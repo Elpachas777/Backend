@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id_usuario Int    @id @default(autoincrement())
+  nombres    String
+  apellido   String
+
+  administrador Administrador?
+  docente       Docente?
+  alumno        Alumno?
+}
+
+model Administrador {
+  id_admin    Int     @id @default(autoincrement())
+  correo      String  @unique
+  contraseña String
+  bloqueado   Boolean @default(false)
+
+  usuarioId Int     @unique
+  usuario   Usuario @relation(fields: [usuarioId], references: [id_usuario], onDelete: Cascade)
+}
+
+model Docente {
+  id_docente  Int     @id @default(autoincrement())
+  correo      String  @unique
+  contraseña String
+  escuela     String
+  autorizado  Boolean @default(false)
+  bloqueado   Boolean @default(false)
+
+  usuarioId Int     @unique
+  usuario   Usuario @relation(fields: [usuarioId], references: [id_usuario], onDelete: Cascade)
+
+  grupos     Grupo[]
+  ejercicios Ejercicio[]
+}
+
+model Alumno {
+  id_alumno Int  @id @default(autoincrement())
+  id_grupo  Int?
+
+  usuarioId Int     @unique
+  usuario   Usuario @relation(fields: [usuarioId], references: [id_usuario], onDelete: Cascade)
+
+  grupo      Grupo?      @relation(fields: [id_grupo], references: [id_grupo])
+  respuestas Respuesta[]
+}
+
+model Grupo {
+  id_grupo     Int    @id @default(autoincrement())
+  nombre_grupo String
+  id_docente   Int
+  turno        String
+
+  docente    Docente     @relation(fields: [id_docente], references: [id_docente])
+  alumnos    Alumno[]
+  ejercicios Ejercicio[]
+}
+
+model Ejercicio {
+  id_ejercicio Int      @id @default(autoincrement())
+  nombre       String
+  fecha_inicio DateTime
+  fecha_final  DateTime
+  tipo         String
+  id_grupo     Int
+  id_docente   Int
+
+  grupo      Grupo       @relation(fields: [id_grupo], references: [id_grupo])
+  docente    Docente     @relation(fields: [id_docente], references: [id_docente])
+  respuestas Respuesta[]
+}
+
+model Respuesta {
+  id_respuesta Int    @id @default(autoincrement())
+  trazo        String
+  puntaje      Int
+  id_alumno    Int
+  id_ejercicio Int
+
+  alumno    Alumno    @relation(fields: [id_alumno], references: [id_alumno])
+  ejercicio Ejercicio @relation(fields: [id_ejercicio], references: [id_ejercicio])
+}
