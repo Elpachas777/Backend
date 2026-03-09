@@ -14,7 +14,7 @@ export const registrarNuevoAdministrador = async (data) => {
     const infoAdmin = await remplazarContraseña(
       validarCampos(data, ["correo", "password", "nombres", "apellido"]),
     );
-
+    console.log(infoAdmin);
     const nuevoAdministrador = await crearAdministrador(infoAdmin);
 
     if (!nuevoAdministrador) {
