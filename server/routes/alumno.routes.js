@@ -1,10 +1,10 @@
 import { Router } from "express";
 import {
   consultarAlumnoInfo,
-  registrarAlumno,
   consultarAlumnosInfo,
-  modificarAlumno,
   eliminarAlumno,
+  modificarAlumno,
+  registrarAlumno,
   verAlumnosGrupo,
 } from "../controllers/alumno.controller.js";
 
