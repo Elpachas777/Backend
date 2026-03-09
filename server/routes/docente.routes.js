@@ -1,20 +1,20 @@
 import { Router } from "express";
 import {
-  editarDocente,
+  editarDocenteInfo,
   eliminarDocente,
   registarDocente,
-  verDocentes,
-  verDocente,
-  verificarDocente,
+  consultarDocenteInfo,
+  consultarDocentesInfo,
+  verificarCorreoDocente,
 } from "../controllers/docente.controller.js";
 
 const router = Router();
 
 router.post("/registrarDocente", registarDocente);
-router.get("/verificar", verificarDocente);
-router.get("/verDocentes", verDocentes);
-router.get("/verDocente/:id", verDocente);
+router.get("/verificar", verificarCorreoDocente);
+router.get("/verDocentes", consultarDocentesInfo);
+router.get("/verDocente/:id", consultarDocenteInfo);
 router.delete("/eliminarDocente/:id", eliminarDocente);
-router.put("/editarDocente/:id", editarDocente);
+router.put("/editarDocente/:id", editarDocenteInfo);
 
 export default router;

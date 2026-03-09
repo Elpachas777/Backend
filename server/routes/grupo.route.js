@@ -1,22 +1,22 @@
 import { Router } from "express";
 import {
   registrarGrupo,
-  verGrupo,
-  verGrupos,
+  consultarGrupoInfo,
+  consultarGruposInfo,
   eliminarGrupo,
-  modificarGrupo,
-  agregarAlumno,
+  editarGrupoInfo,
+  agregarAlumnoAGrupo,
 } from "../controllers/grupo.controller.js";
 
-import { auth } from "../auth/auth.js";
+import { auth } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
-router.post("/verGrupo", verGrupo);
-router.get("/verGrupos", verGrupos);
+router.post("/verGrupo", consultarGrupoInfo);
+router.get("/verGrupos", consultarGruposInfo);
 router.post("/registrarseGrupo", auth, registrarGrupo);
-router.put("/actualizarGrupo/:id", modificarGrupo);
+router.put("/actualizarGrupo/:id", editarGrupoInfo);
 router.delete("/eliminarGrupo/:id", eliminarGrupo);
-router.put("/agregarAlumno", agregarAlumno);
+router.put("/agregarAlumno", agregarAlumnoAGrupo);
 
 export default router;

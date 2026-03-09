@@ -1,208 +1,129 @@
 import "dotenv/config";
-import { prisma } from "../db.js";
-import bcrypt from "bcrypt";
-import { consultarAdmin } from "./admin.service.js";
+import {
+  consultarDocentePorCorreo,
+  consultarDocentePorId,
+  consultarDocentes,
+  crearDocente,
+  editarDocente,
+  eliminarDocenteId,
+  validarCorreo
+} from "../repo/docente.repo.js";
+import { hashear, correoRegistrado, validarCampos, remplazarContraseña, docenteId, controlErrores } from "../utils/utilidad.utils.js"
+import { ApiError } from "../utils/errores.utils.js";
+import { modificarContraseñaAdministrador } from "../repo/admin.repo.js";
 
-export async function existe(id) {
-  return await prisma.docente.findUnique({
-    where: {
-      id_docente: Number(id),
-    },
-  });
-}
+export const registrarNuevoDocente = async (data) => {
+  try {
+    correoRegistrado(data.correo)
 
-async function existeCorreo(correo) {
-  return await prisma.docente.findUnique({
-    where: {
-      correo: correo,
-    },
-  });
-}
+    const infoDocente = await remplazarContraseña(validarCampos(data, ["nombres", "apellidos", "escuela", "correo", "password"]))
+    const nuevoDocente = await crearDocente(infoDocente)
 
-export async function hashear(password) {
-  const passwordHash = await bcrypt.hash(
-    password,
-    Number(process.env.SALT_ROUND)
-  );
-  return passwordHash;
-}
+    if (!nuevoDocente) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se puedo registrar al docente")
+    }
 
-export const registrar = async ({ datos }) => {
-  const existeAdmin = await consultarAdmin(datos.correo);
-  const existeDocente = await existeCorreo(datos.correo);
+    return nuevoDocente
+  } catch (error) {
+    controlErrores(error)
+  }
+};
 
-  if (existeAdmin || existeDocente)
-    throw new Error("El correo ya ha sido registrado");
+export const validarCorreoDocente = async (data) => {
+  try {
+    if (!consultarDocentePorCorreo(data.correo))
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se ha encontrado el docente asociado al correo");
 
-  const passwordHash = await hashear(datos.password);
+    const docenteVerificado = await validarCorreo(data.id)
 
-  const nuevoDocente = await prisma.docente.create({
-    data: {
+    if (!docenteVerificado) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se puedo verificar el correo del docente")
+    }
+
+  } catch (error) {
+    controlErrores(error)
+  }
+};
+
+export const verInfoDocente = async (data) => {
+  try {
+    const docente = await consultarDocentePorId(data.id)
+
+    if (!docente) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró al docente")
+    }
+
+    const docenteInfo = {
+      nombres: docente.usuario.nombres,
+      apellidos: docente.usuario.apellido,
+      escuela: docente.escuela,
+    };
+
+    return docenteInfo;
+  } catch (error) {
+    controlErrores(error)
+  }
+};
+
+export const verInfoDocentes = async () => {
+  try {
+    const docentes = await consultarDocentes()
+
+    if (!docentes) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontraron docentes registrados")
+    }
+
+    const docentesInfo = docentes.map((datos) => ({
+      id: datos.id_docente,
+      nombres: datos.usuario.nombres,
+      apellidos: datos.usuario.apellido,
       correo: datos.correo,
-      contraseña: passwordHash,
       escuela: datos.escuela,
-      usuario: {
-        create: {
-          nombres: datos.nombres,
-          apellido: datos.apellidos,
-        },
-      },
-    },
-    include: {
-      usuario: true,
-    },
-  });
+    }));
 
-  return nuevoDocente;
-};
-
-export const verPorCorreo = async (correo) => {
-  const docente = await prisma.docente.findUnique({
-    where: {
-      correo: correo,
-    },
-  });
-
-  if (!docente) throw new Error("El correo no existe");
-  return docente;
-};
-
-export const verPorId = async (id) => {
-  const docente = await prisma.docente.findUnique({
-    where: {
-      id_docente: Number(id),
-    },
-    select: {
-      escuela: true,
-      usuario: {
-        select: {
-          nombres: true,
-          apellido: true,
-        },
-      },
-    },
-  });
-
-  if (!docente) throw new Error("No se encontró al docente");
-
-  const resultado = {
-    nombres: docente.usuario.nombres,
-    apellidos: docente.usuario.apellido,
-    escuela: docente.escuela,
-  };
-  return resultado;
-};
-
-export const verTodos = async () => {
-  const docentes = await prisma.docente.findMany({
-    select: {
-      id_docente: true,
-      correo: true,
-      escuela: true,
-      usuario: {
-        select: {
-          nombres: true,
-          apellido: true,
-        },
-      },
-    },
-  });
-
-  const resultado = docentes.map((datos) => ({
-    id: datos.id_docente,
-    nombres: datos.usuario.nombres,
-    apellidos: datos.usuario.apellido,
-    correo: datos.correo,
-    escuela: datos.escuela,
-  }));
-
-  return resultado;
-};
-
-export const modificarVerificado = async (id, correo) => {
-  if (!existe(id)) throw new Error("El correo no existe");
-
-  const docenteVerificado = await prisma.docente.update({
-    where: {
-      id_docente: id,
-    },
-    data: {
-      autorizado: true,
-    },
-  });
-
-  return docenteVerificado;
-};
-
-export const editar = async (id, datos) => {
-  if (!existe(id)) throw new Error("El docente no existe");
-
-  const docenteEditado = await prisma.docente.update({
-    where: {
-      id_docente: Number(id),
-    },
-    data: {
-      escuela: datos.escuela,
-      usuario: {
-        update: {
-          nombres: datos.nombres,
-          apellido: datos.apellidos,
-        },
-      },
-    },
-    include: {
-      usuario: true,
-    },
-  });
-
-  return docenteEditado;
-};
-
-export const eliminar = async (id) => {
-  if (!existe(id)) throw new Error("El correo no ha sido registrado");
-
-  const docenteEliminado = await prisma.docente.delete({
-    where: {
-      id_docente: Number(id),
-    },
-  });
-
-  if (!docenteEliminado) throw new Error("No se pudo borrar al docente");
-
-  return docenteEliminado;
-};
-
-export const actualizarContraseña = async (correo, password) => {
-  const existeAdmin = await consultarAdmin(correo);
-  if (existeAdmin) {
-    const passwordHash = await hashear(password);
-    const modificado = await prisma.administrador.update({
-      where: {
-        correo: correo,
-      },
-      data: {
-        contraseña: passwordHash,
-      },
-    });
-
-    return modificado;
+    return docentesInfo;
+  } catch (error) {
+    controlErrores(error)
   }
+};
 
-  const existeDocente = await existeCorreo(correo);
-  if (existeDocente) {
-    const passwordHash = await hashear(password);
+export const editarInfoDocente = async (data) => {
+  try {
+    docenteId(data.id)
+    const docenteEditado = await editarDocente(data)
 
-    const modificado = await prisma.docente.update({
-      where: {
-        correo: correo,
-      },
-      data: {
-        contraseña: passwordHash,
-      },
-    });
+    if (!docenteEditado) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo editar al docente")
+    }
 
-    return modificado;
+  } catch (error) {
+    controlErrores(error)
   }
+};
 
-  throw new Error("No se encontró la cuenta");
+export const eliminarDocentePorId = async (data) => {
+  try {
+    docenteId(data.id)
+    const docenteEliminado = await eliminarDocenteId(data.id)
+
+    if (!docenteEliminado) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo eliminar al docente")
+    }
+
+  } catch (error) {
+    controlErrores(error)
+  }
+};
+
+export const actualizarContraseñaDocente = async (data) => {
+  try {
+    const modificado = await modificarContraseñaAdministrador(data.correo, hashear(data.password))
+
+    if (!modificado) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo actualizar la contraseña")
+    }
+
+  } catch (error) {
+    controlErrores(error)
+  }
 };

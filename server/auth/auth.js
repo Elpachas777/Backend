@@ -1,15 +1,28 @@
 import "dotenv/config";
 import jwt from "jsonwebtoken";
+import { ApiError } from "../utils/errores.utils.js";
 
-export const auth = (req, res, next) => {
+export function verificarTokenAuth(token) {
   try {
-    const token = req.cookies?.access_token;
-    if (!token) return res.status(401).send("Token inexistente");
-
-    const tokenDatos = jwt.verify(token, process.env.SECRET_KEY);
-    req.user = tokenDatos;
-    next();
+    return jwt.verify(token, process.env.SECRET_KEY);
   } catch (error) {
-    return res.status(401).send("Token invalido o expirado");
+    throw new ApiError(error.message, 500, "No se pudo verificar el token")
   }
-};
+}
+
+export function generarToken(objeto, duracion) {
+  try {
+    return jwt.sign(objeto, process.env.SECRET_KEY, { expiresIn: duracion, });
+  } catch (error) {
+    throw new ApiError(error.message, 500, "Error al crear el token")
+  }
+}
+
+export function objetoSesion() {
+  return {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 1000 * 60 * 60,
+  }
+}

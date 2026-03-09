@@ -1,13 +1,14 @@
-import { crearAdmin } from "../services/admin.service.js";
+import { registrarNuevoAdministrador } from "../services/admin.service.js";
 
-export const registrarAdmin = async (req, res) => {
-  console.log("A");
+export async function registrarAdmin(req, res, next) {
   try {
-    const nuevoAdmin = await crearAdmin(req.body);
-    if (!nuevoAdmin) res.status(401).send("No se pudo crear el administrador");
+    await registrarNuevoAdministrador(req.body);
 
-    res.status(200).send("ok");
+    return res.status(201).json({
+      tipo: "success",
+      mensaje: "Administrador registrado con éxito"
+    });
   } catch (error) {
-    res.status(400).send("Ocurrió un error");
+    next(error)
   }
-};
+}

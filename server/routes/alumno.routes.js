@@ -1,8 +1,8 @@
 import { Router } from "express";
 import {
-  verAlumno,
+  consultarAlumnoInfo,
   registrarAlumno,
-  verAlumnos,
+  consultarAlumnosInfo,
   modificarAlumno,
   eliminarAlumno,
   verAlumnosGrupo,
@@ -10,9 +10,9 @@ import {
 
 const router = Router();
 
-router.get("/verAlumno/:id", verAlumno);
+router.get("/verAlumno/:id", consultarAlumnoInfo);
 router.get("/verAlumnosGrupo/:id", verAlumnosGrupo);
-router.get("/verAlumnos", verAlumnos);
+router.get("/verAlumnos", consultarAlumnosInfo);
 router.post("/registrarseAlumno", registrarAlumno);
 router.put("/actualizarAlumno/:id", modificarAlumno);
 router.delete("/eliminarAlumno/:id", eliminarAlumno);

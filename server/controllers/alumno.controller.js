@@ -1,138 +1,80 @@
-import { prisma } from "../db.js";
 import {
-  editar,
-  eliminar,
-  registrar,
-  verUno,
+  registrarNuevoAlumno,
+  verInfoAlumno,
+  verInfoAlumnos,
+  editarInfoAlumno,
+  eliminarAlumnoPorId,
+  verAlumnosEnGrupo,
 } from "../services/alumno.service.js";
 
-export const registrarAlumno = async (req, res) => {
+export async function registrarAlumno(req, res, next) {
   try {
-    const { nombre, apellidos } = req.body;
-    await registrar(nombre, apellidos);
+    await registrarNuevoAlumno(req.body);
 
-    return res
-      .status(200)
-      .json({ tipo: "success", mensaje: "Alumno creado con exito" });
+    return res.status(200).json({
+      tipo: "success",
+      mensaje: "Alumno registrado con exito"
+    });
   } catch (error) {
-    res
-      .status(400)
-      .json({ tipo: "error", mensaje: "No se pudo registrar al Alumno" });
+    next(error)
   }
-};
+}
 
-export const registrarAlumno2 = async (nombre, apellidos, idGrupo) => {
-  const nuevoalumno = await prisma.alumno.create({
-    data: {
-      grupo: {
-        connect: {
-          id_grupo: Number(idGrupo),
-        },
-      },
-      usuario: {
-        create: {
-          nombres: nombre,
-          apellido: apellidos,
-        },
-      },
-    },
-    include: {
-      usuario: true,
-      grupo: true,
-    },
-  });
-
-  const data = {
-    id: nuevoalumno.id_alumno,
-    nombres: nuevoalumno.usuario.nombres,
-    apellidos: nuevoalumno.usuario.apellido,
-  };
-
-  return data;
-};
-
-export const verAlumno = async (req, res) => {
+export async function consultarAlumnoInfo(req, res, next) {
   try {
-    const { id } = req.params;
-    const respuesta = await verUno(id);
-    res.status(200).json(respuesta);
+    const respuesta = await verInfoAlumno(req.params);
+    return res.status(200).json(respuesta);
   } catch (error) {
-    res.status(400).json({ tipo: "error", mensaje: "No encontró al alumno" });
+    next(error)
   }
-};
+}
 
-export const verAlumnos = async (req, res) => {
-  const alumnos = await prisma.alumno.findMany({
-    select: {
-      id_alumno: true,
-      usuario: {
-        select: {
-          nombres: true,
-          apellido: true,
-        },
-      },
-    },
-  });
+export async function consultarAlumnosInfo(req, res, next) {
+  try {
+    const resultado = await verInfoAlumnos();
+    return res.status(200).json(resultado);
+  } catch (error) {
+    next(error)
+  }
+}
 
-  const resultado = alumnos.map((datos) => ({
-    id: datos.id_alumno,
-    nombres: datos.usuario.nombres,
-    apellidos: datos.usuario.apellido,
-  }));
-
-  return res.json(resultado);
-};
-
-export const modificarAlumno = async (req, res) => {
+export async function modificarAlumno(req, res, next) {
   try {
     const { id } = req.params;
     const { nombre, apellidos } = req.body;
 
-    await editar(id, nombre, apellidos);
+    const data = { id, nombre, apellidos };
 
-    return res
-      .status(200)
-      .json({ tipo: "info", mensaje: "Alumno editado con exito" });
+    await editarInfoAlumno(data);
+
+    return res.status(200).json({
+      tipo: "info",
+      mensaje: "Alumno editado con exito"
+    });
   } catch (error) {
-    res
-      .status(400)
-      .json({ tipo: "error", mensaje: "No se pudo editar al Alumno" });
+    next(error)
   }
-};
+}
 
-export const eliminarAlumno = async (req, res) => {
+export async function eliminarAlumno(req, res, next) {
   try {
-    const { id } = req.params;
-    await eliminar(id);
-    res
-      .status(200)
-      .json({ tipo: "info", mensaje: "Alumno eliminado con exito" });
+    await eliminarAlumnoPorId(req.params);
+    return res.status(200).json({
+      tipo: "info",
+      mensaje: "Alumno eliminado con exito"
+    });
   } catch (error) {
-    res
-      .status(400)
-      .json({ tipo: "error", mensaje: "No se pudo eliminar al Alumno" });
+    next(error)
   }
-};
+}
 
-export const verAlumnosGrupo = async (req, res) => {
-  const { id } = req.params;
-  const alumnos = await prisma.alumno.findMany({
-    where: {
-      id_grupo: Number(id),
-    },
-    omit: {
-      id_grupo: true,
-    },
-    include: {
-      usuario: true,
-    },
-  });
+export async function verAlumnosGrupo(req, res, next) {
+  try {
+    const respuesta = await verAlumnosEnGrupo(req.params);
 
-  const resultado = alumnos.map((datos) => ({
-    id: datos.id_alumno,
-    nombres: datos.usuario.nombres,
-    apellidos: datos.usuario.apellido,
-  }));
+    return res.status(200).json(respuesta);
 
-  return res.send(resultado);
-};
+  } catch (error) {
+    next(error)
+  }
+}

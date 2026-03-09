@@ -1,96 +1,126 @@
-import { prisma } from "../db.js";
+import {
+  consultarAlumnoPorId,
+  consultarAlumnos,
+  crearAlumno,
+  crearAlumnoGrupo,
+  eliminarAlumnoId,
+  modificarInfoAlumno,
+  verAlumnosGrupoId
+} from "../repo/alumno.repo.js"
+import { ApiError } from "../utils/errores.utils.js"
+import { alumnoId, controlErrores, validarCampos } from "../utils/utilidad.utils.js"
 
-export const registrar = async (nombre, apellidos) => {
-  const nuevoAlumno = await prisma.alumno.create({
-    data: {
-      usuario: {
-        create: {
-          nombres: nombre,
-          apellido: apellidos,
-        },
-      },
-    },
-    include: {
-      usuario: true,
-    },
-  });
+export const registrarNuevoAlumno = async (data) => {
+  try {
+    const datos = validarCampos(data, ["nombre", "apellidos"])
+    const nuevoAlumno = await crearAlumno(datos)
 
-  return nuevoAlumno;
+    if (!nuevoAlumno) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo registrar al alumno")
+    }
+
+  } catch (error) {
+    controlErrores(error)
+  }
 };
 
-export const agregarAGrupo = async (idAlumno, idGrupo) => {
-  const alumnoAgregado = await prisma.alumno.update({
-    where: {
-      id_alumno: Number(idAlumno),
-    },
-    data: {
-      id_grupo: Number(idGrupo),
-    },
-  });
+export const registrarConGrupo = async (data) => {
+  try {
+    const datos = validarCampos(data, ["idGrupo", "nombre", "apellidos"])
+    const nuevoAlumno = await crearAlumnoGrupo(datos)
 
-  return alumnoAgregado;
+    if (!nuevoAlumno) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo registrar al alumno")
+    }
+
+  } catch (error) {
+    controlErrores(error)
+  }
+}
+
+export const verInfoAlumno = async (data) => {
+  try {
+    const alumno = await consultarAlumnoPorId(data)
+
+    if (!alumno) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró al alumno")
+    }
+
+    const alumnoInfo = {
+      nombre: alumno.usuario.nombres,
+      apellidos: alumno.usuario.apellido,
+    };
+
+    return alumnoInfo;
+  } catch (error) {
+    controlErrores(error)
+  }
 };
 
-export const editar = async (id, nombre, apellidos) => {
-  const alumnoModificado = await prisma.alumno.update({
-    where: {
-      id_alumno: Number(id),
-    },
-    data: {
-      usuario: {
-        update: {
-          nombres: nombre,
-          apellido: apellidos,
-        },
-      },
-    },
-  });
+export const verInfoAlumnos = async () => {
+  try {
+    const alumnos = await consultarAlumnos()
 
-  return alumnoModificado;
+    if (!alumnos) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró a ningun alumno")
+    }
+
+    const alumnosInfo = alumnos.map((datos) => ({
+      id: datos.id_alumno,
+      nombres: datos.usuario.nombres,
+      apellidos: datos.usuario.apellido,
+    }));
+
+    return alumnosInfo;
+  } catch (error) {
+    controlErrores(error)
+  }
+}
+
+export const editarInfoAlumno = async (data) => {
+  try {
+    const alumnoModificado = await modificarInfoAlumno(data)
+
+    if (!alumnoModificado) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró a ningun alumno para modificar")
+    }
+
+    return alumnoModificado;
+  } catch (error) {
+    controlErrores(error)
+  }
 };
 
-export const eliminar = async (id) => {
-  const alumnoEliminado = await prisma.alumno.delete({
-    where: {
-      id_alumno: Number(id),
-    },
-  });
+export const eliminarAlumnoPorId = async (data) => {
+  try {
+    alumnoId(data.id)
 
-  return alumnoEliminado;
+    const alumnoEliminado = await eliminarAlumnoId(data)
+
+    if (!alumnoEliminado) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró a ningun alumno para eliminar")
+    }
+  } catch (error) {
+    controlErrores(error)
+  }
 };
 
-export const verUno = async (id) => {
-  const alumno = await prisma.alumno.findFirst({
-    where: {
-      id_alumno: Number(id),
-    },
-    select: {
-      usuario: {
-        select: {
-          nombres: true,
-          apellido: true,
-        },
-      },
-    },
-  });
+export const verAlumnosEnGrupo = async (data) => {
+  try {
+    const alumnos = await verAlumnosGrupoId(data)
 
-  const alumnoEncontrado = {
-    nombre: alumno.usuario.nombres,
-    apellidos: alumno.usuario.apellido,
-  };
+    if (!alumnos) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró a ningun alumno")
+    }
 
-  return alumnoEncontrado;
-};
+    const alumnosInfo = alumnos.map((datos) => ({
+      id: datos.id_alumno,
+      nombres: datos.usuario.nombres,
+      apellidos: datos.usuario.apellido,
+    }));
 
-export const verPorDatos = async (nombre, apellidos) => {
-  const alumno = await prisma.alumno.findFirst({
-    where: {
-      usuario: {
-        nombres: nombre,
-        apellido: apellidos,
-      },
-    },
-  });
-
-  return alumno;
-};
+    return alumnosInfo
+  } catch (error) {
+    controlErrores(error)
+  }
+}

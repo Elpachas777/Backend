@@ -1,35 +1,31 @@
-import { prisma } from "../db.js";
-import { hashear } from "./docente.service.js";
+import { crearAdministrador, modificarContraseñaAdministrador } from "../repo/admin.repo.js";
+import { ApiError } from "../utils/errores.utils.js";
+import { validarCampos, remplazarContraseña, controlErrores } from "../utils/utilidad.utils.js";
 
-export const crearAdmin = async (datos) => {
-  const passwordHash = await hashear(datos.password);
+export const registrarNuevoAdministrador = async (data) => {
+  try {
+    const infoAdmin = remplazarContraseña(validarCampos(data, ["correo", "password", "nombres", "apellido"]))
+    const nuevoAdministrador = await crearAdministrador(infoAdmin)
 
-  const nuevoAdmin = await prisma.administrador.create({
-    data: {
-      correo: datos.correo,
-      contraseña: passwordHash,
-      usuario: {
-        create: {
-          nombres: datos.nombres,
-          apellido: datos.apellido,
-        },
-      },
-    },
-  });
+    if (!nuevoAdministrador) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo registrar el administrador")
+    }
 
-  return nuevoAdmin;
+  } catch (error) {
+    controlErrores(error)
+  }
 };
 
-export const consultarAdmin = async (correo) => {
-  const admin = await prisma.administrador.findUnique({
-    where: {
-      correo: correo,
-    },
-    select: {
-      id_admin: true,
-      correo: true,
-    },
-  });
+export const actualizarContraseñaAdministador = async (data) => {
+  try {
+    const modificado = await modificarContraseñaAdministrador(data.correo, hashear(data.password))
 
-  return admin;
-};
+    if (!modificado) {
+      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo actualizar la contraseña")
+    }
+
+  } catch (error) {
+    controlErrores(error)
+  }
+
+}

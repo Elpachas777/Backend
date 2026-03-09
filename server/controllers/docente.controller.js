@@ -1,113 +1,85 @@
-import sendEmail from "../mail.js";
 import {
-  editar,
-  eliminar,
-  modificarVerificado,
-  registrar,
-  verPorId,
-  verTodos,
+  validarCorreoDocente,
+  registrarNuevoDocente,
+  verInfoDocente,
+  verInfoDocentes,
+  editarInfoDocente,
+  eliminarDocentePorId,
 } from "../services/docente.service.js";
-import jwt from "jsonwebtoken";
-import "dotenv/config";
+import { validarTokenCorreo, enviarTokenCorreo } from "../services/correo.service.js";
 
-export const registarDocente = async (req, res) => {
-  const datos = req.body;
 
+export async function registarDocente(req, res, next) {
   try {
-    const docente = await registrar({ datos });
-
-    const tokenVerificacion = jwt.sign(
-      { id: docente.id_docente, correo: docente.correo, tipo: "verificación" },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: "1h",
-      }
-    );
-
-    const pagina = `http://localhost:4000/verificar?token=${tokenVerificacion}`;
-
-    sendEmail(
-      docente.correo,
-      "Confirmación de correo",
-      ` <h1>Hola, ${datos.nombres}</h1>
-        <p>Gracias por registrarte. Haz clic para confirmar tu correo:</p>
-        <p><a href="${pagina}">Confirmar correo</a></p>`
-    );
+    const docente = await registrarNuevoDocente(req.body);
+    enviarTokenCorreo(docente);
 
     res.status(201).json({
       tipo: "success",
-      mensaje:
-        "Docente registrado con exito, favor de revisar el correo enviado.",
+      mensaje: "Docente registrado con exito, favor de revisar el correo enviado.",
     });
   } catch (error) {
-    res.status(400).json({ tipo: "error", mensaje: error.message });
+    next(error)
   }
-};
+}
 
-export const verificarDocente = async (req, res) => {
-  const { token } = req.query;
-
+export async function verificarCorreoDocente(req, res, next) {
   try {
-    const datosToken = jwt.verify(token, process.env.SECRET_KEY);
+    const datosToken = validarTokenCorreo(req.query);
+    await validarCorreoDocente(datosToken.id, datosToken.correo);
 
-    if (datosToken.tipo !== "verificación")
-      res.status(400).send("Token invalido");
-
-    await modificarVerificado(datosToken.id, datosToken.correo);
-
-    res
-      .status(201)
-      .json({ tipo: "info", mensaje: "Correo verificado con exito" });
+    res.status(201).json({
+      tipo: "info",
+      mensaje: "Correo verificado con exito"
+    });
   } catch (error) {
-    res.status(400).json({ tipo: "error", mensaje: error.message });
+    next(error)
   }
-};
+}
 
-export const verDocente = async (req, res) => {
+export async function consultarDocenteInfo(req, res, next) {
   try {
-    const { id } = req.params;
-    const docente = await verPorId(id);
-    res.status(201).json(docente);
+    const docente = await verInfoDocente(req.params);
+    res.status(200).json(docente);
   } catch (error) {
-    res.json({ tipo: "error", mensaje: error.message });
+    next(error)
   }
-};
+}
 
-export const verDocentes = async (req, res) => {
+export async function consultarDocentesInfo(req, res, next) {
   try {
-    const docentes = await verTodos();
+    const docentes = await verInfoDocentes();
     res.status(200).json(docentes);
   } catch (error) {
-    res.status(400).json({ tipo: "error", mensaje: error.message });
+    next(error)
   }
-};
+}
 
-export const editarDocente = async (req, res) => {
+export async function editarDocenteInfo(req, res, next) {
   try {
     const { id } = req.params;
-    const datos = req.body;
-    await editar(id, datos);
+    const { nombres, apellidos, escuela } = req.body;
+    const data = { id, nombres, apellidos, escuela };
 
-    return res
-      .status(200)
-      .json({ tipo: "info", mensaje: "Usuario editado con exito" });
+    await editarInfoDocente(data);
+
+    return res.status(200).json({
+      tipo: "info",
+      mensaje: "Usuario editado con exito"
+    });
   } catch (error) {
-    res
-      .status(400)
-      .json({ tipo: "error", mensaje: "No se pudo editar al docente" });
+    next(error)
   }
-};
+}
 
-export const eliminarDocente = async (req, res) => {
+export async function eliminarDocente(req, res, next) {
   try {
-    const { id } = req.params;
-    await eliminar(id);
-    return res
-      .status(202)
-      .json({ tipo: "info", mensaje: "Docente eliminado con exito" });
+    await eliminarDocentePorId(req.params);
+    return res.status(200).json({
+      tipo: "info",
+      mensaje: "Docente eliminado con exito"
+    });
   } catch (error) {
-    res
-      .status(400)
-      .json({ tipo: "error", mensaje: "No se pudo eliminar al docente" });
+    next(error)
   }
-};
+}
