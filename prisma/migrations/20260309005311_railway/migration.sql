@@ -12,8 +12,10 @@ CREATE TABLE `Administrador` (
     `id_admin` INTEGER NOT NULL AUTO_INCREMENT,
     `correo` VARCHAR(191) NOT NULL,
     `contraseña` VARCHAR(191) NOT NULL,
+    `bloqueado` BOOLEAN NOT NULL DEFAULT false,
     `usuarioId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `Administrador_correo_key`(`correo`),
     UNIQUE INDEX `Administrador_usuarioId_key`(`usuarioId`),
     PRIMARY KEY (`id_admin`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -23,9 +25,12 @@ CREATE TABLE `Docente` (
     `id_docente` INTEGER NOT NULL AUTO_INCREMENT,
     `correo` VARCHAR(191) NOT NULL,
     `contraseña` VARCHAR(191) NOT NULL,
-    `autorizado` BOOLEAN NOT NULL,
+    `escuela` VARCHAR(191) NOT NULL,
+    `autorizado` BOOLEAN NOT NULL DEFAULT false,
+    `bloqueado` BOOLEAN NOT NULL DEFAULT false,
     `usuarioId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `Docente_correo_key`(`correo`),
     UNIQUE INDEX `Docente_usuarioId_key`(`usuarioId`),
     PRIMARY KEY (`id_docente`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -33,7 +38,7 @@ CREATE TABLE `Docente` (
 -- CreateTable
 CREATE TABLE `Alumno` (
     `id_alumno` INTEGER NOT NULL AUTO_INCREMENT,
-    `id_grupo` INTEGER NOT NULL,
+    `id_grupo` INTEGER NULL,
     `usuarioId` INTEGER NOT NULL,
 
     UNIQUE INDEX `Alumno_usuarioId_key`(`usuarioId`),
@@ -75,16 +80,16 @@ CREATE TABLE `Respuesta` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Administrador` ADD CONSTRAINT `Administrador_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id_usuario`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Administrador` ADD CONSTRAINT `Administrador_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Docente` ADD CONSTRAINT `Docente_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id_usuario`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Docente` ADD CONSTRAINT `Docente_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Alumno` ADD CONSTRAINT `Alumno_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id_usuario`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Alumno` ADD CONSTRAINT `Alumno_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Alumno` ADD CONSTRAINT `Alumno_id_grupo_fkey` FOREIGN KEY (`id_grupo`) REFERENCES `Grupo`(`id_grupo`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Alumno` ADD CONSTRAINT `Alumno_id_grupo_fkey` FOREIGN KEY (`id_grupo`) REFERENCES `Grupo`(`id_grupo`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Grupo` ADD CONSTRAINT `Grupo_id_docente_fkey` FOREIGN KEY (`id_docente`) REFERENCES `Docente`(`id_docente`) ON DELETE RESTRICT ON UPDATE CASCADE;
