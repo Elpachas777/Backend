@@ -11,11 +11,10 @@ import {
 
 export const registrarNuevoAdministrador = async (data) => {
   try {
-    const infoAdmin = remplazarContraseña(
+    const infoAdmin = await remplazarContraseña(
       validarCampos(data, ["correo", "password", "nombres", "apellido"]),
     );
 
-    console.log(infoAdmin);
     const nuevoAdministrador = await crearAdministrador(infoAdmin);
 
     if (!nuevoAdministrador) {
