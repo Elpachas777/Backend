@@ -1,6 +1,7 @@
 import { crearAdmin } from "../services/admin.service.js";
 
 export const registrarAdmin = async (req, res) => {
+  console.log("A");
   try {
     const nuevoAdmin = await crearAdmin(req.body);
     if (!nuevoAdmin) res.status(401).send("No se pudo crear el administrador");
