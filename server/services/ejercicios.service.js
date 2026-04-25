@@ -1,4 +1,10 @@
+import { controlErrores } from "../utils/utilidad.utils.js";
+
 export const guardarEjercicio = (data) => {
-  const json = JSON.parse(data);
-  console.log(json);
+  try {
+    const json = JSON.parse(data);
+    console.log(json);
+  } catch (error) {
+    controlErrores(error);
+  }
 };
