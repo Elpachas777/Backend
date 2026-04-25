@@ -2,8 +2,8 @@ import { guardarEjercicio } from "../services/ejercicios.service.js";
 
 export const registrarEjercicio = (req, res, next) => {
   try {
-    const { data } = req.body;
-    guardarEjercicio(JSON.stringify(data));
+    const data = req.body;
+    guardarEjercicio(data);
     return "Guardado";
   } catch (error) {
     next(error);
