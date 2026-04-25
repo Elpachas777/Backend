@@ -1,11 +1,11 @@
 import { Router } from "express";
 import {
-  registrarGrupo,
+  agregarAlumnoAGrupo,
   consultarGrupoInfo,
   consultarGruposInfo,
-  eliminarGrupo,
   editarGrupoInfo,
-  agregarAlumnoAGrupo,
+  eliminarGrupo,
+  registrarGrupo,
 } from "../controllers/grupo.controller.js";
 
 import { auth } from "../middleware/auth.middleware.js";
