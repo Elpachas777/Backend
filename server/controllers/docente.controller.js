@@ -1,13 +1,15 @@
 import {
-  validarCorreoDocente,
-  registrarNuevoDocente,
-  verInfoDocente,
-  verInfoDocentes,
+  enviarTokenCorreo,
+  validarTokenCorreo,
+} from "../services/correo.service.js";
+import {
   editarInfoDocente,
   eliminarDocentePorId,
+  registrarNuevoDocente,
+  validarCorreoDocente,
+  verInfoDocente,
+  verInfoDocentes,
 } from "../services/docente.service.js";
-import { validarTokenCorreo, enviarTokenCorreo } from "../services/correo.service.js";
-
 
 export async function registarDocente(req, res, next) {
   try {
@@ -16,10 +18,11 @@ export async function registarDocente(req, res, next) {
 
     res.status(201).json({
       tipo: "success",
-      mensaje: "Docente registrado con exito, favor de revisar el correo enviado.",
+      mensaje:
+        "Docente registrado con exito, favor de revisar el correo enviado.",
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
@@ -30,10 +33,10 @@ export async function verificarCorreoDocente(req, res, next) {
 
     res.status(201).json({
       tipo: "info",
-      mensaje: "Correo verificado con exito"
+      mensaje: "Correo verificado con exito",
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
@@ -42,7 +45,7 @@ export async function consultarDocenteInfo(req, res, next) {
     const docente = await verInfoDocente(req.params);
     res.status(200).json(docente);
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
@@ -51,7 +54,7 @@ export async function consultarDocentesInfo(req, res, next) {
     const docentes = await verInfoDocentes();
     res.status(200).json(docentes);
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
@@ -65,10 +68,10 @@ export async function editarDocenteInfo(req, res, next) {
 
     return res.status(200).json({
       tipo: "info",
-      mensaje: "Usuario editado con exito"
+      mensaje: "Usuario editado con exito",
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
@@ -77,9 +80,9 @@ export async function eliminarDocente(req, res, next) {
     await eliminarDocentePorId(req.params);
     return res.status(200).json({
       tipo: "info",
-      mensaje: "Docente eliminado con exito"
+      mensaje: "Docente eliminado con exito",
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 }

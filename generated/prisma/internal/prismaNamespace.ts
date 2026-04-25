@@ -390,6 +390,7 @@ export const ModelName = {
   Alumno: 'Alumno',
   Grupo: 'Grupo',
   Ejercicio: 'Ejercicio',
+  TipoEjercicio: 'TipoEjercicio',
   Respuesta: 'Respuesta'
 } as const
 
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "usuario" | "administrador" | "docente" | "alumno" | "grupo" | "ejercicio" | "respuesta"
+    modelProps: "usuario" | "administrador" | "docente" | "alumno" | "grupo" | "ejercicio" | "tipoEjercicio" | "respuesta"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -806,6 +807,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TipoEjercicio: {
+      payload: Prisma.$TipoEjercicioPayload<ExtArgs>
+      fields: Prisma.TipoEjercicioFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TipoEjercicioFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipoEjercicioPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TipoEjercicioFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipoEjercicioPayload>
+        }
+        findFirst: {
+          args: Prisma.TipoEjercicioFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipoEjercicioPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TipoEjercicioFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipoEjercicioPayload>
+        }
+        findMany: {
+          args: Prisma.TipoEjercicioFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipoEjercicioPayload>[]
+        }
+        create: {
+          args: Prisma.TipoEjercicioCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipoEjercicioPayload>
+        }
+        createMany: {
+          args: Prisma.TipoEjercicioCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.TipoEjercicioDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipoEjercicioPayload>
+        }
+        update: {
+          args: Prisma.TipoEjercicioUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipoEjercicioPayload>
+        }
+        deleteMany: {
+          args: Prisma.TipoEjercicioDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TipoEjercicioUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.TipoEjercicioUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TipoEjercicioPayload>
+        }
+        aggregate: {
+          args: Prisma.TipoEjercicioAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTipoEjercicio>
+        }
+        groupBy: {
+          args: Prisma.TipoEjercicioGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TipoEjercicioGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TipoEjercicioCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TipoEjercicioCountAggregateOutputType> | number
+        }
+      }
+    }
     Respuesta: {
       payload: Prisma.$RespuestaPayload<ExtArgs>
       fields: Prisma.RespuestaFieldRefs
@@ -965,15 +1032,23 @@ export type GrupoScalarFieldEnum = (typeof GrupoScalarFieldEnum)[keyof typeof Gr
 
 export const EjercicioScalarFieldEnum = {
   id_ejercicio: 'id_ejercicio',
-  nombre: 'nombre',
+  titulo: 'titulo',
   fecha_inicio: 'fecha_inicio',
   fecha_final: 'fecha_final',
-  tipo: 'tipo',
+  id_tipo: 'id_tipo',
   id_grupo: 'id_grupo',
   id_docente: 'id_docente'
 } as const
 
 export type EjercicioScalarFieldEnum = (typeof EjercicioScalarFieldEnum)[keyof typeof EjercicioScalarFieldEnum]
+
+
+export const TipoEjercicioScalarFieldEnum = {
+  id_tipo: 'id_tipo',
+  nombre: 'nombre'
+} as const
+
+export type TipoEjercicioScalarFieldEnum = (typeof TipoEjercicioScalarFieldEnum)[keyof typeof TipoEjercicioScalarFieldEnum]
 
 
 export const RespuestaScalarFieldEnum = {
@@ -1037,11 +1112,17 @@ export type GrupoOrderByRelevanceFieldEnum = (typeof GrupoOrderByRelevanceFieldE
 
 
 export const EjercicioOrderByRelevanceFieldEnum = {
-  nombre: 'nombre',
-  tipo: 'tipo'
+  titulo: 'titulo'
 } as const
 
 export type EjercicioOrderByRelevanceFieldEnum = (typeof EjercicioOrderByRelevanceFieldEnum)[keyof typeof EjercicioOrderByRelevanceFieldEnum]
+
+
+export const TipoEjercicioOrderByRelevanceFieldEnum = {
+  nombre: 'nombre'
+} as const
+
+export type TipoEjercicioOrderByRelevanceFieldEnum = (typeof TipoEjercicioOrderByRelevanceFieldEnum)[keyof typeof TipoEjercicioOrderByRelevanceFieldEnum]
 
 
 export const RespuestaOrderByRelevanceFieldEnum = {
@@ -1192,6 +1273,7 @@ export type GlobalOmitConfig = {
   alumno?: Prisma.AlumnoOmit
   grupo?: Prisma.GrupoOmit
   ejercicio?: Prisma.EjercicioOmit
+  tipoEjercicio?: Prisma.TipoEjercicioOmit
   respuesta?: Prisma.RespuestaOmit
 }
 
