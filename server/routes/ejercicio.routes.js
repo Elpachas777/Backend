@@ -7,6 +7,6 @@ import {
 const router = Router();
 
 router.post("/crearEjercicio", registrarEjercicio);
-router.post("/verEjercicio", verEjercicio);
+router.get("/verEjercicio", verEjercicio);
 
 export default router;
