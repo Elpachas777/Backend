@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { modificarContraseñaAdministrador } from "../repo/admin.repo.js";
 import {
   consultarDocentePorCorreo,
   consultarDocentePorId,
@@ -6,51 +7,80 @@ import {
   crearDocente,
   editarDocente,
   eliminarDocenteId,
-  validarCorreo
+  validarCorreo,
 } from "../repo/docente.repo.js";
-import { hashear, correoRegistrado, validarCampos, remplazarContraseña, docenteId, controlErrores } from "../utils/utilidad.utils.js"
 import { ApiError } from "../utils/errores.utils.js";
-import { modificarContraseñaAdministrador } from "../repo/admin.repo.js";
+import {
+  controlErrores,
+  correoRegistrado,
+  docenteId,
+  hashear,
+  remplazarContraseña,
+  validarCampos,
+} from "../utils/utilidad.utils.js";
 
 export const registrarNuevoDocente = async (data) => {
   try {
-    correoRegistrado(data.correo)
+    correoRegistrado(data.correo);
 
-    const infoDocente = await remplazarContraseña(validarCampos(data, ["nombres", "apellidos", "escuela", "correo", "password"]))
-    const nuevoDocente = await crearDocente(infoDocente)
+    const infoDocente = await remplazarContraseña(
+      validarCampos(data, [
+        "nombres",
+        "apellidos",
+        "escuela",
+        "correo",
+        "password",
+      ]),
+    );
+    const nuevoDocente = await crearDocente(infoDocente);
 
     if (!nuevoDocente) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se puedo registrar al docente")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se puedo registrar al docente",
+      );
     }
 
-    return nuevoDocente
+    return nuevoDocente;
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };
 
 export const validarCorreoDocente = async (data) => {
   try {
     if (!consultarDocentePorCorreo(data.correo))
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se ha encontrado el docente asociado al correo");
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se ha encontrado el docente asociado al correo",
+      );
 
-    const docenteVerificado = await validarCorreo(data.id)
+    const docenteVerificado = await validarCorreo(data.id);
 
     if (!docenteVerificado) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se puedo verificar el correo del docente")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se puedo verificar el correo del docente",
+      );
     }
-
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };
 
 export const verInfoDocente = async (data) => {
   try {
-    const docente = await consultarDocentePorId(data.id)
+    const docente = await consultarDocentePorId(data.id);
 
     if (!docente) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró al docente")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se encontró al docente",
+      );
     }
 
     const docenteInfo = {
@@ -61,16 +91,20 @@ export const verInfoDocente = async (data) => {
 
     return docenteInfo;
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };
 
 export const verInfoDocentes = async () => {
   try {
-    const docentes = await consultarDocentes()
+    const docentes = await consultarDocentes();
 
     if (!docentes) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontraron docentes registrados")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se encontraron docentes registrados",
+      );
     }
 
     const docentesInfo = docentes.map((datos) => ({
@@ -83,47 +117,59 @@ export const verInfoDocentes = async () => {
 
     return docentesInfo;
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };
 
 export const editarInfoDocente = async (data) => {
   try {
-    docenteId(data.id)
-    const docenteEditado = await editarDocente(data)
+    docenteId(data.id);
+    const docenteEditado = await editarDocente(data);
 
     if (!docenteEditado) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo editar al docente")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se pudo editar al docente",
+      );
     }
-
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };
 
 export const eliminarDocentePorId = async (data) => {
   try {
-    docenteId(data.id)
-    const docenteEliminado = await eliminarDocenteId(data.id)
+    docenteId(data.id);
+    const docenteEliminado = await eliminarDocenteId(data.id);
 
     if (!docenteEliminado) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo eliminar al docente")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se pudo eliminar al docente",
+      );
     }
-
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };
 
 export const actualizarContraseñaDocente = async (data) => {
   try {
-    const modificado = await modificarContraseñaAdministrador(data.correo, hashear(data.password))
+    const modificado = await modificarContraseñaAdministrador(
+      data.correo,
+      hashear(data.password),
+    );
 
     if (!modificado) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo actualizar la contraseña")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se pudo actualizar la contraseña",
+      );
     }
-
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };

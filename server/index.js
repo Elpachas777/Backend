@@ -8,6 +8,7 @@ import adminRoutes from "./routes/admin.routes.js";
 import alumnoRoutes from "./routes/alumno.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import docenteRoutes from "./routes/docente.routes.js";
+import ejerciciosRoutes from "./routes/ejercicios.routes.js";
 import gruposRoutes from "./routes/grupo.route.js";
 import indexRoutes from "./routes/index.routes.js";
 import sesionRoutes from "./routes/sesion.routes.js";
@@ -32,6 +33,7 @@ app.use(gruposRoutes);
 app.use(sesionRoutes);
 app.use(authRoutes);
 app.use(adminRoutes);
+app.use(ejerciciosRoutes);
 
 app.use(manejadorErrores);
 

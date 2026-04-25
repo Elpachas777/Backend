@@ -72,6 +72,11 @@ export type Grupo = Prisma.GrupoModel
  */
 export type Ejercicio = Prisma.EjercicioModel
 /**
+ * Model TipoEjercicio
+ * 
+ */
+export type TipoEjercicio = Prisma.TipoEjercicioModel
+/**
  * Model Respuesta
  * 
  */

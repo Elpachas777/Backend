@@ -57,6 +57,7 @@ export const ModelName = {
   Alumno: 'Alumno',
   Grupo: 'Grupo',
   Ejercicio: 'Ejercicio',
+  TipoEjercicio: 'TipoEjercicio',
   Respuesta: 'Respuesta'
 } as const
 
@@ -130,15 +131,23 @@ export type GrupoScalarFieldEnum = (typeof GrupoScalarFieldEnum)[keyof typeof Gr
 
 export const EjercicioScalarFieldEnum = {
   id_ejercicio: 'id_ejercicio',
-  nombre: 'nombre',
+  titulo: 'titulo',
   fecha_inicio: 'fecha_inicio',
   fecha_final: 'fecha_final',
-  tipo: 'tipo',
+  id_tipo: 'id_tipo',
   id_grupo: 'id_grupo',
   id_docente: 'id_docente'
 } as const
 
 export type EjercicioScalarFieldEnum = (typeof EjercicioScalarFieldEnum)[keyof typeof EjercicioScalarFieldEnum]
+
+
+export const TipoEjercicioScalarFieldEnum = {
+  id_tipo: 'id_tipo',
+  nombre: 'nombre'
+} as const
+
+export type TipoEjercicioScalarFieldEnum = (typeof TipoEjercicioScalarFieldEnum)[keyof typeof TipoEjercicioScalarFieldEnum]
 
 
 export const RespuestaScalarFieldEnum = {
@@ -202,11 +211,17 @@ export type GrupoOrderByRelevanceFieldEnum = (typeof GrupoOrderByRelevanceFieldE
 
 
 export const EjercicioOrderByRelevanceFieldEnum = {
-  nombre: 'nombre',
-  tipo: 'tipo'
+  titulo: 'titulo'
 } as const
 
 export type EjercicioOrderByRelevanceFieldEnum = (typeof EjercicioOrderByRelevanceFieldEnum)[keyof typeof EjercicioOrderByRelevanceFieldEnum]
+
+
+export const TipoEjercicioOrderByRelevanceFieldEnum = {
+  nombre: 'nombre'
+} as const
+
+export type TipoEjercicioOrderByRelevanceFieldEnum = (typeof TipoEjercicioOrderByRelevanceFieldEnum)[keyof typeof TipoEjercicioOrderByRelevanceFieldEnum]
 
 
 export const RespuestaOrderByRelevanceFieldEnum = {

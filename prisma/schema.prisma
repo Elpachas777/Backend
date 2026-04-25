@@ -36,7 +36,7 @@ model Administrador {
 model Docente {
   id_docente  Int     @id @default(autoincrement())
   correo      String  @unique
-  contraseña String
+  contraseña  String
   escuela     String
   autorizado  Boolean @default(false)
   bloqueado   Boolean @default(false)
@@ -72,16 +72,23 @@ model Grupo {
 
 model Ejercicio {
   id_ejercicio Int      @id @default(autoincrement())
-  nombre       String
+  titulo       String
   fecha_inicio DateTime
   fecha_final  DateTime
-  tipo         String
+  id_tipo      Int 
   id_grupo     Int
   id_docente   Int
 
+  tipo       TipoEjercicio @relation(fields: [id_tipo], references : [id_tipo])
   grupo      Grupo       @relation(fields: [id_grupo], references: [id_grupo])
   docente    Docente     @relation(fields: [id_docente], references: [id_docente])
   respuestas Respuesta[]
+}
+
+model TipoEjercicio {
+  id_tipo Int @id @default(autoincrement())
+  nombre String @unique
+  ejercicios Ejercicio[] 
 }
 
 model Respuesta {
