@@ -4,8 +4,8 @@ export const crearGrupo = ({ nombre, turno, id }) => {
   return prisma.grupo.create({
     data: {
       nombre_grupo: nombre,
-      turno: turno,
       id_docente: Number(id),
+      turno: turno,
     },
   });
 };

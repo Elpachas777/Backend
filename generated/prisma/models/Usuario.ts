@@ -201,8 +201,8 @@ export type UsuarioWhereInput = {
   nombres?: Prisma.StringFilter<"Usuario"> | string
   apellido?: Prisma.StringFilter<"Usuario"> | string
   administrador?: Prisma.XOR<Prisma.AdministradorNullableScalarRelationFilter, Prisma.AdministradorWhereInput> | null
-  docente?: Prisma.XOR<Prisma.DocenteNullableScalarRelationFilter, Prisma.DocenteWhereInput> | null
   alumno?: Prisma.XOR<Prisma.AlumnoNullableScalarRelationFilter, Prisma.AlumnoWhereInput> | null
+  docente?: Prisma.XOR<Prisma.DocenteNullableScalarRelationFilter, Prisma.DocenteWhereInput> | null
 }
 
 export type UsuarioOrderByWithRelationInput = {
@@ -210,8 +210,8 @@ export type UsuarioOrderByWithRelationInput = {
   nombres?: Prisma.SortOrder
   apellido?: Prisma.SortOrder
   administrador?: Prisma.AdministradorOrderByWithRelationInput
-  docente?: Prisma.DocenteOrderByWithRelationInput
   alumno?: Prisma.AlumnoOrderByWithRelationInput
+  docente?: Prisma.DocenteOrderByWithRelationInput
   _relevance?: Prisma.UsuarioOrderByRelevanceInput
 }
 
@@ -223,8 +223,8 @@ export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
   nombres?: Prisma.StringFilter<"Usuario"> | string
   apellido?: Prisma.StringFilter<"Usuario"> | string
   administrador?: Prisma.XOR<Prisma.AdministradorNullableScalarRelationFilter, Prisma.AdministradorWhereInput> | null
-  docente?: Prisma.XOR<Prisma.DocenteNullableScalarRelationFilter, Prisma.DocenteWhereInput> | null
   alumno?: Prisma.XOR<Prisma.AlumnoNullableScalarRelationFilter, Prisma.AlumnoWhereInput> | null
+  docente?: Prisma.XOR<Prisma.DocenteNullableScalarRelationFilter, Prisma.DocenteWhereInput> | null
 }, "id_usuario">
 
 export type UsuarioOrderByWithAggregationInput = {
@@ -251,8 +251,8 @@ export type UsuarioCreateInput = {
   nombres: string
   apellido: string
   administrador?: Prisma.AdministradorCreateNestedOneWithoutUsuarioInput
-  docente?: Prisma.DocenteCreateNestedOneWithoutUsuarioInput
   alumno?: Prisma.AlumnoCreateNestedOneWithoutUsuarioInput
+  docente?: Prisma.DocenteCreateNestedOneWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateInput = {
@@ -260,16 +260,16 @@ export type UsuarioUncheckedCreateInput = {
   nombres: string
   apellido: string
   administrador?: Prisma.AdministradorUncheckedCreateNestedOneWithoutUsuarioInput
-  docente?: Prisma.DocenteUncheckedCreateNestedOneWithoutUsuarioInput
   alumno?: Prisma.AlumnoUncheckedCreateNestedOneWithoutUsuarioInput
+  docente?: Prisma.DocenteUncheckedCreateNestedOneWithoutUsuarioInput
 }
 
 export type UsuarioUpdateInput = {
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
   administrador?: Prisma.AdministradorUpdateOneWithoutUsuarioNestedInput
-  docente?: Prisma.DocenteUpdateOneWithoutUsuarioNestedInput
   alumno?: Prisma.AlumnoUpdateOneWithoutUsuarioNestedInput
+  docente?: Prisma.DocenteUpdateOneWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateInput = {
@@ -277,8 +277,8 @@ export type UsuarioUncheckedUpdateInput = {
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
   administrador?: Prisma.AdministradorUncheckedUpdateOneWithoutUsuarioNestedInput
-  docente?: Prisma.DocenteUncheckedUpdateOneWithoutUsuarioNestedInput
   alumno?: Prisma.AlumnoUncheckedUpdateOneWithoutUsuarioNestedInput
+  docente?: Prisma.DocenteUncheckedUpdateOneWithoutUsuarioNestedInput
 }
 
 export type UsuarioCreateManyInput = {
@@ -392,16 +392,16 @@ export type UsuarioUpdateOneRequiredWithoutAlumnoNestedInput = {
 export type UsuarioCreateWithoutAdministradorInput = {
   nombres: string
   apellido: string
-  docente?: Prisma.DocenteCreateNestedOneWithoutUsuarioInput
   alumno?: Prisma.AlumnoCreateNestedOneWithoutUsuarioInput
+  docente?: Prisma.DocenteCreateNestedOneWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutAdministradorInput = {
   id_usuario?: number
   nombres: string
   apellido: string
-  docente?: Prisma.DocenteUncheckedCreateNestedOneWithoutUsuarioInput
   alumno?: Prisma.AlumnoUncheckedCreateNestedOneWithoutUsuarioInput
+  docente?: Prisma.DocenteUncheckedCreateNestedOneWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutAdministradorInput = {
@@ -423,16 +423,16 @@ export type UsuarioUpdateToOneWithWhereWithoutAdministradorInput = {
 export type UsuarioUpdateWithoutAdministradorInput = {
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
-  docente?: Prisma.DocenteUpdateOneWithoutUsuarioNestedInput
   alumno?: Prisma.AlumnoUpdateOneWithoutUsuarioNestedInput
+  docente?: Prisma.DocenteUpdateOneWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutAdministradorInput = {
   id_usuario?: Prisma.IntFieldUpdateOperationsInput | number
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
-  docente?: Prisma.DocenteUncheckedUpdateOneWithoutUsuarioNestedInput
   alumno?: Prisma.AlumnoUncheckedUpdateOneWithoutUsuarioNestedInput
+  docente?: Prisma.DocenteUncheckedUpdateOneWithoutUsuarioNestedInput
 }
 
 export type UsuarioCreateWithoutDocenteInput = {
@@ -534,8 +534,8 @@ export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   nombres?: boolean
   apellido?: boolean
   administrador?: boolean | Prisma.Usuario$administradorArgs<ExtArgs>
-  docente?: boolean | Prisma.Usuario$docenteArgs<ExtArgs>
   alumno?: boolean | Prisma.Usuario$alumnoArgs<ExtArgs>
+  docente?: boolean | Prisma.Usuario$docenteArgs<ExtArgs>
 }, ExtArgs["result"]["usuario"]>
 
 
@@ -549,16 +549,16 @@ export type UsuarioSelectScalar = {
 export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_usuario" | "nombres" | "apellido", ExtArgs["result"]["usuario"]>
 export type UsuarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   administrador?: boolean | Prisma.Usuario$administradorArgs<ExtArgs>
-  docente?: boolean | Prisma.Usuario$docenteArgs<ExtArgs>
   alumno?: boolean | Prisma.Usuario$alumnoArgs<ExtArgs>
+  docente?: boolean | Prisma.Usuario$docenteArgs<ExtArgs>
 }
 
 export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Usuario"
   objects: {
     administrador: Prisma.$AdministradorPayload<ExtArgs> | null
-    docente: Prisma.$DocentePayload<ExtArgs> | null
     alumno: Prisma.$AlumnoPayload<ExtArgs> | null
+    docente: Prisma.$DocentePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_usuario: number
@@ -905,8 +905,8 @@ readonly fields: UsuarioFieldRefs;
 export interface Prisma__UsuarioClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   administrador<T extends Prisma.Usuario$administradorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$administradorArgs<ExtArgs>>): Prisma.Prisma__AdministradorClient<runtime.Types.Result.GetResult<Prisma.$AdministradorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  docente<T extends Prisma.Usuario$docenteArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$docenteArgs<ExtArgs>>): Prisma.Prisma__DocenteClient<runtime.Types.Result.GetResult<Prisma.$DocentePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   alumno<T extends Prisma.Usuario$alumnoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$alumnoArgs<ExtArgs>>): Prisma.Prisma__AlumnoClient<runtime.Types.Result.GetResult<Prisma.$AlumnoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  docente<T extends Prisma.Usuario$docenteArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$docenteArgs<ExtArgs>>): Prisma.Prisma__DocenteClient<runtime.Types.Result.GetResult<Prisma.$DocentePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1301,25 +1301,6 @@ export type Usuario$administradorArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
- * Usuario.docente
- */
-export type Usuario$docenteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Docente
-   */
-  select?: Prisma.DocenteSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Docente
-   */
-  omit?: Prisma.DocenteOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DocenteInclude<ExtArgs> | null
-  where?: Prisma.DocenteWhereInput
-}
-
-/**
  * Usuario.alumno
  */
 export type Usuario$alumnoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1336,6 +1317,25 @@ export type Usuario$alumnoArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   include?: Prisma.AlumnoInclude<ExtArgs> | null
   where?: Prisma.AlumnoWhereInput
+}
+
+/**
+ * Usuario.docente
+ */
+export type Usuario$docenteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Docente
+   */
+  select?: Prisma.DocenteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Docente
+   */
+  omit?: Prisma.DocenteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DocenteInclude<ExtArgs> | null
+  where?: Prisma.DocenteWhereInput
 }
 
 /**

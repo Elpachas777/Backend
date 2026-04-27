@@ -208,8 +208,8 @@ export type AlumnoWhereInput = {
   id_alumno?: Prisma.IntFilter<"Alumno"> | number
   id_grupo?: Prisma.IntNullableFilter<"Alumno"> | number | null
   usuarioId?: Prisma.IntFilter<"Alumno"> | number
-  usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   grupo?: Prisma.XOR<Prisma.GrupoNullableScalarRelationFilter, Prisma.GrupoWhereInput> | null
+  usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   respuestas?: Prisma.RespuestaListRelationFilter
 }
 
@@ -217,8 +217,8 @@ export type AlumnoOrderByWithRelationInput = {
   id_alumno?: Prisma.SortOrder
   id_grupo?: Prisma.SortOrderInput | Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
-  usuario?: Prisma.UsuarioOrderByWithRelationInput
   grupo?: Prisma.GrupoOrderByWithRelationInput
+  usuario?: Prisma.UsuarioOrderByWithRelationInput
   respuestas?: Prisma.RespuestaOrderByRelationAggregateInput
 }
 
@@ -229,8 +229,8 @@ export type AlumnoWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AlumnoWhereInput[]
   NOT?: Prisma.AlumnoWhereInput | Prisma.AlumnoWhereInput[]
   id_grupo?: Prisma.IntNullableFilter<"Alumno"> | number | null
-  usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   grupo?: Prisma.XOR<Prisma.GrupoNullableScalarRelationFilter, Prisma.GrupoWhereInput> | null
+  usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   respuestas?: Prisma.RespuestaListRelationFilter
 }, "id_alumno" | "usuarioId">
 
@@ -255,8 +255,8 @@ export type AlumnoScalarWhereWithAggregatesInput = {
 }
 
 export type AlumnoCreateInput = {
-  usuario: Prisma.UsuarioCreateNestedOneWithoutAlumnoInput
   grupo?: Prisma.GrupoCreateNestedOneWithoutAlumnosInput
+  usuario: Prisma.UsuarioCreateNestedOneWithoutAlumnoInput
   respuestas?: Prisma.RespuestaCreateNestedManyWithoutAlumnoInput
 }
 
@@ -268,8 +268,8 @@ export type AlumnoUncheckedCreateInput = {
 }
 
 export type AlumnoUpdateInput = {
-  usuario?: Prisma.UsuarioUpdateOneRequiredWithoutAlumnoNestedInput
   grupo?: Prisma.GrupoUpdateOneWithoutAlumnosNestedInput
+  usuario?: Prisma.UsuarioUpdateOneRequiredWithoutAlumnoNestedInput
   respuestas?: Prisma.RespuestaUpdateManyWithoutAlumnoNestedInput
 }
 
@@ -527,8 +527,8 @@ export type AlumnoScalarWhereInput = {
 }
 
 export type AlumnoCreateWithoutRespuestasInput = {
-  usuario: Prisma.UsuarioCreateNestedOneWithoutAlumnoInput
   grupo?: Prisma.GrupoCreateNestedOneWithoutAlumnosInput
+  usuario: Prisma.UsuarioCreateNestedOneWithoutAlumnoInput
 }
 
 export type AlumnoUncheckedCreateWithoutRespuestasInput = {
@@ -554,8 +554,8 @@ export type AlumnoUpdateToOneWithWhereWithoutRespuestasInput = {
 }
 
 export type AlumnoUpdateWithoutRespuestasInput = {
-  usuario?: Prisma.UsuarioUpdateOneRequiredWithoutAlumnoNestedInput
   grupo?: Prisma.GrupoUpdateOneWithoutAlumnosNestedInput
+  usuario?: Prisma.UsuarioUpdateOneRequiredWithoutAlumnoNestedInput
 }
 
 export type AlumnoUncheckedUpdateWithoutRespuestasInput = {
@@ -620,8 +620,8 @@ export type AlumnoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id_alumno?: boolean
   id_grupo?: boolean
   usuarioId?: boolean
-  usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   grupo?: boolean | Prisma.Alumno$grupoArgs<ExtArgs>
+  usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   respuestas?: boolean | Prisma.Alumno$respuestasArgs<ExtArgs>
   _count?: boolean | Prisma.AlumnoCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["alumno"]>
@@ -636,8 +636,8 @@ export type AlumnoSelectScalar = {
 
 export type AlumnoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_alumno" | "id_grupo" | "usuarioId", ExtArgs["result"]["alumno"]>
 export type AlumnoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   grupo?: boolean | Prisma.Alumno$grupoArgs<ExtArgs>
+  usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   respuestas?: boolean | Prisma.Alumno$respuestasArgs<ExtArgs>
   _count?: boolean | Prisma.AlumnoCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -645,8 +645,8 @@ export type AlumnoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type $AlumnoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Alumno"
   objects: {
-    usuario: Prisma.$UsuarioPayload<ExtArgs>
     grupo: Prisma.$GrupoPayload<ExtArgs> | null
+    usuario: Prisma.$UsuarioPayload<ExtArgs>
     respuestas: Prisma.$RespuestaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -993,8 +993,8 @@ readonly fields: AlumnoFieldRefs;
  */
 export interface Prisma__AlumnoClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  usuario<T extends Prisma.UsuarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsuarioDefaultArgs<ExtArgs>>): Prisma.Prisma__UsuarioClient<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   grupo<T extends Prisma.Alumno$grupoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Alumno$grupoArgs<ExtArgs>>): Prisma.Prisma__GrupoClient<runtime.Types.Result.GetResult<Prisma.$GrupoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  usuario<T extends Prisma.UsuarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsuarioDefaultArgs<ExtArgs>>): Prisma.Prisma__UsuarioClient<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   respuestas<T extends Prisma.Alumno$respuestasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Alumno$respuestasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RespuestaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
