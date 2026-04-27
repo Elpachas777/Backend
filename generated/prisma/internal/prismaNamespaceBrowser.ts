@@ -131,12 +131,13 @@ export type GrupoScalarFieldEnum = (typeof GrupoScalarFieldEnum)[keyof typeof Gr
 
 export const EjercicioScalarFieldEnum = {
   id_ejercicio: 'id_ejercicio',
-  titulo: 'titulo',
   fecha_inicio: 'fecha_inicio',
   fecha_final: 'fecha_final',
-  id_tipo: 'id_tipo',
   id_grupo: 'id_grupo',
-  id_docente: 'id_docente'
+  id_docente: 'id_docente',
+  id_tipo: 'id_tipo',
+  titulo: 'titulo',
+  contenido: 'contenido'
 } as const
 
 export type EjercicioScalarFieldEnum = (typeof EjercicioScalarFieldEnum)[keyof typeof EjercicioScalarFieldEnum]
@@ -167,6 +168,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const UsuarioOrderByRelevanceFieldEnum = {
@@ -208,6 +216,23 @@ export const GrupoOrderByRelevanceFieldEnum = {
 } as const
 
 export type GrupoOrderByRelevanceFieldEnum = (typeof GrupoOrderByRelevanceFieldEnum)[keyof typeof GrupoOrderByRelevanceFieldEnum]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
 export const EjercicioOrderByRelevanceFieldEnum = {

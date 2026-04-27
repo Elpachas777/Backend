@@ -28,92 +28,94 @@ export type AggregateEjercicio = {
 
 export type EjercicioAvgAggregateOutputType = {
   id_ejercicio: number | null
-  id_tipo: number | null
   id_grupo: number | null
   id_docente: number | null
+  id_tipo: number | null
 }
 
 export type EjercicioSumAggregateOutputType = {
   id_ejercicio: number | null
-  id_tipo: number | null
   id_grupo: number | null
   id_docente: number | null
+  id_tipo: number | null
 }
 
 export type EjercicioMinAggregateOutputType = {
   id_ejercicio: number | null
-  titulo: string | null
   fecha_inicio: Date | null
   fecha_final: Date | null
-  id_tipo: number | null
   id_grupo: number | null
   id_docente: number | null
+  id_tipo: number | null
+  titulo: string | null
 }
 
 export type EjercicioMaxAggregateOutputType = {
   id_ejercicio: number | null
-  titulo: string | null
   fecha_inicio: Date | null
   fecha_final: Date | null
-  id_tipo: number | null
   id_grupo: number | null
   id_docente: number | null
+  id_tipo: number | null
+  titulo: string | null
 }
 
 export type EjercicioCountAggregateOutputType = {
   id_ejercicio: number
-  titulo: number
   fecha_inicio: number
   fecha_final: number
-  id_tipo: number
   id_grupo: number
   id_docente: number
+  id_tipo: number
+  titulo: number
+  contenido: number
   _all: number
 }
 
 
 export type EjercicioAvgAggregateInputType = {
   id_ejercicio?: true
-  id_tipo?: true
   id_grupo?: true
   id_docente?: true
+  id_tipo?: true
 }
 
 export type EjercicioSumAggregateInputType = {
   id_ejercicio?: true
-  id_tipo?: true
   id_grupo?: true
   id_docente?: true
+  id_tipo?: true
 }
 
 export type EjercicioMinAggregateInputType = {
   id_ejercicio?: true
-  titulo?: true
   fecha_inicio?: true
   fecha_final?: true
-  id_tipo?: true
   id_grupo?: true
   id_docente?: true
+  id_tipo?: true
+  titulo?: true
 }
 
 export type EjercicioMaxAggregateInputType = {
   id_ejercicio?: true
-  titulo?: true
   fecha_inicio?: true
   fecha_final?: true
-  id_tipo?: true
   id_grupo?: true
   id_docente?: true
+  id_tipo?: true
+  titulo?: true
 }
 
 export type EjercicioCountAggregateInputType = {
   id_ejercicio?: true
-  titulo?: true
   fecha_inicio?: true
   fecha_final?: true
-  id_tipo?: true
   id_grupo?: true
   id_docente?: true
+  id_tipo?: true
+  titulo?: true
+  contenido?: true
   _all?: true
 }
 
@@ -205,12 +207,13 @@ export type EjercicioGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type EjercicioGroupByOutputType = {
   id_ejercicio: number
-  titulo: string
   fecha_inicio: Date
   fecha_final: Date
-  id_tipo: number
   id_grupo: number
   id_docente: number
+  id_tipo: number
+  titulo: string
+  contenido: runtime.JsonValue
   _count: EjercicioCountAggregateOutputType | null
   _avg: EjercicioAvgAggregateOutputType | null
   _sum: EjercicioSumAggregateOutputType | null
@@ -238,29 +241,31 @@ export type EjercicioWhereInput = {
   OR?: Prisma.EjercicioWhereInput[]
   NOT?: Prisma.EjercicioWhereInput | Prisma.EjercicioWhereInput[]
   id_ejercicio?: Prisma.IntFilter<"Ejercicio"> | number
-  titulo?: Prisma.StringFilter<"Ejercicio"> | string
   fecha_inicio?: Prisma.DateTimeFilter<"Ejercicio"> | Date | string
   fecha_final?: Prisma.DateTimeFilter<"Ejercicio"> | Date | string
-  id_tipo?: Prisma.IntFilter<"Ejercicio"> | number
   id_grupo?: Prisma.IntFilter<"Ejercicio"> | number
   id_docente?: Prisma.IntFilter<"Ejercicio"> | number
-  tipo?: Prisma.XOR<Prisma.TipoEjercicioScalarRelationFilter, Prisma.TipoEjercicioWhereInput>
-  grupo?: Prisma.XOR<Prisma.GrupoScalarRelationFilter, Prisma.GrupoWhereInput>
+  id_tipo?: Prisma.IntFilter<"Ejercicio"> | number
+  titulo?: Prisma.StringFilter<"Ejercicio"> | string
+  contenido?: Prisma.JsonFilter<"Ejercicio">
   docente?: Prisma.XOR<Prisma.DocenteScalarRelationFilter, Prisma.DocenteWhereInput>
+  grupo?: Prisma.XOR<Prisma.GrupoScalarRelationFilter, Prisma.GrupoWhereInput>
+  tipo?: Prisma.XOR<Prisma.TipoEjercicioScalarRelationFilter, Prisma.TipoEjercicioWhereInput>
   respuestas?: Prisma.RespuestaListRelationFilter
 }
 
 export type EjercicioOrderByWithRelationInput = {
   id_ejercicio?: Prisma.SortOrder
-  titulo?: Prisma.SortOrder
   fecha_inicio?: Prisma.SortOrder
   fecha_final?: Prisma.SortOrder
-  id_tipo?: Prisma.SortOrder
   id_grupo?: Prisma.SortOrder
   id_docente?: Prisma.SortOrder
-  tipo?: Prisma.TipoEjercicioOrderByWithRelationInput
-  grupo?: Prisma.GrupoOrderByWithRelationInput
+  id_tipo?: Prisma.SortOrder
+  titulo?: Prisma.SortOrder
+  contenido?: Prisma.SortOrder
   docente?: Prisma.DocenteOrderByWithRelationInput
+  grupo?: Prisma.GrupoOrderByWithRelationInput
+  tipo?: Prisma.TipoEjercicioOrderByWithRelationInput
   respuestas?: Prisma.RespuestaOrderByRelationAggregateInput
   _relevance?: Prisma.EjercicioOrderByRelevanceInput
 }
@@ -270,26 +275,28 @@ export type EjercicioWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.EjercicioWhereInput | Prisma.EjercicioWhereInput[]
   OR?: Prisma.EjercicioWhereInput[]
   NOT?: Prisma.EjercicioWhereInput | Prisma.EjercicioWhereInput[]
-  titulo?: Prisma.StringFilter<"Ejercicio"> | string
   fecha_inicio?: Prisma.DateTimeFilter<"Ejercicio"> | Date | string
   fecha_final?: Prisma.DateTimeFilter<"Ejercicio"> | Date | string
-  id_tipo?: Prisma.IntFilter<"Ejercicio"> | number
   id_grupo?: Prisma.IntFilter<"Ejercicio"> | number
   id_docente?: Prisma.IntFilter<"Ejercicio"> | number
-  tipo?: Prisma.XOR<Prisma.TipoEjercicioScalarRelationFilter, Prisma.TipoEjercicioWhereInput>
-  grupo?: Prisma.XOR<Prisma.GrupoScalarRelationFilter, Prisma.GrupoWhereInput>
+  id_tipo?: Prisma.IntFilter<"Ejercicio"> | number
+  titulo?: Prisma.StringFilter<"Ejercicio"> | string
+  contenido?: Prisma.JsonFilter<"Ejercicio">
   docente?: Prisma.XOR<Prisma.DocenteScalarRelationFilter, Prisma.DocenteWhereInput>
+  grupo?: Prisma.XOR<Prisma.GrupoScalarRelationFilter, Prisma.GrupoWhereInput>
+  tipo?: Prisma.XOR<Prisma.TipoEjercicioScalarRelationFilter, Prisma.TipoEjercicioWhereInput>
   respuestas?: Prisma.RespuestaListRelationFilter
 }, "id_ejercicio">
 
 export type EjercicioOrderByWithAggregationInput = {
   id_ejercicio?: Prisma.SortOrder
-  titulo?: Prisma.SortOrder
   fecha_inicio?: Prisma.SortOrder
   fecha_final?: Prisma.SortOrder
-  id_tipo?: Prisma.SortOrder
   id_grupo?: Prisma.SortOrder
   id_docente?: Prisma.SortOrder
+  id_tipo?: Prisma.SortOrder
+  titulo?: Prisma.SortOrder
+  contenido?: Prisma.SortOrder
   _count?: Prisma.EjercicioCountOrderByAggregateInput
   _avg?: Prisma.EjercicioAvgOrderByAggregateInput
   _max?: Prisma.EjercicioMaxOrderByAggregateInput
@@ -302,80 +309,88 @@ export type EjercicioScalarWhereWithAggregatesInput = {
   OR?: Prisma.EjercicioScalarWhereWithAggregatesInput[]
   NOT?: Prisma.EjercicioScalarWhereWithAggregatesInput | Prisma.EjercicioScalarWhereWithAggregatesInput[]
   id_ejercicio?: Prisma.IntWithAggregatesFilter<"Ejercicio"> | number
-  titulo?: Prisma.StringWithAggregatesFilter<"Ejercicio"> | string
   fecha_inicio?: Prisma.DateTimeWithAggregatesFilter<"Ejercicio"> | Date | string
   fecha_final?: Prisma.DateTimeWithAggregatesFilter<"Ejercicio"> | Date | string
-  id_tipo?: Prisma.IntWithAggregatesFilter<"Ejercicio"> | number
   id_grupo?: Prisma.IntWithAggregatesFilter<"Ejercicio"> | number
   id_docente?: Prisma.IntWithAggregatesFilter<"Ejercicio"> | number
+  id_tipo?: Prisma.IntWithAggregatesFilter<"Ejercicio"> | number
+  titulo?: Prisma.StringWithAggregatesFilter<"Ejercicio"> | string
+  contenido?: Prisma.JsonWithAggregatesFilter<"Ejercicio">
 }
 
 export type EjercicioCreateInput = {
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  tipo: Prisma.TipoEjercicioCreateNestedOneWithoutEjerciciosInput
-  grupo: Prisma.GrupoCreateNestedOneWithoutEjerciciosInput
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
   docente: Prisma.DocenteCreateNestedOneWithoutEjerciciosInput
+  grupo: Prisma.GrupoCreateNestedOneWithoutEjerciciosInput
+  tipo: Prisma.TipoEjercicioCreateNestedOneWithoutEjerciciosInput
   respuestas?: Prisma.RespuestaCreateNestedManyWithoutEjercicioInput
 }
 
 export type EjercicioUncheckedCreateInput = {
   id_ejercicio?: number
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  id_tipo: number
   id_grupo: number
   id_docente: number
+  id_tipo: number
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
   respuestas?: Prisma.RespuestaUncheckedCreateNestedManyWithoutEjercicioInput
 }
 
 export type EjercicioUpdateInput = {
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tipo?: Prisma.TipoEjercicioUpdateOneRequiredWithoutEjerciciosNestedInput
-  grupo?: Prisma.GrupoUpdateOneRequiredWithoutEjerciciosNestedInput
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   docente?: Prisma.DocenteUpdateOneRequiredWithoutEjerciciosNestedInput
+  grupo?: Prisma.GrupoUpdateOneRequiredWithoutEjerciciosNestedInput
+  tipo?: Prisma.TipoEjercicioUpdateOneRequiredWithoutEjerciciosNestedInput
   respuestas?: Prisma.RespuestaUpdateManyWithoutEjercicioNestedInput
 }
 
 export type EjercicioUncheckedUpdateInput = {
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
   id_grupo?: Prisma.IntFieldUpdateOperationsInput | number
   id_docente?: Prisma.IntFieldUpdateOperationsInput | number
+  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   respuestas?: Prisma.RespuestaUncheckedUpdateManyWithoutEjercicioNestedInput
 }
 
 export type EjercicioCreateManyInput = {
   id_ejercicio?: number
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  id_tipo: number
   id_grupo: number
   id_docente: number
+  id_tipo: number
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type EjercicioUpdateManyMutationInput = {
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type EjercicioUncheckedUpdateManyInput = {
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
   id_grupo?: Prisma.IntFieldUpdateOperationsInput | number
   id_docente?: Prisma.IntFieldUpdateOperationsInput | number
+  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type EjercicioListRelationFilter = {
@@ -396,46 +411,47 @@ export type EjercicioOrderByRelevanceInput = {
 
 export type EjercicioCountOrderByAggregateInput = {
   id_ejercicio?: Prisma.SortOrder
-  titulo?: Prisma.SortOrder
   fecha_inicio?: Prisma.SortOrder
   fecha_final?: Prisma.SortOrder
-  id_tipo?: Prisma.SortOrder
   id_grupo?: Prisma.SortOrder
   id_docente?: Prisma.SortOrder
+  id_tipo?: Prisma.SortOrder
+  titulo?: Prisma.SortOrder
+  contenido?: Prisma.SortOrder
 }
 
 export type EjercicioAvgOrderByAggregateInput = {
   id_ejercicio?: Prisma.SortOrder
-  id_tipo?: Prisma.SortOrder
   id_grupo?: Prisma.SortOrder
   id_docente?: Prisma.SortOrder
+  id_tipo?: Prisma.SortOrder
 }
 
 export type EjercicioMaxOrderByAggregateInput = {
   id_ejercicio?: Prisma.SortOrder
-  titulo?: Prisma.SortOrder
   fecha_inicio?: Prisma.SortOrder
   fecha_final?: Prisma.SortOrder
-  id_tipo?: Prisma.SortOrder
   id_grupo?: Prisma.SortOrder
   id_docente?: Prisma.SortOrder
+  id_tipo?: Prisma.SortOrder
+  titulo?: Prisma.SortOrder
 }
 
 export type EjercicioMinOrderByAggregateInput = {
   id_ejercicio?: Prisma.SortOrder
-  titulo?: Prisma.SortOrder
   fecha_inicio?: Prisma.SortOrder
   fecha_final?: Prisma.SortOrder
-  id_tipo?: Prisma.SortOrder
   id_grupo?: Prisma.SortOrder
   id_docente?: Prisma.SortOrder
+  id_tipo?: Prisma.SortOrder
+  titulo?: Prisma.SortOrder
 }
 
 export type EjercicioSumOrderByAggregateInput = {
   id_ejercicio?: Prisma.SortOrder
-  id_tipo?: Prisma.SortOrder
   id_grupo?: Prisma.SortOrder
   id_docente?: Prisma.SortOrder
+  id_tipo?: Prisma.SortOrder
 }
 
 export type EjercicioScalarRelationFilter = {
@@ -588,21 +604,23 @@ export type EjercicioUpdateOneRequiredWithoutRespuestasNestedInput = {
 }
 
 export type EjercicioCreateWithoutDocenteInput = {
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  tipo: Prisma.TipoEjercicioCreateNestedOneWithoutEjerciciosInput
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
   grupo: Prisma.GrupoCreateNestedOneWithoutEjerciciosInput
+  tipo: Prisma.TipoEjercicioCreateNestedOneWithoutEjerciciosInput
   respuestas?: Prisma.RespuestaCreateNestedManyWithoutEjercicioInput
 }
 
 export type EjercicioUncheckedCreateWithoutDocenteInput = {
   id_ejercicio?: number
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  id_tipo: number
   id_grupo: number
+  id_tipo: number
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
   respuestas?: Prisma.RespuestaUncheckedCreateNestedManyWithoutEjercicioInput
 }
 
@@ -637,30 +655,33 @@ export type EjercicioScalarWhereInput = {
   OR?: Prisma.EjercicioScalarWhereInput[]
   NOT?: Prisma.EjercicioScalarWhereInput | Prisma.EjercicioScalarWhereInput[]
   id_ejercicio?: Prisma.IntFilter<"Ejercicio"> | number
-  titulo?: Prisma.StringFilter<"Ejercicio"> | string
   fecha_inicio?: Prisma.DateTimeFilter<"Ejercicio"> | Date | string
   fecha_final?: Prisma.DateTimeFilter<"Ejercicio"> | Date | string
-  id_tipo?: Prisma.IntFilter<"Ejercicio"> | number
   id_grupo?: Prisma.IntFilter<"Ejercicio"> | number
   id_docente?: Prisma.IntFilter<"Ejercicio"> | number
+  id_tipo?: Prisma.IntFilter<"Ejercicio"> | number
+  titulo?: Prisma.StringFilter<"Ejercicio"> | string
+  contenido?: Prisma.JsonFilter<"Ejercicio">
 }
 
 export type EjercicioCreateWithoutGrupoInput = {
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  tipo: Prisma.TipoEjercicioCreateNestedOneWithoutEjerciciosInput
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
   docente: Prisma.DocenteCreateNestedOneWithoutEjerciciosInput
+  tipo: Prisma.TipoEjercicioCreateNestedOneWithoutEjerciciosInput
   respuestas?: Prisma.RespuestaCreateNestedManyWithoutEjercicioInput
 }
 
 export type EjercicioUncheckedCreateWithoutGrupoInput = {
   id_ejercicio?: number
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  id_tipo: number
   id_docente: number
+  id_tipo: number
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
   respuestas?: Prisma.RespuestaUncheckedCreateNestedManyWithoutEjercicioInput
 }
 
@@ -691,21 +712,23 @@ export type EjercicioUpdateManyWithWhereWithoutGrupoInput = {
 }
 
 export type EjercicioCreateWithoutTipoInput = {
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  grupo: Prisma.GrupoCreateNestedOneWithoutEjerciciosInput
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
   docente: Prisma.DocenteCreateNestedOneWithoutEjerciciosInput
+  grupo: Prisma.GrupoCreateNestedOneWithoutEjerciciosInput
   respuestas?: Prisma.RespuestaCreateNestedManyWithoutEjercicioInput
 }
 
 export type EjercicioUncheckedCreateWithoutTipoInput = {
   id_ejercicio?: number
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
   id_grupo: number
   id_docente: number
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
   respuestas?: Prisma.RespuestaUncheckedCreateNestedManyWithoutEjercicioInput
 }
 
@@ -736,22 +759,24 @@ export type EjercicioUpdateManyWithWhereWithoutTipoInput = {
 }
 
 export type EjercicioCreateWithoutRespuestasInput = {
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  tipo: Prisma.TipoEjercicioCreateNestedOneWithoutEjerciciosInput
-  grupo: Prisma.GrupoCreateNestedOneWithoutEjerciciosInput
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
   docente: Prisma.DocenteCreateNestedOneWithoutEjerciciosInput
+  grupo: Prisma.GrupoCreateNestedOneWithoutEjerciciosInput
+  tipo: Prisma.TipoEjercicioCreateNestedOneWithoutEjerciciosInput
 }
 
 export type EjercicioUncheckedCreateWithoutRespuestasInput = {
   id_ejercicio?: number
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  id_tipo: number
   id_grupo: number
   id_docente: number
+  id_tipo: number
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type EjercicioCreateOrConnectWithoutRespuestasInput = {
@@ -771,133 +796,147 @@ export type EjercicioUpdateToOneWithWhereWithoutRespuestasInput = {
 }
 
 export type EjercicioUpdateWithoutRespuestasInput = {
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tipo?: Prisma.TipoEjercicioUpdateOneRequiredWithoutEjerciciosNestedInput
-  grupo?: Prisma.GrupoUpdateOneRequiredWithoutEjerciciosNestedInput
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   docente?: Prisma.DocenteUpdateOneRequiredWithoutEjerciciosNestedInput
+  grupo?: Prisma.GrupoUpdateOneRequiredWithoutEjerciciosNestedInput
+  tipo?: Prisma.TipoEjercicioUpdateOneRequiredWithoutEjerciciosNestedInput
 }
 
 export type EjercicioUncheckedUpdateWithoutRespuestasInput = {
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
   id_grupo?: Prisma.IntFieldUpdateOperationsInput | number
   id_docente?: Prisma.IntFieldUpdateOperationsInput | number
+  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type EjercicioCreateManyDocenteInput = {
   id_ejercicio?: number
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  id_tipo: number
   id_grupo: number
+  id_tipo: number
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type EjercicioUpdateWithoutDocenteInput = {
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tipo?: Prisma.TipoEjercicioUpdateOneRequiredWithoutEjerciciosNestedInput
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   grupo?: Prisma.GrupoUpdateOneRequiredWithoutEjerciciosNestedInput
+  tipo?: Prisma.TipoEjercicioUpdateOneRequiredWithoutEjerciciosNestedInput
   respuestas?: Prisma.RespuestaUpdateManyWithoutEjercicioNestedInput
 }
 
 export type EjercicioUncheckedUpdateWithoutDocenteInput = {
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
   id_grupo?: Prisma.IntFieldUpdateOperationsInput | number
+  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   respuestas?: Prisma.RespuestaUncheckedUpdateManyWithoutEjercicioNestedInput
 }
 
 export type EjercicioUncheckedUpdateManyWithoutDocenteInput = {
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
   id_grupo?: Prisma.IntFieldUpdateOperationsInput | number
+  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type EjercicioCreateManyGrupoInput = {
   id_ejercicio?: number
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
-  id_tipo: number
   id_docente: number
+  id_tipo: number
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type EjercicioUpdateWithoutGrupoInput = {
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tipo?: Prisma.TipoEjercicioUpdateOneRequiredWithoutEjerciciosNestedInput
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   docente?: Prisma.DocenteUpdateOneRequiredWithoutEjerciciosNestedInput
+  tipo?: Prisma.TipoEjercicioUpdateOneRequiredWithoutEjerciciosNestedInput
   respuestas?: Prisma.RespuestaUpdateManyWithoutEjercicioNestedInput
 }
 
 export type EjercicioUncheckedUpdateWithoutGrupoInput = {
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
   id_docente?: Prisma.IntFieldUpdateOperationsInput | number
+  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   respuestas?: Prisma.RespuestaUncheckedUpdateManyWithoutEjercicioNestedInput
 }
 
 export type EjercicioUncheckedUpdateManyWithoutGrupoInput = {
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
   id_docente?: Prisma.IntFieldUpdateOperationsInput | number
+  id_tipo?: Prisma.IntFieldUpdateOperationsInput | number
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type EjercicioCreateManyTipoInput = {
   id_ejercicio?: number
-  titulo: string
   fecha_inicio: Date | string
   fecha_final: Date | string
   id_grupo: number
   id_docente: number
+  titulo: string
+  contenido: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type EjercicioUpdateWithoutTipoInput = {
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  grupo?: Prisma.GrupoUpdateOneRequiredWithoutEjerciciosNestedInput
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   docente?: Prisma.DocenteUpdateOneRequiredWithoutEjerciciosNestedInput
+  grupo?: Prisma.GrupoUpdateOneRequiredWithoutEjerciciosNestedInput
   respuestas?: Prisma.RespuestaUpdateManyWithoutEjercicioNestedInput
 }
 
 export type EjercicioUncheckedUpdateWithoutTipoInput = {
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_grupo?: Prisma.IntFieldUpdateOperationsInput | number
   id_docente?: Prisma.IntFieldUpdateOperationsInput | number
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   respuestas?: Prisma.RespuestaUncheckedUpdateManyWithoutEjercicioNestedInput
 }
 
 export type EjercicioUncheckedUpdateManyWithoutTipoInput = {
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
-  titulo?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_inicio?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fecha_final?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   id_grupo?: Prisma.IntFieldUpdateOperationsInput | number
   id_docente?: Prisma.IntFieldUpdateOperationsInput | number
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  contenido?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 
@@ -933,15 +972,16 @@ export type EjercicioCountOutputTypeCountRespuestasArgs<ExtArgs extends runtime.
 
 export type EjercicioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_ejercicio?: boolean
-  titulo?: boolean
   fecha_inicio?: boolean
   fecha_final?: boolean
-  id_tipo?: boolean
   id_grupo?: boolean
   id_docente?: boolean
-  tipo?: boolean | Prisma.TipoEjercicioDefaultArgs<ExtArgs>
-  grupo?: boolean | Prisma.GrupoDefaultArgs<ExtArgs>
+  id_tipo?: boolean
+  titulo?: boolean
+  contenido?: boolean
   docente?: boolean | Prisma.DocenteDefaultArgs<ExtArgs>
+  grupo?: boolean | Prisma.GrupoDefaultArgs<ExtArgs>
+  tipo?: boolean | Prisma.TipoEjercicioDefaultArgs<ExtArgs>
   respuestas?: boolean | Prisma.Ejercicio$respuestasArgs<ExtArgs>
   _count?: boolean | Prisma.EjercicioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ejercicio"]>
@@ -950,19 +990,20 @@ export type EjercicioSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type EjercicioSelectScalar = {
   id_ejercicio?: boolean
-  titulo?: boolean
   fecha_inicio?: boolean
   fecha_final?: boolean
-  id_tipo?: boolean
   id_grupo?: boolean
   id_docente?: boolean
+  id_tipo?: boolean
+  titulo?: boolean
+  contenido?: boolean
 }
 
-export type EjercicioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_ejercicio" | "titulo" | "fecha_inicio" | "fecha_final" | "id_tipo" | "id_grupo" | "id_docente", ExtArgs["result"]["ejercicio"]>
+export type EjercicioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_ejercicio" | "fecha_inicio" | "fecha_final" | "id_grupo" | "id_docente" | "id_tipo" | "titulo" | "contenido", ExtArgs["result"]["ejercicio"]>
 export type EjercicioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tipo?: boolean | Prisma.TipoEjercicioDefaultArgs<ExtArgs>
-  grupo?: boolean | Prisma.GrupoDefaultArgs<ExtArgs>
   docente?: boolean | Prisma.DocenteDefaultArgs<ExtArgs>
+  grupo?: boolean | Prisma.GrupoDefaultArgs<ExtArgs>
+  tipo?: boolean | Prisma.TipoEjercicioDefaultArgs<ExtArgs>
   respuestas?: boolean | Prisma.Ejercicio$respuestasArgs<ExtArgs>
   _count?: boolean | Prisma.EjercicioCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -970,19 +1011,20 @@ export type EjercicioInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type $EjercicioPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Ejercicio"
   objects: {
-    tipo: Prisma.$TipoEjercicioPayload<ExtArgs>
-    grupo: Prisma.$GrupoPayload<ExtArgs>
     docente: Prisma.$DocentePayload<ExtArgs>
+    grupo: Prisma.$GrupoPayload<ExtArgs>
+    tipo: Prisma.$TipoEjercicioPayload<ExtArgs>
     respuestas: Prisma.$RespuestaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_ejercicio: number
-    titulo: string
     fecha_inicio: Date
     fecha_final: Date
-    id_tipo: number
     id_grupo: number
     id_docente: number
+    id_tipo: number
+    titulo: string
+    contenido: runtime.JsonValue
   }, ExtArgs["result"]["ejercicio"]>
   composites: {}
 }
@@ -1323,9 +1365,9 @@ readonly fields: EjercicioFieldRefs;
  */
 export interface Prisma__EjercicioClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  tipo<T extends Prisma.TipoEjercicioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TipoEjercicioDefaultArgs<ExtArgs>>): Prisma.Prisma__TipoEjercicioClient<runtime.Types.Result.GetResult<Prisma.$TipoEjercicioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  grupo<T extends Prisma.GrupoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GrupoDefaultArgs<ExtArgs>>): Prisma.Prisma__GrupoClient<runtime.Types.Result.GetResult<Prisma.$GrupoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   docente<T extends Prisma.DocenteDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DocenteDefaultArgs<ExtArgs>>): Prisma.Prisma__DocenteClient<runtime.Types.Result.GetResult<Prisma.$DocentePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  grupo<T extends Prisma.GrupoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GrupoDefaultArgs<ExtArgs>>): Prisma.Prisma__GrupoClient<runtime.Types.Result.GetResult<Prisma.$GrupoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tipo<T extends Prisma.TipoEjercicioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TipoEjercicioDefaultArgs<ExtArgs>>): Prisma.Prisma__TipoEjercicioClient<runtime.Types.Result.GetResult<Prisma.$TipoEjercicioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   respuestas<T extends Prisma.Ejercicio$respuestasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ejercicio$respuestasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RespuestaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1357,12 +1399,13 @@ export interface Prisma__EjercicioClient<T, Null = never, ExtArgs extends runtim
  */
 export interface EjercicioFieldRefs {
   readonly id_ejercicio: Prisma.FieldRef<"Ejercicio", 'Int'>
-  readonly titulo: Prisma.FieldRef<"Ejercicio", 'String'>
   readonly fecha_inicio: Prisma.FieldRef<"Ejercicio", 'DateTime'>
   readonly fecha_final: Prisma.FieldRef<"Ejercicio", 'DateTime'>
-  readonly id_tipo: Prisma.FieldRef<"Ejercicio", 'Int'>
   readonly id_grupo: Prisma.FieldRef<"Ejercicio", 'Int'>
   readonly id_docente: Prisma.FieldRef<"Ejercicio", 'Int'>
+  readonly id_tipo: Prisma.FieldRef<"Ejercicio", 'Int'>
+  readonly titulo: Prisma.FieldRef<"Ejercicio", 'String'>
+  readonly contenido: Prisma.FieldRef<"Ejercicio", 'Json'>
 }
     
 

@@ -237,8 +237,8 @@ export type DocenteWhereInput = {
   bloqueado?: Prisma.BoolFilter<"Docente"> | boolean
   usuarioId?: Prisma.IntFilter<"Docente"> | number
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
-  grupos?: Prisma.GrupoListRelationFilter
   ejercicios?: Prisma.EjercicioListRelationFilter
+  grupos?: Prisma.GrupoListRelationFilter
 }
 
 export type DocenteOrderByWithRelationInput = {
@@ -250,8 +250,8 @@ export type DocenteOrderByWithRelationInput = {
   bloqueado?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
   usuario?: Prisma.UsuarioOrderByWithRelationInput
-  grupos?: Prisma.GrupoOrderByRelationAggregateInput
   ejercicios?: Prisma.EjercicioOrderByRelationAggregateInput
+  grupos?: Prisma.GrupoOrderByRelationAggregateInput
   _relevance?: Prisma.DocenteOrderByRelevanceInput
 }
 
@@ -267,8 +267,8 @@ export type DocenteWhereUniqueInput = Prisma.AtLeast<{
   autorizado?: Prisma.BoolFilter<"Docente"> | boolean
   bloqueado?: Prisma.BoolFilter<"Docente"> | boolean
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
-  grupos?: Prisma.GrupoListRelationFilter
   ejercicios?: Prisma.EjercicioListRelationFilter
+  grupos?: Prisma.GrupoListRelationFilter
 }, "id_docente" | "correo" | "usuarioId">
 
 export type DocenteOrderByWithAggregationInput = {
@@ -306,8 +306,8 @@ export type DocenteCreateInput = {
   autorizado?: boolean
   bloqueado?: boolean
   usuario: Prisma.UsuarioCreateNestedOneWithoutDocenteInput
-  grupos?: Prisma.GrupoCreateNestedManyWithoutDocenteInput
   ejercicios?: Prisma.EjercicioCreateNestedManyWithoutDocenteInput
+  grupos?: Prisma.GrupoCreateNestedManyWithoutDocenteInput
 }
 
 export type DocenteUncheckedCreateInput = {
@@ -318,8 +318,8 @@ export type DocenteUncheckedCreateInput = {
   autorizado?: boolean
   bloqueado?: boolean
   usuarioId: number
-  grupos?: Prisma.GrupoUncheckedCreateNestedManyWithoutDocenteInput
   ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutDocenteInput
+  grupos?: Prisma.GrupoUncheckedCreateNestedManyWithoutDocenteInput
 }
 
 export type DocenteUpdateInput = {
@@ -329,8 +329,8 @@ export type DocenteUpdateInput = {
   autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutDocenteNestedInput
-  grupos?: Prisma.GrupoUpdateManyWithoutDocenteNestedInput
   ejercicios?: Prisma.EjercicioUpdateManyWithoutDocenteNestedInput
+  grupos?: Prisma.GrupoUpdateManyWithoutDocenteNestedInput
 }
 
 export type DocenteUncheckedUpdateInput = {
@@ -341,8 +341,8 @@ export type DocenteUncheckedUpdateInput = {
   autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuarioId?: Prisma.IntFieldUpdateOperationsInput | number
-  grupos?: Prisma.GrupoUncheckedUpdateManyWithoutDocenteNestedInput
   ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutDocenteNestedInput
+  grupos?: Prisma.GrupoUncheckedUpdateManyWithoutDocenteNestedInput
 }
 
 export type DocenteCreateManyInput = {
@@ -495,8 +495,8 @@ export type DocenteCreateWithoutUsuarioInput = {
   escuela: string
   autorizado?: boolean
   bloqueado?: boolean
-  grupos?: Prisma.GrupoCreateNestedManyWithoutDocenteInput
   ejercicios?: Prisma.EjercicioCreateNestedManyWithoutDocenteInput
+  grupos?: Prisma.GrupoCreateNestedManyWithoutDocenteInput
 }
 
 export type DocenteUncheckedCreateWithoutUsuarioInput = {
@@ -506,8 +506,8 @@ export type DocenteUncheckedCreateWithoutUsuarioInput = {
   escuela: string
   autorizado?: boolean
   bloqueado?: boolean
-  grupos?: Prisma.GrupoUncheckedCreateNestedManyWithoutDocenteInput
   ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutDocenteInput
+  grupos?: Prisma.GrupoUncheckedCreateNestedManyWithoutDocenteInput
 }
 
 export type DocenteCreateOrConnectWithoutUsuarioInput = {
@@ -532,8 +532,8 @@ export type DocenteUpdateWithoutUsuarioInput = {
   escuela?: Prisma.StringFieldUpdateOperationsInput | string
   autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  grupos?: Prisma.GrupoUpdateManyWithoutDocenteNestedInput
   ejercicios?: Prisma.EjercicioUpdateManyWithoutDocenteNestedInput
+  grupos?: Prisma.GrupoUpdateManyWithoutDocenteNestedInput
 }
 
 export type DocenteUncheckedUpdateWithoutUsuarioInput = {
@@ -543,8 +543,8 @@ export type DocenteUncheckedUpdateWithoutUsuarioInput = {
   escuela?: Prisma.StringFieldUpdateOperationsInput | string
   autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  grupos?: Prisma.GrupoUncheckedUpdateManyWithoutDocenteNestedInput
   ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutDocenteNestedInput
+  grupos?: Prisma.GrupoUncheckedUpdateManyWithoutDocenteNestedInput
 }
 
 export type DocenteCreateWithoutGruposInput = {
@@ -669,13 +669,13 @@ export type DocenteUncheckedUpdateWithoutEjerciciosInput = {
  */
 
 export type DocenteCountOutputType = {
-  grupos: number
   ejercicios: number
+  grupos: number
 }
 
 export type DocenteCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  grupos?: boolean | DocenteCountOutputTypeCountGruposArgs
   ejercicios?: boolean | DocenteCountOutputTypeCountEjerciciosArgs
+  grupos?: boolean | DocenteCountOutputTypeCountGruposArgs
 }
 
 /**
@@ -691,15 +691,15 @@ export type DocenteCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
 /**
  * DocenteCountOutputType without action
  */
-export type DocenteCountOutputTypeCountGruposArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.GrupoWhereInput
+export type DocenteCountOutputTypeCountEjerciciosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EjercicioWhereInput
 }
 
 /**
  * DocenteCountOutputType without action
  */
-export type DocenteCountOutputTypeCountEjerciciosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.EjercicioWhereInput
+export type DocenteCountOutputTypeCountGruposArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GrupoWhereInput
 }
 
 
@@ -712,8 +712,8 @@ export type DocenteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   bloqueado?: boolean
   usuarioId?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
-  grupos?: boolean | Prisma.Docente$gruposArgs<ExtArgs>
   ejercicios?: boolean | Prisma.Docente$ejerciciosArgs<ExtArgs>
+  grupos?: boolean | Prisma.Docente$gruposArgs<ExtArgs>
   _count?: boolean | Prisma.DocenteCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["docente"]>
 
@@ -732,8 +732,8 @@ export type DocenteSelectScalar = {
 export type DocenteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_docente" | "correo" | "contraseña" | "escuela" | "autorizado" | "bloqueado" | "usuarioId", ExtArgs["result"]["docente"]>
 export type DocenteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
-  grupos?: boolean | Prisma.Docente$gruposArgs<ExtArgs>
   ejercicios?: boolean | Prisma.Docente$ejerciciosArgs<ExtArgs>
+  grupos?: boolean | Prisma.Docente$gruposArgs<ExtArgs>
   _count?: boolean | Prisma.DocenteCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -741,8 +741,8 @@ export type $DocentePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Docente"
   objects: {
     usuario: Prisma.$UsuarioPayload<ExtArgs>
-    grupos: Prisma.$GrupoPayload<ExtArgs>[]
     ejercicios: Prisma.$EjercicioPayload<ExtArgs>[]
+    grupos: Prisma.$GrupoPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_docente: number
@@ -1093,8 +1093,8 @@ readonly fields: DocenteFieldRefs;
 export interface Prisma__DocenteClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   usuario<T extends Prisma.UsuarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsuarioDefaultArgs<ExtArgs>>): Prisma.Prisma__UsuarioClient<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  grupos<T extends Prisma.Docente$gruposArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Docente$gruposArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GrupoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ejercicios<T extends Prisma.Docente$ejerciciosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Docente$ejerciciosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EjercicioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  grupos<T extends Prisma.Docente$gruposArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Docente$gruposArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GrupoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1474,30 +1474,6 @@ export type DocenteDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Docente.grupos
- */
-export type Docente$gruposArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Grupo
-   */
-  select?: Prisma.GrupoSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Grupo
-   */
-  omit?: Prisma.GrupoOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.GrupoInclude<ExtArgs> | null
-  where?: Prisma.GrupoWhereInput
-  orderBy?: Prisma.GrupoOrderByWithRelationInput | Prisma.GrupoOrderByWithRelationInput[]
-  cursor?: Prisma.GrupoWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.GrupoScalarFieldEnum | Prisma.GrupoScalarFieldEnum[]
-}
-
-/**
  * Docente.ejercicios
  */
 export type Docente$ejerciciosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1519,6 +1495,30 @@ export type Docente$ejerciciosArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.EjercicioScalarFieldEnum | Prisma.EjercicioScalarFieldEnum[]
+}
+
+/**
+ * Docente.grupos
+ */
+export type Docente$gruposArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Grupo
+   */
+  select?: Prisma.GrupoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Grupo
+   */
+  omit?: Prisma.GrupoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GrupoInclude<ExtArgs> | null
+  where?: Prisma.GrupoWhereInput
+  orderBy?: Prisma.GrupoOrderByWithRelationInput | Prisma.GrupoOrderByWithRelationInput[]
+  cursor?: Prisma.GrupoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GrupoScalarFieldEnum | Prisma.GrupoScalarFieldEnum[]
 }
 
 /**
