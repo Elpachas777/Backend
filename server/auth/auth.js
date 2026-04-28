@@ -6,15 +6,16 @@ export function verificarTokenAuth(token) {
   try {
     return jwt.verify(token, process.env.SECRET_KEY);
   } catch (error) {
-    throw new ApiError(error.message, 500, "No se pudo verificar el token")
+    throw new ApiError(error.message, 500, "No se pudo verificar el token");
   }
 }
 
 export function generarToken(objeto, duracion) {
   try {
-    return jwt.sign(objeto, process.env.SECRET_KEY, { expiresIn: duracion, });
+    console.log(objeto);
+    return jwt.sign(objeto, process.env.SECRET_KEY, { expiresIn: duracion });
   } catch (error) {
-    throw new ApiError(error.message, 500, "Error al crear el token")
+    throw new ApiError(error.message, 500, "Error al crear el token");
   }
 }
 
@@ -24,5 +25,5 @@ export function objetoSesion() {
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge: 1000 * 60 * 60,
-  }
+  };
 }
