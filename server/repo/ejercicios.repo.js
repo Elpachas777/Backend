@@ -7,15 +7,15 @@ export const crearEjercicio = (
   return prisma.ejercicio.create({
     data: {
       titulo: titulo,
-      fecha_inicio: fecha_inicio,
-      fecha_final: fecha_final,
+      fecha_inicio: new Date(fecha_inicio),
+      fecha_final: new Date(fecha_final),
       contenido: contenido,
       id_tipo: tipo,
-      docente:{
-        connect:{
-          id_docente : Number(docente)
+      docente: {
+        connect: {
+          id_docente: Number(docente)
         }
       }
-    },
+    }
   });
 };
