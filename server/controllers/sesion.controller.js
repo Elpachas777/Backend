@@ -9,11 +9,9 @@ import {
 export async function iniciarSesion(req, res, next) {
   try {
     const sesion = await login(req.body);
-    console.log(sesion);
     const token = generarToken(sesion, "1h");
-    console.log(token);
 
-    return res.cookie("access_token", token, objetoSesion()).json(token);
+    return res.cookie("access_token", token, objetoSesion());
   } catch (error) {
     next(error);
   }

@@ -12,7 +12,6 @@ export function verificarTokenAuth(token) {
 
 export function generarToken(objeto, duracion) {
   try {
-    console.log(objeto);
     return jwt.sign(objeto, process.env.SECRET_KEY, { expiresIn: duracion });
   } catch (error) {
     throw new ApiError(error.message, 500, "Error al crear el token");
