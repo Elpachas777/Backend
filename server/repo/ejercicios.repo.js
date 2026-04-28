@@ -11,7 +11,11 @@ export const crearEjercicio = (
       fecha_final: fecha_final,
       contenido: contenido,
       id_tipo: tipo,
-      id_docente: docente,
+      docente:{
+        connect:{
+          id_docente : Number(docente)
+        }
+      }
     },
   });
 };
