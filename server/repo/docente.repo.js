@@ -36,7 +36,7 @@ export const crearDocente = ({
     data: {
       correo: correo,
       contraseña: password,
-      escuela: escuela,
+      id_escuela: Number(escuela),
       usuario: {
         create: {
           nombres: nombres,
@@ -46,6 +46,7 @@ export const crearDocente = ({
     },
     include: {
       usuario: true,
+      escuela: true
     },
   });
 };

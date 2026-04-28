@@ -33,7 +33,7 @@ export const registrarNuevoDocente = async (data) => {
       ]),
     );
     const nuevoDocente = await crearDocente(infoDocente);
-
+    console.log(nuevoDocente)
     if (!nuevoDocente) {
       throw new ApiError(
         "La petición devuelve un registro vacio",
