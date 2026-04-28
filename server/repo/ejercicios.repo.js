@@ -2,7 +2,7 @@ import { prisma } from "../utils/db.utils.js";
 
 export const crearEjercicio = (
   { titulo, fecha_inicio, fecha_final, contenido, tipo },
-  docente,
+  id,
 ) => {
   return prisma.ejercicio.create({
     data: {
@@ -12,7 +12,7 @@ export const crearEjercicio = (
       contenido: contenido,
       docente: {
         connect: {
-          id_docente: Number(docente)
+          id_docente: Number(id)
         }
       },
       tipo: {

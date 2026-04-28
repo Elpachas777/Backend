@@ -1,12 +1,15 @@
+import { verificarTokenAuth } from "../auth/auth.js";
 import { guardarEjercicio } from "../services/ejercicios.service.js";
 
 export const registrarEjercicio = async (req, res, next) => {
   try {
     const data = req.body;
-    const docente = req.cookies?.access_token || "";
+    const token = req.cookies?.access_token || "";
+    const docente = verificarTokenAuth(token)
+
     console.log(docente)
-    console.log(req.cookies)
-    await guardarEjercicio(JSON.stringify(data), docente);
+
+    await guardarEjercicio(JSON.stringify(data), docente.id);
 
     return res.status(200).json({
       tipo: "success",
