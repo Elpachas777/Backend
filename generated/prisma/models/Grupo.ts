@@ -368,11 +368,6 @@ export type GrupoSumOrderByAggregateInput = {
   id_docente?: Prisma.SortOrder
 }
 
-export type GrupoScalarRelationFilter = {
-  is?: Prisma.GrupoWhereInput
-  isNot?: Prisma.GrupoWhereInput
-}
-
 export type GrupoCreateNestedManyWithoutDocenteInput = {
   create?: Prisma.XOR<Prisma.GrupoCreateWithoutDocenteInput, Prisma.GrupoUncheckedCreateWithoutDocenteInput> | Prisma.GrupoCreateWithoutDocenteInput[] | Prisma.GrupoUncheckedCreateWithoutDocenteInput[]
   connectOrCreate?: Prisma.GrupoCreateOrConnectWithoutDocenteInput | Prisma.GrupoCreateOrConnectWithoutDocenteInput[]
@@ -437,10 +432,12 @@ export type GrupoCreateNestedOneWithoutEjerciciosInput = {
   connect?: Prisma.GrupoWhereUniqueInput
 }
 
-export type GrupoUpdateOneRequiredWithoutEjerciciosNestedInput = {
+export type GrupoUpdateOneWithoutEjerciciosNestedInput = {
   create?: Prisma.XOR<Prisma.GrupoCreateWithoutEjerciciosInput, Prisma.GrupoUncheckedCreateWithoutEjerciciosInput>
   connectOrCreate?: Prisma.GrupoCreateOrConnectWithoutEjerciciosInput
   upsert?: Prisma.GrupoUpsertWithoutEjerciciosInput
+  disconnect?: Prisma.GrupoWhereInput | boolean
+  delete?: Prisma.GrupoWhereInput | boolean
   connect?: Prisma.GrupoWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.GrupoUpdateToOneWithWhereWithoutEjerciciosInput, Prisma.GrupoUpdateWithoutEjerciciosInput>, Prisma.GrupoUncheckedUpdateWithoutEjerciciosInput>
 }
