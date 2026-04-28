@@ -11,6 +11,7 @@
 export type * from './models/Usuario.ts'
 export type * from './models/Administrador.ts'
 export type * from './models/Docente.ts'
+export type * from './models/Escuela.ts'
 export type * from './models/Alumno.ts'
 export type * from './models/Grupo.ts'
 export type * from './models/Ejercicio.ts'

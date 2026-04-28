@@ -57,6 +57,11 @@ export type Administrador = Prisma.AdministradorModel
  */
 export type Docente = Prisma.DocenteModel
 /**
+ * Model Escuela
+ * 
+ */
+export type Escuela = Prisma.EscuelaModel
+/**
  * Model Alumno
  * 
  */

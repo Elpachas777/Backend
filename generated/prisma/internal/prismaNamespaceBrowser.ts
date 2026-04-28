@@ -54,6 +54,7 @@ export const ModelName = {
   Usuario: 'Usuario',
   Administrador: 'Administrador',
   Docente: 'Docente',
+  Escuela: 'Escuela',
   Alumno: 'Alumno',
   Grupo: 'Grupo',
   Ejercicio: 'Ejercicio',
@@ -101,13 +102,25 @@ export const DocenteScalarFieldEnum = {
   id_docente: 'id_docente',
   correo: 'correo',
   contraseña: 'contraseña',
-  escuela: 'escuela',
+  id_escuela: 'id_escuela',
   autorizado: 'autorizado',
   bloqueado: 'bloqueado',
   usuarioId: 'usuarioId'
 } as const
 
 export type DocenteScalarFieldEnum = (typeof DocenteScalarFieldEnum)[keyof typeof DocenteScalarFieldEnum]
+
+
+export const EscuelaScalarFieldEnum = {
+  id_escuela: 'id_escuela',
+  nombre: 'nombre',
+  ubicacion: 'ubicacion',
+  director: 'director',
+  contacto: 'contacto',
+  contado_adicional: 'contado_adicional'
+} as const
+
+export type EscuelaScalarFieldEnum = (typeof EscuelaScalarFieldEnum)[keyof typeof EscuelaScalarFieldEnum]
 
 
 export const AlumnoScalarFieldEnum = {
@@ -195,8 +208,7 @@ export type AdministradorOrderByRelevanceFieldEnum = (typeof AdministradorOrderB
 
 export const DocenteOrderByRelevanceFieldEnum = {
   correo: 'correo',
-  contraseña: 'contraseña',
-  escuela: 'escuela'
+  contraseña: 'contraseña'
 } as const
 
 export type DocenteOrderByRelevanceFieldEnum = (typeof DocenteOrderByRelevanceFieldEnum)[keyof typeof DocenteOrderByRelevanceFieldEnum]
@@ -208,6 +220,17 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const EscuelaOrderByRelevanceFieldEnum = {
+  nombre: 'nombre',
+  ubicacion: 'ubicacion',
+  director: 'director',
+  contacto: 'contacto',
+  contado_adicional: 'contado_adicional'
+} as const
+
+export type EscuelaOrderByRelevanceFieldEnum = (typeof EscuelaOrderByRelevanceFieldEnum)[keyof typeof EscuelaOrderByRelevanceFieldEnum]
 
 
 export const GrupoOrderByRelevanceFieldEnum = {
