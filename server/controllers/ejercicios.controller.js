@@ -4,6 +4,8 @@ export const registrarEjercicio = async (req, res, next) => {
   try {
     const data = req.body;
     const docente = req.cookie?.access_token.id || "";
+    console.log(docente)
+    console.log(req.cookie)
     await guardarEjercicio(JSON.stringify(data), docente);
 
     return res.status(200).json({
