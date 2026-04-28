@@ -8,6 +8,7 @@ import {
 
 export async function iniciarSesion(req, res, next) {
   try {
+    console.log(req.body);
     const sesion = await login(req.body);
     const token = generarToken(sesion, "1h");
 
