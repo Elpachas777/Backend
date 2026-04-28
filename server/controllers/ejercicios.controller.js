@@ -3,7 +3,7 @@ import { guardarEjercicio } from "../services/ejercicios.service.js";
 export const registrarEjercicio = async (req, res, next) => {
   try {
     const data = req.body;
-    const docente = req.cookies?.access_token.id || "";
+    const docente = req.cookies?.access_token || "";
     console.log(docente)
     console.log(req.cookies)
     await guardarEjercicio(JSON.stringify(data), docente);
