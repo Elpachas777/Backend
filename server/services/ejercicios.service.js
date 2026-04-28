@@ -4,7 +4,7 @@ export const guardarEjercicio = (data) => {
   try {
     const json = JSON.parse(data);
     console.log(json);
-    //crearEjercicio(json);
+    crearEjercicio(json);
   } catch (error) {
     controlErrores(error);
   }

@@ -65,13 +65,14 @@ model Ejercicio {
   id_ejercicio Int           @id @default(autoincrement())
   fecha_inicio DateTime
   fecha_final  DateTime
-  id_grupo     Int
+  id_grupo     Int?
   id_docente   Int
   id_tipo      Int
   titulo       String
   contenido    Json
+
   docente      Docente       @relation(fields: [id_docente], references: [id_docente])
-  grupo        Grupo         @relation(fields: [id_grupo], references: [id_grupo])
+  grupo        Grupo?         @relation(fields: [id_grupo], references: [id_grupo])
   tipo         TipoEjercicio @relation(fields: [id_tipo], references: [id_tipo])
   respuestas   Respuesta[]
 
