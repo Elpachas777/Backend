@@ -36,13 +36,17 @@ export const crearDocente = ({
     data: {
       correo: correo,
       contraseña: password,
-      id_escuela: Number(escuela),
       usuario: {
         create: {
           nombres: nombres,
           apellido: apellidos,
         },
       },
+      escuela : {
+        connect : {
+          id_escuela : Number(escuela)
+        }
+      }
     },
     include: {
       usuario: true,
