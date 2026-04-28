@@ -26,16 +26,28 @@ model Administrador {
 }
 
 model Docente {
-  id_docente  Int         @id @default(autoincrement())
-  correo      String      @unique
+  id_docente  Int     @id @default(autoincrement())
+  correo      String  @unique
   contraseña String
-  escuela     String
-  autorizado  Boolean     @default(false)
-  bloqueado   Boolean     @default(false)
-  usuarioId   Int         @unique
-  usuario     Usuario     @relation(fields: [usuarioId], references: [id_usuario], onDelete: Cascade)
-  ejercicios  Ejercicio[]
-  grupos      Grupo[]
+  id_escuela  Int
+  autorizado  Boolean @default(false)
+  bloqueado   Boolean @default(false)
+  usuarioId   Int     @unique
+
+  usuario    Usuario     @relation(fields: [usuarioId], references: [id_usuario], onDelete: Cascade)
+  escuela    Escuela     @relation(fields: [id_escuela], references: [id_escuela])
+  ejercicios Ejercicio[]
+  grupos     Grupo[]
+}
+
+model Escuela {
+  id_escuela        Int       @id @default(autoincrement())
+  nombre            String
+  ubicacion         String?
+  director          String?
+  contacto          String?
+  contado_adicional String?
+  docentes          Docente[]
 }
 
 model Alumno {
@@ -62,7 +74,7 @@ model Grupo {
 }
 
 model Ejercicio {
-  id_ejercicio Int           @id @default(autoincrement())
+  id_ejercicio Int      @id @default(autoincrement())
   fecha_inicio DateTime
   fecha_final  DateTime
   id_grupo     Int?
@@ -71,10 +83,10 @@ model Ejercicio {
   titulo       String
   contenido    Json
 
-  docente      Docente       @relation(fields: [id_docente], references: [id_docente])
-  grupo        Grupo?         @relation(fields: [id_grupo], references: [id_grupo])
-  tipo         TipoEjercicio @relation(fields: [id_tipo], references: [id_tipo])
-  respuestas   Respuesta[]
+  docente    Docente       @relation(fields: [id_docente], references: [id_docente])
+  grupo      Grupo?        @relation(fields: [id_grupo], references: [id_grupo])
+  tipo       TipoEjercicio @relation(fields: [id_tipo], references: [id_tipo])
+  respuestas Respuesta[]
 
   @@index([id_docente], map: "Ejercicio_id_docente_fkey")
   @@index([id_grupo], map: "Ejercicio_id_grupo_fkey")

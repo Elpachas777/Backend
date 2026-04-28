@@ -387,6 +387,7 @@ export const ModelName = {
   Usuario: 'Usuario',
   Administrador: 'Administrador',
   Docente: 'Docente',
+  Escuela: 'Escuela',
   Alumno: 'Alumno',
   Grupo: 'Grupo',
   Ejercicio: 'Ejercicio',
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "usuario" | "administrador" | "docente" | "alumno" | "grupo" | "ejercicio" | "tipoEjercicio" | "respuesta"
+    modelProps: "usuario" | "administrador" | "docente" | "escuela" | "alumno" | "grupo" | "ejercicio" | "tipoEjercicio" | "respuesta"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -606,6 +607,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.DocenteCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.DocenteCountAggregateOutputType> | number
+        }
+      }
+    }
+    Escuela: {
+      payload: Prisma.$EscuelaPayload<ExtArgs>
+      fields: Prisma.EscuelaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EscuelaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscuelaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EscuelaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscuelaPayload>
+        }
+        findFirst: {
+          args: Prisma.EscuelaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscuelaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EscuelaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscuelaPayload>
+        }
+        findMany: {
+          args: Prisma.EscuelaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscuelaPayload>[]
+        }
+        create: {
+          args: Prisma.EscuelaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscuelaPayload>
+        }
+        createMany: {
+          args: Prisma.EscuelaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.EscuelaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscuelaPayload>
+        }
+        update: {
+          args: Prisma.EscuelaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscuelaPayload>
+        }
+        deleteMany: {
+          args: Prisma.EscuelaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EscuelaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.EscuelaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscuelaPayload>
+        }
+        aggregate: {
+          args: Prisma.EscuelaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEscuela>
+        }
+        groupBy: {
+          args: Prisma.EscuelaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EscuelaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EscuelaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EscuelaCountAggregateOutputType> | number
         }
       }
     }
@@ -1002,13 +1069,25 @@ export const DocenteScalarFieldEnum = {
   id_docente: 'id_docente',
   correo: 'correo',
   contraseña: 'contraseña',
-  escuela: 'escuela',
+  id_escuela: 'id_escuela',
   autorizado: 'autorizado',
   bloqueado: 'bloqueado',
   usuarioId: 'usuarioId'
 } as const
 
 export type DocenteScalarFieldEnum = (typeof DocenteScalarFieldEnum)[keyof typeof DocenteScalarFieldEnum]
+
+
+export const EscuelaScalarFieldEnum = {
+  id_escuela: 'id_escuela',
+  nombre: 'nombre',
+  ubicacion: 'ubicacion',
+  director: 'director',
+  contacto: 'contacto',
+  contado_adicional: 'contado_adicional'
+} as const
+
+export type EscuelaScalarFieldEnum = (typeof EscuelaScalarFieldEnum)[keyof typeof EscuelaScalarFieldEnum]
 
 
 export const AlumnoScalarFieldEnum = {
@@ -1096,8 +1175,7 @@ export type AdministradorOrderByRelevanceFieldEnum = (typeof AdministradorOrderB
 
 export const DocenteOrderByRelevanceFieldEnum = {
   correo: 'correo',
-  contraseña: 'contraseña',
-  escuela: 'escuela'
+  contraseña: 'contraseña'
 } as const
 
 export type DocenteOrderByRelevanceFieldEnum = (typeof DocenteOrderByRelevanceFieldEnum)[keyof typeof DocenteOrderByRelevanceFieldEnum]
@@ -1109,6 +1187,17 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const EscuelaOrderByRelevanceFieldEnum = {
+  nombre: 'nombre',
+  ubicacion: 'ubicacion',
+  director: 'director',
+  contacto: 'contacto',
+  contado_adicional: 'contado_adicional'
+} as const
+
+export type EscuelaOrderByRelevanceFieldEnum = (typeof EscuelaOrderByRelevanceFieldEnum)[keyof typeof EscuelaOrderByRelevanceFieldEnum]
 
 
 export const GrupoOrderByRelevanceFieldEnum = {
@@ -1309,6 +1398,7 @@ export type GlobalOmitConfig = {
   usuario?: Prisma.UsuarioOmit
   administrador?: Prisma.AdministradorOmit
   docente?: Prisma.DocenteOmit
+  escuela?: Prisma.EscuelaOmit
   alumno?: Prisma.AlumnoOmit
   grupo?: Prisma.GrupoOmit
   ejercicio?: Prisma.EjercicioOmit
