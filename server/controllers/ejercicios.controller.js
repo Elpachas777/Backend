@@ -1,10 +1,15 @@
 import { guardarEjercicio } from "../services/ejercicios.service.js";
 
-export const registrarEjercicio = (req, res, next) => {
+export const registrarEjercicio = async (req, res, next) => {
   try {
     const data = req.body;
-    guardarEjercicio(JSON.stringify(data));
-    return "Guardado";
+    const docente = req.cookie?.access_token.id || "";
+    await guardarEjercicio(JSON.stringify(data), docente);
+
+    return res.status(200).json({
+      tipo: "success",
+      mensaje: "Ejercicio guardado con exito",
+    });
   } catch (error) {
     next(error);
   }
