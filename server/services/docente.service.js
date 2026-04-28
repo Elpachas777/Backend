@@ -38,7 +38,7 @@ export const registrarNuevoDocente = async (data) => {
       throw new ApiError(
         "La petición devuelve un registro vacio",
         500,
-        "No se puedo registrar al docente",
+        "No se pudo registrar al docente",
       );
     }
 
