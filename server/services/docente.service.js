@@ -7,6 +7,7 @@ import {
   crearDocente,
   editarDocente,
   eliminarDocenteId,
+  modificarHabilitado,
   validarCorreo,
 } from "../repo/docente.repo.js";
 import { ApiError } from "../utils/errores.utils.js";
@@ -71,9 +72,9 @@ export const validarCorreoDocente = async (data) => {
   }
 };
 
-export const verInfoDocente = async (data) => {
+export const verInfoDocente = async (id) => {
   try {
-    const docente = await consultarDocentePorId(data.id);
+    const docente = await consultarDocentePorId(id);
 
     if (!docente) {
       throw new ApiError(
@@ -114,7 +115,7 @@ export const verInfoDocentes = async () => {
       password: datos.contraseña,
       escuela: datos.escuela.nombre,
       fechaIngreso: datos.usuario.creado,
-      habilitado: datos.autorizado,
+      habilitado: datos.habilitado,
       grupos: datos.grupos.map((propiedades) => ({
         id: propiedades.id_grupo,
         nombre: propiedades.nombre_grupo,
@@ -144,10 +145,10 @@ export const editarInfoDocente = async (data) => {
   }
 };
 
-export const eliminarDocentePorId = async (data) => {
+export const eliminarDocentePorId = async (id) => {
   try {
-    docenteId(data.id);
-    const docenteEliminado = await eliminarDocenteId(data.id);
+    docenteId(id);
+    const docenteEliminado = await eliminarDocenteId(id);
 
     if (!docenteEliminado) {
       throw new ApiError(
@@ -173,6 +174,22 @@ export const actualizarContraseñaDocente = async (data) => {
         "La petición devuelve un registro vacio",
         500,
         "No se pudo actualizar la contraseña",
+      );
+    }
+  } catch (error) {
+    controlErrores(error);
+  }
+};
+
+export const actualizarHabilitado = async (id, habilitado) => {
+  try {
+    const habilitado = await modificarHabilitado(id, habilitado);
+
+    if (!habilitado) {
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se pudo actualizar el estado de habilitado",
       );
     }
   } catch (error) {

@@ -61,7 +61,7 @@ export const validarCorreo = (id) => {
       id_docente: id,
     },
     data: {
-      autorizado: true,
+      habilitado: true,
     },
   });
 };
@@ -105,12 +105,23 @@ export const eliminarDocenteId = (id) => {
 };
 
 export const modificarContraseñaDocente = (correo, passwordHash) => {
-  return prisma.administrador.update({
+  return prisma.docente.update({
     where: {
       correo: correo,
     },
     data: {
       contraseña: passwordHash,
+    },
+  });
+};
+
+export const modificarHabilitado = (id, habilitado) => {
+  return prisma.docente.update({
+    where: {
+      id_docente: id,
+    },
+    data: {
+      habilitado: habilitado,
     },
   });
 };

@@ -40,7 +40,7 @@ export type AdministradorMinAggregateOutputType = {
   id_admin: number | null
   correo: string | null
   contraseña: string | null
-  bloqueado: boolean | null
+  habilitado: boolean | null
   usuarioId: number | null
 }
 
@@ -48,7 +48,7 @@ export type AdministradorMaxAggregateOutputType = {
   id_admin: number | null
   correo: string | null
   contraseña: string | null
-  bloqueado: boolean | null
+  habilitado: boolean | null
   usuarioId: number | null
 }
 
@@ -56,7 +56,7 @@ export type AdministradorCountAggregateOutputType = {
   id_admin: number
   correo: number
   contraseña: number
-  bloqueado: number
+  habilitado: number
   usuarioId: number
   _all: number
 }
@@ -76,7 +76,7 @@ export type AdministradorMinAggregateInputType = {
   id_admin?: true
   correo?: true
   contraseña?: true
-  bloqueado?: true
+  habilitado?: true
   usuarioId?: true
 }
 
@@ -84,7 +84,7 @@ export type AdministradorMaxAggregateInputType = {
   id_admin?: true
   correo?: true
   contraseña?: true
-  bloqueado?: true
+  habilitado?: true
   usuarioId?: true
 }
 
@@ -92,7 +92,7 @@ export type AdministradorCountAggregateInputType = {
   id_admin?: true
   correo?: true
   contraseña?: true
-  bloqueado?: true
+  habilitado?: true
   usuarioId?: true
   _all?: true
 }
@@ -187,7 +187,7 @@ export type AdministradorGroupByOutputType = {
   id_admin: number
   correo: string
   contraseña: string
-  bloqueado: boolean
+  habilitado: boolean
   usuarioId: number
   _count: AdministradorCountAggregateOutputType | null
   _avg: AdministradorAvgAggregateOutputType | null
@@ -218,7 +218,7 @@ export type AdministradorWhereInput = {
   id_admin?: Prisma.IntFilter<"Administrador"> | number
   correo?: Prisma.StringFilter<"Administrador"> | string
   contraseña?: Prisma.StringFilter<"Administrador"> | string
-  bloqueado?: Prisma.BoolFilter<"Administrador"> | boolean
+  habilitado?: Prisma.BoolFilter<"Administrador"> | boolean
   usuarioId?: Prisma.IntFilter<"Administrador"> | number
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
 }
@@ -227,7 +227,7 @@ export type AdministradorOrderByWithRelationInput = {
   id_admin?: Prisma.SortOrder
   correo?: Prisma.SortOrder
   contraseña?: Prisma.SortOrder
-  bloqueado?: Prisma.SortOrder
+  habilitado?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
   usuario?: Prisma.UsuarioOrderByWithRelationInput
   _relevance?: Prisma.AdministradorOrderByRelevanceInput
@@ -241,7 +241,7 @@ export type AdministradorWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AdministradorWhereInput[]
   NOT?: Prisma.AdministradorWhereInput | Prisma.AdministradorWhereInput[]
   contraseña?: Prisma.StringFilter<"Administrador"> | string
-  bloqueado?: Prisma.BoolFilter<"Administrador"> | boolean
+  habilitado?: Prisma.BoolFilter<"Administrador"> | boolean
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
 }, "id_admin" | "correo" | "usuarioId">
 
@@ -249,7 +249,7 @@ export type AdministradorOrderByWithAggregationInput = {
   id_admin?: Prisma.SortOrder
   correo?: Prisma.SortOrder
   contraseña?: Prisma.SortOrder
-  bloqueado?: Prisma.SortOrder
+  habilitado?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
   _count?: Prisma.AdministradorCountOrderByAggregateInput
   _avg?: Prisma.AdministradorAvgOrderByAggregateInput
@@ -265,14 +265,14 @@ export type AdministradorScalarWhereWithAggregatesInput = {
   id_admin?: Prisma.IntWithAggregatesFilter<"Administrador"> | number
   correo?: Prisma.StringWithAggregatesFilter<"Administrador"> | string
   contraseña?: Prisma.StringWithAggregatesFilter<"Administrador"> | string
-  bloqueado?: Prisma.BoolWithAggregatesFilter<"Administrador"> | boolean
+  habilitado?: Prisma.BoolWithAggregatesFilter<"Administrador"> | boolean
   usuarioId?: Prisma.IntWithAggregatesFilter<"Administrador"> | number
 }
 
 export type AdministradorCreateInput = {
   correo: string
   contraseña: string
-  bloqueado?: boolean
+  habilitado?: boolean
   usuario: Prisma.UsuarioCreateNestedOneWithoutAdministradorInput
 }
 
@@ -280,14 +280,14 @@ export type AdministradorUncheckedCreateInput = {
   id_admin?: number
   correo: string
   contraseña: string
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId: number
 }
 
 export type AdministradorUpdateInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutAdministradorNestedInput
 }
 
@@ -295,7 +295,7 @@ export type AdministradorUncheckedUpdateInput = {
   id_admin?: Prisma.IntFieldUpdateOperationsInput | number
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuarioId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -303,21 +303,21 @@ export type AdministradorCreateManyInput = {
   id_admin?: number
   correo: string
   contraseña: string
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId: number
 }
 
 export type AdministradorUpdateManyMutationInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type AdministradorUncheckedUpdateManyInput = {
   id_admin?: Prisma.IntFieldUpdateOperationsInput | number
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuarioId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -336,7 +336,7 @@ export type AdministradorCountOrderByAggregateInput = {
   id_admin?: Prisma.SortOrder
   correo?: Prisma.SortOrder
   contraseña?: Prisma.SortOrder
-  bloqueado?: Prisma.SortOrder
+  habilitado?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
 }
 
@@ -349,7 +349,7 @@ export type AdministradorMaxOrderByAggregateInput = {
   id_admin?: Prisma.SortOrder
   correo?: Prisma.SortOrder
   contraseña?: Prisma.SortOrder
-  bloqueado?: Prisma.SortOrder
+  habilitado?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
 }
 
@@ -357,7 +357,7 @@ export type AdministradorMinOrderByAggregateInput = {
   id_admin?: Prisma.SortOrder
   correo?: Prisma.SortOrder
   contraseña?: Prisma.SortOrder
-  bloqueado?: Prisma.SortOrder
+  habilitado?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
 }
 
@@ -405,14 +405,14 @@ export type BoolFieldUpdateOperationsInput = {
 export type AdministradorCreateWithoutUsuarioInput = {
   correo: string
   contraseña: string
-  bloqueado?: boolean
+  habilitado?: boolean
 }
 
 export type AdministradorUncheckedCreateWithoutUsuarioInput = {
   id_admin?: number
   correo: string
   contraseña: string
-  bloqueado?: boolean
+  habilitado?: boolean
 }
 
 export type AdministradorCreateOrConnectWithoutUsuarioInput = {
@@ -434,14 +434,14 @@ export type AdministradorUpdateToOneWithWhereWithoutUsuarioInput = {
 export type AdministradorUpdateWithoutUsuarioInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type AdministradorUncheckedUpdateWithoutUsuarioInput = {
   id_admin?: Prisma.IntFieldUpdateOperationsInput | number
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -450,7 +450,7 @@ export type AdministradorSelect<ExtArgs extends runtime.Types.Extensions.Interna
   id_admin?: boolean
   correo?: boolean
   contraseña?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["administrador"]>
@@ -461,11 +461,11 @@ export type AdministradorSelectScalar = {
   id_admin?: boolean
   correo?: boolean
   contraseña?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId?: boolean
 }
 
-export type AdministradorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_admin" | "correo" | "contraseña" | "bloqueado" | "usuarioId", ExtArgs["result"]["administrador"]>
+export type AdministradorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_admin" | "correo" | "contraseña" | "habilitado" | "usuarioId", ExtArgs["result"]["administrador"]>
 export type AdministradorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }
@@ -479,7 +479,7 @@ export type $AdministradorPayload<ExtArgs extends runtime.Types.Extensions.Inter
     id_admin: number
     correo: string
     contraseña: string
-    bloqueado: boolean
+    habilitado: boolean
     usuarioId: number
   }, ExtArgs["result"]["administrador"]>
   composites: {}
@@ -854,7 +854,7 @@ export interface AdministradorFieldRefs {
   readonly id_admin: Prisma.FieldRef<"Administrador", 'Int'>
   readonly correo: Prisma.FieldRef<"Administrador", 'String'>
   readonly contraseña: Prisma.FieldRef<"Administrador", 'String'>
-  readonly bloqueado: Prisma.FieldRef<"Administrador", 'Boolean'>
+  readonly habilitado: Prisma.FieldRef<"Administrador", 'Boolean'>
   readonly usuarioId: Prisma.FieldRef<"Administrador", 'Int'>
 }
     

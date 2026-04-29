@@ -21,7 +21,7 @@ model Administrador {
   id_admin    Int     @id @default(autoincrement())
   correo      String  @unique
   contraseña String
-  bloqueado   Boolean @default(false)
+  habilitado  Boolean @default(false)
   usuarioId   Int     @unique
   usuario     Usuario @relation(fields: [usuarioId], references: [id_usuario], onDelete: Cascade)
 }
@@ -31,8 +31,7 @@ model Docente {
   correo      String  @unique
   contraseña String
   id_escuela  Int
-  autorizado  Boolean @default(false)
-  bloqueado   Boolean @default(false)
+  habilitado  Boolean @default(false)
   usuarioId   Int     @unique
 
   usuario    Usuario     @relation(fields: [usuarioId], references: [id_usuario], onDelete: Cascade)

@@ -43,8 +43,7 @@ export type DocenteMinAggregateOutputType = {
   correo: string | null
   contraseña: string | null
   id_escuela: number | null
-  autorizado: boolean | null
-  bloqueado: boolean | null
+  habilitado: boolean | null
   usuarioId: number | null
 }
 
@@ -53,8 +52,7 @@ export type DocenteMaxAggregateOutputType = {
   correo: string | null
   contraseña: string | null
   id_escuela: number | null
-  autorizado: boolean | null
-  bloqueado: boolean | null
+  habilitado: boolean | null
   usuarioId: number | null
 }
 
@@ -63,8 +61,7 @@ export type DocenteCountAggregateOutputType = {
   correo: number
   contraseña: number
   id_escuela: number
-  autorizado: number
-  bloqueado: number
+  habilitado: number
   usuarioId: number
   _all: number
 }
@@ -87,8 +84,7 @@ export type DocenteMinAggregateInputType = {
   correo?: true
   contraseña?: true
   id_escuela?: true
-  autorizado?: true
-  bloqueado?: true
+  habilitado?: true
   usuarioId?: true
 }
 
@@ -97,8 +93,7 @@ export type DocenteMaxAggregateInputType = {
   correo?: true
   contraseña?: true
   id_escuela?: true
-  autorizado?: true
-  bloqueado?: true
+  habilitado?: true
   usuarioId?: true
 }
 
@@ -107,8 +102,7 @@ export type DocenteCountAggregateInputType = {
   correo?: true
   contraseña?: true
   id_escuela?: true
-  autorizado?: true
-  bloqueado?: true
+  habilitado?: true
   usuarioId?: true
   _all?: true
 }
@@ -204,8 +198,7 @@ export type DocenteGroupByOutputType = {
   correo: string
   contraseña: string
   id_escuela: number
-  autorizado: boolean
-  bloqueado: boolean
+  habilitado: boolean
   usuarioId: number
   _count: DocenteCountAggregateOutputType | null
   _avg: DocenteAvgAggregateOutputType | null
@@ -237,8 +230,7 @@ export type DocenteWhereInput = {
   correo?: Prisma.StringFilter<"Docente"> | string
   contraseña?: Prisma.StringFilter<"Docente"> | string
   id_escuela?: Prisma.IntFilter<"Docente"> | number
-  autorizado?: Prisma.BoolFilter<"Docente"> | boolean
-  bloqueado?: Prisma.BoolFilter<"Docente"> | boolean
+  habilitado?: Prisma.BoolFilter<"Docente"> | boolean
   usuarioId?: Prisma.IntFilter<"Docente"> | number
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   escuela?: Prisma.XOR<Prisma.EscuelaScalarRelationFilter, Prisma.EscuelaWhereInput>
@@ -251,8 +243,7 @@ export type DocenteOrderByWithRelationInput = {
   correo?: Prisma.SortOrder
   contraseña?: Prisma.SortOrder
   id_escuela?: Prisma.SortOrder
-  autorizado?: Prisma.SortOrder
-  bloqueado?: Prisma.SortOrder
+  habilitado?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
   usuario?: Prisma.UsuarioOrderByWithRelationInput
   escuela?: Prisma.EscuelaOrderByWithRelationInput
@@ -270,8 +261,7 @@ export type DocenteWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.DocenteWhereInput | Prisma.DocenteWhereInput[]
   contraseña?: Prisma.StringFilter<"Docente"> | string
   id_escuela?: Prisma.IntFilter<"Docente"> | number
-  autorizado?: Prisma.BoolFilter<"Docente"> | boolean
-  bloqueado?: Prisma.BoolFilter<"Docente"> | boolean
+  habilitado?: Prisma.BoolFilter<"Docente"> | boolean
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   escuela?: Prisma.XOR<Prisma.EscuelaScalarRelationFilter, Prisma.EscuelaWhereInput>
   ejercicios?: Prisma.EjercicioListRelationFilter
@@ -283,8 +273,7 @@ export type DocenteOrderByWithAggregationInput = {
   correo?: Prisma.SortOrder
   contraseña?: Prisma.SortOrder
   id_escuela?: Prisma.SortOrder
-  autorizado?: Prisma.SortOrder
-  bloqueado?: Prisma.SortOrder
+  habilitado?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
   _count?: Prisma.DocenteCountOrderByAggregateInput
   _avg?: Prisma.DocenteAvgOrderByAggregateInput
@@ -301,16 +290,14 @@ export type DocenteScalarWhereWithAggregatesInput = {
   correo?: Prisma.StringWithAggregatesFilter<"Docente"> | string
   contraseña?: Prisma.StringWithAggregatesFilter<"Docente"> | string
   id_escuela?: Prisma.IntWithAggregatesFilter<"Docente"> | number
-  autorizado?: Prisma.BoolWithAggregatesFilter<"Docente"> | boolean
-  bloqueado?: Prisma.BoolWithAggregatesFilter<"Docente"> | boolean
+  habilitado?: Prisma.BoolWithAggregatesFilter<"Docente"> | boolean
   usuarioId?: Prisma.IntWithAggregatesFilter<"Docente"> | number
 }
 
 export type DocenteCreateInput = {
   correo: string
   contraseña: string
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuario: Prisma.UsuarioCreateNestedOneWithoutDocenteInput
   escuela: Prisma.EscuelaCreateNestedOneWithoutDocentesInput
   ejercicios?: Prisma.EjercicioCreateNestedManyWithoutDocenteInput
@@ -322,8 +309,7 @@ export type DocenteUncheckedCreateInput = {
   correo: string
   contraseña: string
   id_escuela: number
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId: number
   ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutDocenteInput
   grupos?: Prisma.GrupoUncheckedCreateNestedManyWithoutDocenteInput
@@ -332,8 +318,7 @@ export type DocenteUncheckedCreateInput = {
 export type DocenteUpdateInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutDocenteNestedInput
   escuela?: Prisma.EscuelaUpdateOneRequiredWithoutDocentesNestedInput
   ejercicios?: Prisma.EjercicioUpdateManyWithoutDocenteNestedInput
@@ -345,8 +330,7 @@ export type DocenteUncheckedUpdateInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
   id_escuela?: Prisma.IntFieldUpdateOperationsInput | number
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuarioId?: Prisma.IntFieldUpdateOperationsInput | number
   ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutDocenteNestedInput
   grupos?: Prisma.GrupoUncheckedUpdateManyWithoutDocenteNestedInput
@@ -357,16 +341,14 @@ export type DocenteCreateManyInput = {
   correo: string
   contraseña: string
   id_escuela: number
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId: number
 }
 
 export type DocenteUpdateManyMutationInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type DocenteUncheckedUpdateManyInput = {
@@ -374,8 +356,7 @@ export type DocenteUncheckedUpdateManyInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
   id_escuela?: Prisma.IntFieldUpdateOperationsInput | number
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuarioId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -395,8 +376,7 @@ export type DocenteCountOrderByAggregateInput = {
   correo?: Prisma.SortOrder
   contraseña?: Prisma.SortOrder
   id_escuela?: Prisma.SortOrder
-  autorizado?: Prisma.SortOrder
-  bloqueado?: Prisma.SortOrder
+  habilitado?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
 }
 
@@ -411,8 +391,7 @@ export type DocenteMaxOrderByAggregateInput = {
   correo?: Prisma.SortOrder
   contraseña?: Prisma.SortOrder
   id_escuela?: Prisma.SortOrder
-  autorizado?: Prisma.SortOrder
-  bloqueado?: Prisma.SortOrder
+  habilitado?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
 }
 
@@ -421,8 +400,7 @@ export type DocenteMinOrderByAggregateInput = {
   correo?: Prisma.SortOrder
   contraseña?: Prisma.SortOrder
   id_escuela?: Prisma.SortOrder
-  autorizado?: Prisma.SortOrder
-  bloqueado?: Prisma.SortOrder
+  habilitado?: Prisma.SortOrder
   usuarioId?: Prisma.SortOrder
 }
 
@@ -552,8 +530,7 @@ export type DocenteUpdateOneRequiredWithoutEjerciciosNestedInput = {
 export type DocenteCreateWithoutUsuarioInput = {
   correo: string
   contraseña: string
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   escuela: Prisma.EscuelaCreateNestedOneWithoutDocentesInput
   ejercicios?: Prisma.EjercicioCreateNestedManyWithoutDocenteInput
   grupos?: Prisma.GrupoCreateNestedManyWithoutDocenteInput
@@ -564,8 +541,7 @@ export type DocenteUncheckedCreateWithoutUsuarioInput = {
   correo: string
   contraseña: string
   id_escuela: number
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutDocenteInput
   grupos?: Prisma.GrupoUncheckedCreateNestedManyWithoutDocenteInput
 }
@@ -589,8 +565,7 @@ export type DocenteUpdateToOneWithWhereWithoutUsuarioInput = {
 export type DocenteUpdateWithoutUsuarioInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   escuela?: Prisma.EscuelaUpdateOneRequiredWithoutDocentesNestedInput
   ejercicios?: Prisma.EjercicioUpdateManyWithoutDocenteNestedInput
   grupos?: Prisma.GrupoUpdateManyWithoutDocenteNestedInput
@@ -601,8 +576,7 @@ export type DocenteUncheckedUpdateWithoutUsuarioInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
   id_escuela?: Prisma.IntFieldUpdateOperationsInput | number
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutDocenteNestedInput
   grupos?: Prisma.GrupoUncheckedUpdateManyWithoutDocenteNestedInput
 }
@@ -610,8 +584,7 @@ export type DocenteUncheckedUpdateWithoutUsuarioInput = {
 export type DocenteCreateWithoutEscuelaInput = {
   correo: string
   contraseña: string
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuario: Prisma.UsuarioCreateNestedOneWithoutDocenteInput
   ejercicios?: Prisma.EjercicioCreateNestedManyWithoutDocenteInput
   grupos?: Prisma.GrupoCreateNestedManyWithoutDocenteInput
@@ -621,8 +594,7 @@ export type DocenteUncheckedCreateWithoutEscuelaInput = {
   id_docente?: number
   correo: string
   contraseña: string
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId: number
   ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutDocenteInput
   grupos?: Prisma.GrupoUncheckedCreateNestedManyWithoutDocenteInput
@@ -662,16 +634,14 @@ export type DocenteScalarWhereInput = {
   correo?: Prisma.StringFilter<"Docente"> | string
   contraseña?: Prisma.StringFilter<"Docente"> | string
   id_escuela?: Prisma.IntFilter<"Docente"> | number
-  autorizado?: Prisma.BoolFilter<"Docente"> | boolean
-  bloqueado?: Prisma.BoolFilter<"Docente"> | boolean
+  habilitado?: Prisma.BoolFilter<"Docente"> | boolean
   usuarioId?: Prisma.IntFilter<"Docente"> | number
 }
 
 export type DocenteCreateWithoutGruposInput = {
   correo: string
   contraseña: string
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuario: Prisma.UsuarioCreateNestedOneWithoutDocenteInput
   escuela: Prisma.EscuelaCreateNestedOneWithoutDocentesInput
   ejercicios?: Prisma.EjercicioCreateNestedManyWithoutDocenteInput
@@ -682,8 +652,7 @@ export type DocenteUncheckedCreateWithoutGruposInput = {
   correo: string
   contraseña: string
   id_escuela: number
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId: number
   ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutDocenteInput
 }
@@ -707,8 +676,7 @@ export type DocenteUpdateToOneWithWhereWithoutGruposInput = {
 export type DocenteUpdateWithoutGruposInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutDocenteNestedInput
   escuela?: Prisma.EscuelaUpdateOneRequiredWithoutDocentesNestedInput
   ejercicios?: Prisma.EjercicioUpdateManyWithoutDocenteNestedInput
@@ -719,8 +687,7 @@ export type DocenteUncheckedUpdateWithoutGruposInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
   id_escuela?: Prisma.IntFieldUpdateOperationsInput | number
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuarioId?: Prisma.IntFieldUpdateOperationsInput | number
   ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutDocenteNestedInput
 }
@@ -728,8 +695,7 @@ export type DocenteUncheckedUpdateWithoutGruposInput = {
 export type DocenteCreateWithoutEjerciciosInput = {
   correo: string
   contraseña: string
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuario: Prisma.UsuarioCreateNestedOneWithoutDocenteInput
   escuela: Prisma.EscuelaCreateNestedOneWithoutDocentesInput
   grupos?: Prisma.GrupoCreateNestedManyWithoutDocenteInput
@@ -740,8 +706,7 @@ export type DocenteUncheckedCreateWithoutEjerciciosInput = {
   correo: string
   contraseña: string
   id_escuela: number
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId: number
   grupos?: Prisma.GrupoUncheckedCreateNestedManyWithoutDocenteInput
 }
@@ -765,8 +730,7 @@ export type DocenteUpdateToOneWithWhereWithoutEjerciciosInput = {
 export type DocenteUpdateWithoutEjerciciosInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutDocenteNestedInput
   escuela?: Prisma.EscuelaUpdateOneRequiredWithoutDocentesNestedInput
   grupos?: Prisma.GrupoUpdateManyWithoutDocenteNestedInput
@@ -777,8 +741,7 @@ export type DocenteUncheckedUpdateWithoutEjerciciosInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
   id_escuela?: Prisma.IntFieldUpdateOperationsInput | number
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuarioId?: Prisma.IntFieldUpdateOperationsInput | number
   grupos?: Prisma.GrupoUncheckedUpdateManyWithoutDocenteNestedInput
 }
@@ -787,16 +750,14 @@ export type DocenteCreateManyEscuelaInput = {
   id_docente?: number
   correo: string
   contraseña: string
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId: number
 }
 
 export type DocenteUpdateWithoutEscuelaInput = {
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutDocenteNestedInput
   ejercicios?: Prisma.EjercicioUpdateManyWithoutDocenteNestedInput
   grupos?: Prisma.GrupoUpdateManyWithoutDocenteNestedInput
@@ -806,8 +767,7 @@ export type DocenteUncheckedUpdateWithoutEscuelaInput = {
   id_docente?: Prisma.IntFieldUpdateOperationsInput | number
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuarioId?: Prisma.IntFieldUpdateOperationsInput | number
   ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutDocenteNestedInput
   grupos?: Prisma.GrupoUncheckedUpdateManyWithoutDocenteNestedInput
@@ -817,8 +777,7 @@ export type DocenteUncheckedUpdateManyWithoutEscuelaInput = {
   id_docente?: Prisma.IntFieldUpdateOperationsInput | number
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   contraseña?: Prisma.StringFieldUpdateOperationsInput | string
-  autorizado?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  bloqueado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  habilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usuarioId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -867,8 +826,7 @@ export type DocenteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   correo?: boolean
   contraseña?: boolean
   id_escuela?: boolean
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   escuela?: boolean | Prisma.EscuelaDefaultArgs<ExtArgs>
@@ -884,12 +842,11 @@ export type DocenteSelectScalar = {
   correo?: boolean
   contraseña?: boolean
   id_escuela?: boolean
-  autorizado?: boolean
-  bloqueado?: boolean
+  habilitado?: boolean
   usuarioId?: boolean
 }
 
-export type DocenteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_docente" | "correo" | "contraseña" | "id_escuela" | "autorizado" | "bloqueado" | "usuarioId", ExtArgs["result"]["docente"]>
+export type DocenteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_docente" | "correo" | "contraseña" | "id_escuela" | "habilitado" | "usuarioId", ExtArgs["result"]["docente"]>
 export type DocenteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   escuela?: boolean | Prisma.EscuelaDefaultArgs<ExtArgs>
@@ -911,8 +868,7 @@ export type $DocentePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     correo: string
     contraseña: string
     id_escuela: number
-    autorizado: boolean
-    bloqueado: boolean
+    habilitado: boolean
     usuarioId: number
   }, ExtArgs["result"]["docente"]>
   composites: {}
@@ -1291,8 +1247,7 @@ export interface DocenteFieldRefs {
   readonly correo: Prisma.FieldRef<"Docente", 'String'>
   readonly contraseña: Prisma.FieldRef<"Docente", 'String'>
   readonly id_escuela: Prisma.FieldRef<"Docente", 'Int'>
-  readonly autorizado: Prisma.FieldRef<"Docente", 'Boolean'>
-  readonly bloqueado: Prisma.FieldRef<"Docente", 'Boolean'>
+  readonly habilitado: Prisma.FieldRef<"Docente", 'Boolean'>
   readonly usuarioId: Prisma.FieldRef<"Docente", 'Int'>
 }
     
