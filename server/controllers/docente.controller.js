@@ -1,7 +1,4 @@
-import {
-  enviarTokenCorreo,
-  validarTokenCorreo,
-} from "../services/correo.service.js";
+import { validarTokenCorreo } from "../services/correo.service.js";
 import {
   editarInfoDocente,
   eliminarDocentePorId,
