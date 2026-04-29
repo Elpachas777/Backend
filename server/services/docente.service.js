@@ -113,6 +113,7 @@ export const verInfoDocentes = async () => {
       correo: datos.correo,
       password: datos.contraseña,
       escuela: datos.escuela.nombre,
+      fecha_ingreso: datos.usuario.creado,
       grupos: datos.grupos.map((propiedades) => ({
         id: propiedades.id_grupo,
         nombre: propiedades.nombre_grupo,
