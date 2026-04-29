@@ -38,18 +38,21 @@ export type UsuarioMinAggregateOutputType = {
   id_usuario: number | null
   nombres: string | null
   apellido: string | null
+  creado: Date | null
 }
 
 export type UsuarioMaxAggregateOutputType = {
   id_usuario: number | null
   nombres: string | null
   apellido: string | null
+  creado: Date | null
 }
 
 export type UsuarioCountAggregateOutputType = {
   id_usuario: number
   nombres: number
   apellido: number
+  creado: number
   _all: number
 }
 
@@ -66,18 +69,21 @@ export type UsuarioMinAggregateInputType = {
   id_usuario?: true
   nombres?: true
   apellido?: true
+  creado?: true
 }
 
 export type UsuarioMaxAggregateInputType = {
   id_usuario?: true
   nombres?: true
   apellido?: true
+  creado?: true
 }
 
 export type UsuarioCountAggregateInputType = {
   id_usuario?: true
   nombres?: true
   apellido?: true
+  creado?: true
   _all?: true
 }
 
@@ -171,6 +177,7 @@ export type UsuarioGroupByOutputType = {
   id_usuario: number
   nombres: string
   apellido: string
+  creado: Date
   _count: UsuarioCountAggregateOutputType | null
   _avg: UsuarioAvgAggregateOutputType | null
   _sum: UsuarioSumAggregateOutputType | null
@@ -200,6 +207,7 @@ export type UsuarioWhereInput = {
   id_usuario?: Prisma.IntFilter<"Usuario"> | number
   nombres?: Prisma.StringFilter<"Usuario"> | string
   apellido?: Prisma.StringFilter<"Usuario"> | string
+  creado?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   administrador?: Prisma.XOR<Prisma.AdministradorNullableScalarRelationFilter, Prisma.AdministradorWhereInput> | null
   alumno?: Prisma.XOR<Prisma.AlumnoNullableScalarRelationFilter, Prisma.AlumnoWhereInput> | null
   docente?: Prisma.XOR<Prisma.DocenteNullableScalarRelationFilter, Prisma.DocenteWhereInput> | null
@@ -209,6 +217,7 @@ export type UsuarioOrderByWithRelationInput = {
   id_usuario?: Prisma.SortOrder
   nombres?: Prisma.SortOrder
   apellido?: Prisma.SortOrder
+  creado?: Prisma.SortOrder
   administrador?: Prisma.AdministradorOrderByWithRelationInput
   alumno?: Prisma.AlumnoOrderByWithRelationInput
   docente?: Prisma.DocenteOrderByWithRelationInput
@@ -222,6 +231,7 @@ export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UsuarioWhereInput | Prisma.UsuarioWhereInput[]
   nombres?: Prisma.StringFilter<"Usuario"> | string
   apellido?: Prisma.StringFilter<"Usuario"> | string
+  creado?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   administrador?: Prisma.XOR<Prisma.AdministradorNullableScalarRelationFilter, Prisma.AdministradorWhereInput> | null
   alumno?: Prisma.XOR<Prisma.AlumnoNullableScalarRelationFilter, Prisma.AlumnoWhereInput> | null
   docente?: Prisma.XOR<Prisma.DocenteNullableScalarRelationFilter, Prisma.DocenteWhereInput> | null
@@ -231,6 +241,7 @@ export type UsuarioOrderByWithAggregationInput = {
   id_usuario?: Prisma.SortOrder
   nombres?: Prisma.SortOrder
   apellido?: Prisma.SortOrder
+  creado?: Prisma.SortOrder
   _count?: Prisma.UsuarioCountOrderByAggregateInput
   _avg?: Prisma.UsuarioAvgOrderByAggregateInput
   _max?: Prisma.UsuarioMaxOrderByAggregateInput
@@ -245,11 +256,13 @@ export type UsuarioScalarWhereWithAggregatesInput = {
   id_usuario?: Prisma.IntWithAggregatesFilter<"Usuario"> | number
   nombres?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
   apellido?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
+  creado?: Prisma.DateTimeWithAggregatesFilter<"Usuario"> | Date | string
 }
 
 export type UsuarioCreateInput = {
   nombres: string
   apellido: string
+  creado?: Date | string
   administrador?: Prisma.AdministradorCreateNestedOneWithoutUsuarioInput
   alumno?: Prisma.AlumnoCreateNestedOneWithoutUsuarioInput
   docente?: Prisma.DocenteCreateNestedOneWithoutUsuarioInput
@@ -259,6 +272,7 @@ export type UsuarioUncheckedCreateInput = {
   id_usuario?: number
   nombres: string
   apellido: string
+  creado?: Date | string
   administrador?: Prisma.AdministradorUncheckedCreateNestedOneWithoutUsuarioInput
   alumno?: Prisma.AlumnoUncheckedCreateNestedOneWithoutUsuarioInput
   docente?: Prisma.DocenteUncheckedCreateNestedOneWithoutUsuarioInput
@@ -267,6 +281,7 @@ export type UsuarioUncheckedCreateInput = {
 export type UsuarioUpdateInput = {
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  creado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   administrador?: Prisma.AdministradorUpdateOneWithoutUsuarioNestedInput
   alumno?: Prisma.AlumnoUpdateOneWithoutUsuarioNestedInput
   docente?: Prisma.DocenteUpdateOneWithoutUsuarioNestedInput
@@ -276,6 +291,7 @@ export type UsuarioUncheckedUpdateInput = {
   id_usuario?: Prisma.IntFieldUpdateOperationsInput | number
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  creado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   administrador?: Prisma.AdministradorUncheckedUpdateOneWithoutUsuarioNestedInput
   alumno?: Prisma.AlumnoUncheckedUpdateOneWithoutUsuarioNestedInput
   docente?: Prisma.DocenteUncheckedUpdateOneWithoutUsuarioNestedInput
@@ -285,17 +301,20 @@ export type UsuarioCreateManyInput = {
   id_usuario?: number
   nombres: string
   apellido: string
+  creado?: Date | string
 }
 
 export type UsuarioUpdateManyMutationInput = {
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  creado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UsuarioUncheckedUpdateManyInput = {
   id_usuario?: Prisma.IntFieldUpdateOperationsInput | number
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  creado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UsuarioOrderByRelevanceInput = {
@@ -308,6 +327,7 @@ export type UsuarioCountOrderByAggregateInput = {
   id_usuario?: Prisma.SortOrder
   nombres?: Prisma.SortOrder
   apellido?: Prisma.SortOrder
+  creado?: Prisma.SortOrder
 }
 
 export type UsuarioAvgOrderByAggregateInput = {
@@ -318,12 +338,14 @@ export type UsuarioMaxOrderByAggregateInput = {
   id_usuario?: Prisma.SortOrder
   nombres?: Prisma.SortOrder
   apellido?: Prisma.SortOrder
+  creado?: Prisma.SortOrder
 }
 
 export type UsuarioMinOrderByAggregateInput = {
   id_usuario?: Prisma.SortOrder
   nombres?: Prisma.SortOrder
   apellido?: Prisma.SortOrder
+  creado?: Prisma.SortOrder
 }
 
 export type UsuarioSumOrderByAggregateInput = {
@@ -337,6 +359,10 @@ export type UsuarioScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -392,6 +418,7 @@ export type UsuarioUpdateOneRequiredWithoutAlumnoNestedInput = {
 export type UsuarioCreateWithoutAdministradorInput = {
   nombres: string
   apellido: string
+  creado?: Date | string
   alumno?: Prisma.AlumnoCreateNestedOneWithoutUsuarioInput
   docente?: Prisma.DocenteCreateNestedOneWithoutUsuarioInput
 }
@@ -400,6 +427,7 @@ export type UsuarioUncheckedCreateWithoutAdministradorInput = {
   id_usuario?: number
   nombres: string
   apellido: string
+  creado?: Date | string
   alumno?: Prisma.AlumnoUncheckedCreateNestedOneWithoutUsuarioInput
   docente?: Prisma.DocenteUncheckedCreateNestedOneWithoutUsuarioInput
 }
@@ -423,6 +451,7 @@ export type UsuarioUpdateToOneWithWhereWithoutAdministradorInput = {
 export type UsuarioUpdateWithoutAdministradorInput = {
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  creado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alumno?: Prisma.AlumnoUpdateOneWithoutUsuarioNestedInput
   docente?: Prisma.DocenteUpdateOneWithoutUsuarioNestedInput
 }
@@ -431,6 +460,7 @@ export type UsuarioUncheckedUpdateWithoutAdministradorInput = {
   id_usuario?: Prisma.IntFieldUpdateOperationsInput | number
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  creado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alumno?: Prisma.AlumnoUncheckedUpdateOneWithoutUsuarioNestedInput
   docente?: Prisma.DocenteUncheckedUpdateOneWithoutUsuarioNestedInput
 }
@@ -438,6 +468,7 @@ export type UsuarioUncheckedUpdateWithoutAdministradorInput = {
 export type UsuarioCreateWithoutDocenteInput = {
   nombres: string
   apellido: string
+  creado?: Date | string
   administrador?: Prisma.AdministradorCreateNestedOneWithoutUsuarioInput
   alumno?: Prisma.AlumnoCreateNestedOneWithoutUsuarioInput
 }
@@ -446,6 +477,7 @@ export type UsuarioUncheckedCreateWithoutDocenteInput = {
   id_usuario?: number
   nombres: string
   apellido: string
+  creado?: Date | string
   administrador?: Prisma.AdministradorUncheckedCreateNestedOneWithoutUsuarioInput
   alumno?: Prisma.AlumnoUncheckedCreateNestedOneWithoutUsuarioInput
 }
@@ -469,6 +501,7 @@ export type UsuarioUpdateToOneWithWhereWithoutDocenteInput = {
 export type UsuarioUpdateWithoutDocenteInput = {
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  creado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   administrador?: Prisma.AdministradorUpdateOneWithoutUsuarioNestedInput
   alumno?: Prisma.AlumnoUpdateOneWithoutUsuarioNestedInput
 }
@@ -477,6 +510,7 @@ export type UsuarioUncheckedUpdateWithoutDocenteInput = {
   id_usuario?: Prisma.IntFieldUpdateOperationsInput | number
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  creado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   administrador?: Prisma.AdministradorUncheckedUpdateOneWithoutUsuarioNestedInput
   alumno?: Prisma.AlumnoUncheckedUpdateOneWithoutUsuarioNestedInput
 }
@@ -484,6 +518,7 @@ export type UsuarioUncheckedUpdateWithoutDocenteInput = {
 export type UsuarioCreateWithoutAlumnoInput = {
   nombres: string
   apellido: string
+  creado?: Date | string
   administrador?: Prisma.AdministradorCreateNestedOneWithoutUsuarioInput
   docente?: Prisma.DocenteCreateNestedOneWithoutUsuarioInput
 }
@@ -492,6 +527,7 @@ export type UsuarioUncheckedCreateWithoutAlumnoInput = {
   id_usuario?: number
   nombres: string
   apellido: string
+  creado?: Date | string
   administrador?: Prisma.AdministradorUncheckedCreateNestedOneWithoutUsuarioInput
   docente?: Prisma.DocenteUncheckedCreateNestedOneWithoutUsuarioInput
 }
@@ -515,6 +551,7 @@ export type UsuarioUpdateToOneWithWhereWithoutAlumnoInput = {
 export type UsuarioUpdateWithoutAlumnoInput = {
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  creado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   administrador?: Prisma.AdministradorUpdateOneWithoutUsuarioNestedInput
   docente?: Prisma.DocenteUpdateOneWithoutUsuarioNestedInput
 }
@@ -523,6 +560,7 @@ export type UsuarioUncheckedUpdateWithoutAlumnoInput = {
   id_usuario?: Prisma.IntFieldUpdateOperationsInput | number
   nombres?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  creado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   administrador?: Prisma.AdministradorUncheckedUpdateOneWithoutUsuarioNestedInput
   docente?: Prisma.DocenteUncheckedUpdateOneWithoutUsuarioNestedInput
 }
@@ -533,6 +571,7 @@ export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id_usuario?: boolean
   nombres?: boolean
   apellido?: boolean
+  creado?: boolean
   administrador?: boolean | Prisma.Usuario$administradorArgs<ExtArgs>
   alumno?: boolean | Prisma.Usuario$alumnoArgs<ExtArgs>
   docente?: boolean | Prisma.Usuario$docenteArgs<ExtArgs>
@@ -544,9 +583,10 @@ export type UsuarioSelectScalar = {
   id_usuario?: boolean
   nombres?: boolean
   apellido?: boolean
+  creado?: boolean
 }
 
-export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_usuario" | "nombres" | "apellido", ExtArgs["result"]["usuario"]>
+export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_usuario" | "nombres" | "apellido" | "creado", ExtArgs["result"]["usuario"]>
 export type UsuarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   administrador?: boolean | Prisma.Usuario$administradorArgs<ExtArgs>
   alumno?: boolean | Prisma.Usuario$alumnoArgs<ExtArgs>
@@ -564,6 +604,7 @@ export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id_usuario: number
     nombres: string
     apellido: string
+    creado: Date
   }, ExtArgs["result"]["usuario"]>
   composites: {}
 }
@@ -939,6 +980,7 @@ export interface UsuarioFieldRefs {
   readonly id_usuario: Prisma.FieldRef<"Usuario", 'Int'>
   readonly nombres: Prisma.FieldRef<"Usuario", 'String'>
   readonly apellido: Prisma.FieldRef<"Usuario", 'String'>
+  readonly creado: Prisma.FieldRef<"Usuario", 'DateTime'>
 }
     
 

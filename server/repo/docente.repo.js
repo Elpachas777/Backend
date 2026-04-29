@@ -68,20 +68,10 @@ export const validarCorreo = (id) => {
 
 export const consultarDocentes = () => {
   return prisma.docente.findMany({
-    select: {
-      id_docente: true,
-      correo: true,
+    include: {
+      usuario: true,
       escuela: true,
-      usuario: {
-        select: {
-          nombres: true,
-        },
-      },
-      escuela: {
-        select: {
-          nombre: true,
-        },
-      },
+      grupos: true,
     },
   });
 };
