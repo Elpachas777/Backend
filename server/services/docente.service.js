@@ -98,7 +98,6 @@ export const verInfoDocente = async (data) => {
 export const verInfoDocentes = async () => {
   try {
     const docentes = await consultarDocentes();
-    console.log(docentes);
     if (!docentes) {
       throw new ApiError(
         "La petición devuelve un registro vacio",
@@ -109,10 +108,15 @@ export const verInfoDocentes = async () => {
 
     const docentesInfo = docentes.map((datos) => ({
       id: datos.id_docente,
-      nombres: datos.usuario.nombres,
+      nombre: datos.usuario.nombres,
       apellidos: datos.usuario.apellido,
       correo: datos.correo,
-      escuela: datos.escuela,
+      password: datos.contraseña,
+      escuela: datos.escuela.nombre,
+      grupos: datos.grupos.map((propiedades) => ({
+        id: propiedades.id_grupo,
+        nombre: propiedades.nombre_grupo,
+      })),
     }));
 
     return docentesInfo;
