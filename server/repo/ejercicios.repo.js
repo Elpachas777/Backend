@@ -12,14 +12,14 @@ export const crearEjercicio = (
       contenido: contenido,
       docente: {
         connect: {
-          id_docente: Number(id)
-        }
+          id_docente: Number(id),
+        },
       },
       tipo: {
-        connect:{
-          id_tipo : Number(tipo)
-        }
-      }
-    }
+        connect: {
+          id_tipo: Number(tipo),
+        },
+      },
+    },
   });
 };
