@@ -543,10 +543,6 @@ export type EjercicioUncheckedUpdateManyWithoutGrupoNestedInput = {
   deleteMany?: Prisma.EjercicioScalarWhereInput | Prisma.EjercicioScalarWhereInput[]
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type EjercicioCreateNestedManyWithoutTipoInput = {
   create?: Prisma.XOR<Prisma.EjercicioCreateWithoutTipoInput, Prisma.EjercicioUncheckedCreateWithoutTipoInput> | Prisma.EjercicioCreateWithoutTipoInput[] | Prisma.EjercicioUncheckedCreateWithoutTipoInput[]
   connectOrCreate?: Prisma.EjercicioCreateOrConnectWithoutTipoInput | Prisma.EjercicioCreateOrConnectWithoutTipoInput[]

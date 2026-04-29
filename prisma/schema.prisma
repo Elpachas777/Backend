@@ -14,6 +14,7 @@ model Usuario {
   administrador Administrador?
   alumno        Alumno?
   docente       Docente?
+  creado        DateTime       @default(now())
 }
 
 model Administrador {
