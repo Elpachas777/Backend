@@ -75,7 +75,6 @@ export const consultarDocentes = () => {
       usuario: {
         select: {
           nombres: true,
-          apellido: true,
         },
       },
       escuela: {
