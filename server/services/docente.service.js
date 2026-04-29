@@ -98,7 +98,7 @@ export const verInfoDocente = async (data) => {
 export const verInfoDocentes = async () => {
   try {
     const docentes = await consultarDocentes();
-
+    console.log(docentes);
     if (!docentes) {
       throw new ApiError(
         "La petición devuelve un registro vacio",
