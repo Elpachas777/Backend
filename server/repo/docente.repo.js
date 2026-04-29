@@ -42,15 +42,15 @@ export const crearDocente = ({
           apellido: apellidos,
         },
       },
-      escuela : {
-        connect : {
-          id_escuela : Number(escuela)
-        }
-      }
+      escuela: {
+        connect: {
+          id_escuela: Number(escuela),
+        },
+      },
     },
     include: {
       usuario: true,
-      escuela: true
+      escuela: true,
     },
   });
 };
@@ -76,6 +76,11 @@ export const consultarDocentes = () => {
         select: {
           nombres: true,
           apellido: true,
+        },
+      },
+      escuela: {
+        select: {
+          nombre: true,
         },
       },
     },
