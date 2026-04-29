@@ -1,5 +1,6 @@
 import { validarTokenCorreo } from "../services/correo.service.js";
 import {
+  actualizarHabilitado,
   editarInfoDocente,
   eliminarDocentePorId,
   registrarNuevoDocente,
@@ -39,7 +40,8 @@ export async function verificarCorreoDocente(req, res, next) {
 
 export async function consultarDocenteInfo(req, res, next) {
   try {
-    const docente = await verInfoDocente(req.params);
+    const { id } = req.params;
+    const docente = await verInfoDocente(id);
     res.status(200).json(docente);
   } catch (error) {
     next(error);
@@ -74,10 +76,27 @@ export async function editarDocenteInfo(req, res, next) {
 
 export async function eliminarDocente(req, res, next) {
   try {
-    await eliminarDocentePorId(req.params);
+    const { id } = req.params;
+    await eliminarDocentePorId(id);
+
     return res.status(200).json({
       tipo: "info",
       mensaje: "Docente eliminado con exito",
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function cambiarHabilitado(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { habilitado } = req.body;
+    await actualizarHabilitado(id, habilitado);
+
+    return res.status(200).json({
+      tipo: "info",
+      mensaje: "Se ha actualizado el estado de habilitado del docente",
     });
   } catch (error) {
     next(error);

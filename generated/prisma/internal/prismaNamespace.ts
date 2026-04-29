@@ -1059,7 +1059,7 @@ export const AdministradorScalarFieldEnum = {
   id_admin: 'id_admin',
   correo: 'correo',
   contraseña: 'contraseña',
-  bloqueado: 'bloqueado',
+  habilitado: 'habilitado',
   usuarioId: 'usuarioId'
 } as const
 
@@ -1071,8 +1071,7 @@ export const DocenteScalarFieldEnum = {
   correo: 'correo',
   contraseña: 'contraseña',
   id_escuela: 'id_escuela',
-  autorizado: 'autorizado',
-  bloqueado: 'bloqueado',
+  habilitado: 'habilitado',
   usuarioId: 'usuarioId'
 } as const
 
