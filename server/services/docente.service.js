@@ -6,18 +6,25 @@ import {
   consultarDocentes,
   crearDocente,
   editarDocente,
+  editarDocenteEscuela,
+  editarDocenteUsuario,
   eliminarDocenteId,
   modificarHabilitado,
+  obtenerContraseña,
   validarCorreo,
 } from "../repo/docente.repo.js";
+import { prisma } from "../utils/db.utils.js";
 import { ApiError } from "../utils/errores.utils.js";
 import {
   controlErrores,
   correoRegistrado,
   docenteId,
   hashear,
+  objetoVacio,
+  quitarVacios,
   remplazarContraseña,
   validarCampos,
+  validarContraseña,
 } from "../utils/utilidad.utils.js";
 
 export const registrarNuevoDocente = async (data) => {
@@ -30,7 +37,7 @@ export const registrarNuevoDocente = async (data) => {
         "apellidos",
         "escuela",
         "correo",
-        "password",
+        "contraseña",
       ]),
     );
     const nuevoDocente = await crearDocente(infoDocente);
@@ -113,7 +120,10 @@ export const verInfoDocentes = async () => {
       apellidos: datos.usuario.apellido,
       correo: datos.correo,
       password: datos.contraseña,
-      escuela: datos.escuela.nombre,
+      escuela: {
+        id: datos.id_escuela,
+        nombre: datos.escuela.nombre,
+      },
       fechaIngreso: datos.usuario.creado,
       habilitado: datos.habilitado,
       grupos: datos.grupos.map((propiedades) => ({
@@ -128,14 +138,37 @@ export const verInfoDocentes = async () => {
   }
 };
 
-export const editarInfoDocente = async (data) => {
+export const editarInfoDocente = async (id, data) => {
   try {
-    docenteId(data.id);
-    const docenteEditado = await editarDocente(data);
+    await docenteId(id);
+    const datosUsuario = quitarVacios(data.usuario);
+    const datosDocente = quitarVacios(data.docente);
+    const { escuela } = data;
 
-    if (!docenteEditado) {
+    const editado = await prisma.$transaction(async (tx) => {
+      if (!objetoVacio(datosUsuario)) {
+        await editarDocenteUsuario(tx, id, datosUsuario);
+      }
+
+      if (!objetoVacio(datosDocente)) {
+        let datos = datosDocente;
+
+        if (Object.hasOwn(datosDocente, "contraseña")) {
+          datos = await remplazarContraseña(datosDocente);
+        }
+
+        await editarDocente(tx, id, datos);
+      }
+
+      if (escuela) {
+        await editarDocenteEscuela(tx, id, escuela);
+      }
+      return "ok";
+    });
+
+    if (!editado) {
       throw new ApiError(
-        "La petición devuelve un registro vacio",
+        "Alguno de los updates falló",
         500,
         "No se pudo editar al docente",
       );
@@ -183,15 +216,33 @@ export const actualizarContraseñaDocente = async (data) => {
 
 export const actualizarHabilitado = async (id, habilitado) => {
   try {
-    const habilitado = await modificarHabilitado(id, habilitado);
+    const cambio = await modificarHabilitado(id, habilitado);
 
-    if (!habilitado) {
+    if (!cambio) {
       throw new ApiError(
         "La petición devuelve un registro vacio",
         500,
         "No se pudo actualizar el estado de habilitado",
       );
     }
+  } catch (error) {
+    controlErrores(error);
+  }
+};
+
+export const comprobarContraseña = async (id, contraseña) => {
+  try {
+    const res = await obtenerContraseña(id);
+
+    if (!res) {
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se pudo encontrar la contraseña del docente",
+      );
+    }
+
+    const validacion = await validarContraseña(contraseña, res.contraseña);
   } catch (error) {
     controlErrores(error);
   }

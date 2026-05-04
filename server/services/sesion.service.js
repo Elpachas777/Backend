@@ -10,7 +10,6 @@ import { actualizarContraseñaDocente } from "./docente.service.js";
 export const login = async ({ correo, password }) => {
   try {
     const admin = await consultarAdminPorCorreo(correo);
-
     if (admin) {
       await validarContraseña(password, admin.contraseña);
 

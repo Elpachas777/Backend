@@ -12,7 +12,6 @@ if (!globalPrisma.prisma) {
     database: process.env.DATABASE_NAME,
     port: Number(process.env.DATABASE_PORT),
     connectionLimit: 10,
-    acquireTimeout: 30000,
     ssl: { rejectUnauthorized: false },
   });
 

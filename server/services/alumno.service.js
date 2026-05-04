@@ -5,45 +5,59 @@ import {
   crearAlumnoGrupo,
   eliminarAlumnoId,
   modificarInfoAlumno,
-  verAlumnosGrupoId
-} from "../repo/alumno.repo.js"
-import { ApiError } from "../utils/errores.utils.js"
-import { alumnoId, controlErrores, validarCampos } from "../utils/utilidad.utils.js"
+  verAlumnosGrupoId,
+} from "../repo/alumno.repo.js";
+import { ApiError } from "../utils/errores.utils.js";
+import {
+  alumnoId,
+  controlErrores,
+  validarCampos,
+} from "../utils/utilidad.utils.js";
 
 export const registrarNuevoAlumno = async (data) => {
   try {
-    const datos = validarCampos(data, ["nombre", "apellidos"])
-    const nuevoAlumno = await crearAlumno(datos)
+    const datos = validarCampos(data, ["nombre", "apellidos"]);
+    const nuevoAlumno = await crearAlumno(datos);
 
     if (!nuevoAlumno) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo registrar al alumno")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se pudo registrar al alumno",
+      );
     }
-
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };
 
 export const registrarConGrupo = async (data) => {
   try {
-    const datos = validarCampos(data, ["idGrupo", "nombre", "apellidos"])
-    const nuevoAlumno = await crearAlumnoGrupo(datos)
+    const datos = validarCampos(data, ["idGrupo", "nombre", "apellidos"]);
+    const nuevoAlumno = await crearAlumnoGrupo(datos);
 
     if (!nuevoAlumno) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se pudo registrar al alumno")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se pudo registrar al alumno",
+      );
     }
-
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
-}
+};
 
 export const verInfoAlumno = async (data) => {
   try {
-    const alumno = await consultarAlumnoPorId(data)
+    const alumno = await consultarAlumnoPorId(data);
 
     if (!alumno) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró al alumno")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se encontró al alumno",
+      );
     }
 
     const alumnoInfo = {
@@ -53,16 +67,20 @@ export const verInfoAlumno = async (data) => {
 
     return alumnoInfo;
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };
 
 export const verInfoAlumnos = async () => {
   try {
-    const alumnos = await consultarAlumnos()
+    const alumnos = await consultarAlumnos();
 
     if (!alumnos) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró a ningun alumno")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se encontró a ningun alumno",
+      );
     }
 
     const alumnosInfo = alumnos.map((datos) => ({
@@ -73,44 +91,56 @@ export const verInfoAlumnos = async () => {
 
     return alumnosInfo;
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
-}
+};
 
 export const editarInfoAlumno = async (data) => {
   try {
-    const alumnoModificado = await modificarInfoAlumno(data)
+    const alumnoModificado = await modificarInfoAlumno(data);
 
     if (!alumnoModificado) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró a ningun alumno para modificar")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se encontró a ningun alumno para modificar",
+      );
     }
 
     return alumnoModificado;
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };
 
 export const eliminarAlumnoPorId = async (data) => {
   try {
-    alumnoId(data.id)
+    await alumnoId(data.id);
 
-    const alumnoEliminado = await eliminarAlumnoId(data)
+    const alumnoEliminado = await eliminarAlumnoId(data.id);
 
     if (!alumnoEliminado) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró a ningun alumno para eliminar")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se encontró a ningun alumno para eliminar",
+      );
     }
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };
 
 export const verAlumnosEnGrupo = async (data) => {
   try {
-    const alumnos = await verAlumnosGrupoId(data)
+    const alumnos = await verAlumnosGrupoId(data);
 
     if (!alumnos) {
-      throw new ApiError("La petición devuelve un registro vacio", 500, "No se encontró a ningun alumno")
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        500,
+        "No se encontró a ningun alumno",
+      );
     }
 
     const alumnosInfo = alumnos.map((datos) => ({
@@ -119,8 +149,8 @@ export const verAlumnosEnGrupo = async (data) => {
       apellidos: datos.usuario.apellido,
     }));
 
-    return alumnosInfo
+    return alumnosInfo;
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
-}
+};

@@ -12,7 +12,7 @@ export const verificarToken = (token) => {
       );
     }
     const tokenDatos = verificarTokenAuth(token);
-    return tokenDatos.rol;
+    return tokenDatos;
   } catch (error) {
     throw new ApiError(error.message, 500, "Error al verificar el token");
   }

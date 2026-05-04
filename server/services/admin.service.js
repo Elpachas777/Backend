@@ -1,12 +1,11 @@
-import {
-  crearAdministrador,
-  modificarContraseñaAdministrador,
-} from "../repo/admin.repo.js";
+import * as repo from "../repo/admin.repo.js";
+import { consultarDocentePorId } from "../repo/docente.repo.js";
 import { ApiError } from "../utils/errores.utils.js";
 import {
   controlErrores,
   remplazarContraseña,
   validarCampos,
+  validarContraseña,
 } from "../utils/utilidad.utils.js";
 
 export const registrarNuevoAdministrador = async (data) => {
@@ -15,7 +14,7 @@ export const registrarNuevoAdministrador = async (data) => {
       validarCampos(data, ["correo", "password", "nombres", "apellido"]),
     );
 
-    const nuevoAdministrador = await crearAdministrador(infoAdmin);
+    const nuevoAdministrador = await repo.crearAdministrador(infoAdmin);
 
     if (!nuevoAdministrador) {
       throw new ApiError(
@@ -29,9 +28,26 @@ export const registrarNuevoAdministrador = async (data) => {
   }
 };
 
+export const verificar = async (id, rol, contraseña) => {
+  try {
+    let contraseñaHash = "";
+
+    if (rol == "admin") {
+      const administrador = await repo.obtener(id);
+      contraseñaHash = administrador.contraseña;
+    } else if (rol == "docente") {
+      const docente = await consultarDocentePorId(id);
+      contraseñaHash = docente.contraseña;
+    }
+    await validarContraseña(contraseña, contraseñaHash);
+  } catch (error) {
+    controlErrores(error);
+  }
+};
+
 export const actualizarContraseñaAdministador = async (data) => {
   try {
-    const modificado = await modificarContraseñaAdministrador(
+    const modificado = await repo.modificarContraseñaAdministrador(
       data.correo,
       hashear(data.password),
     );

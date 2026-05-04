@@ -78,7 +78,7 @@ export const consultarAlumnos = () => {
   });
 };
 
-export const modificarInfoAlumno = ({ id, nombre, apellidos }) => {
+export const modificarInfoAlumno = ({ id, nombres, apellidos }) => {
   return prisma.alumno.update({
     where: {
       id_alumno: Number(id),
@@ -86,7 +86,7 @@ export const modificarInfoAlumno = ({ id, nombre, apellidos }) => {
     data: {
       usuario: {
         update: {
-          nombres: nombre,
+          nombres: nombres,
           apellido: apellidos,
         },
       },
@@ -101,7 +101,7 @@ export const modificarInfoAlumno = ({ id, nombre, apellidos }) => {
   });
 };
 
-export const eliminarAlumnoId = ({ id }) => {
+export const eliminarAlumnoId = (id) => {
   return prisma.alumno.delete({
     where: {
       id_alumno: Number(id),

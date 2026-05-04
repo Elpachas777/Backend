@@ -15,6 +15,14 @@ export const crearAdministrador = ({ correo, password, nombres, apellido }) => {
   });
 };
 
+export const obtener = (id) => {
+  return prisma.administrador.findUnique({
+    where: {
+      id_admin: Number(id),
+    },
+  });
+};
+
 export const consultarAdminPorId = (id) => {
   return prisma.administrador.findUnique({
     where: {
