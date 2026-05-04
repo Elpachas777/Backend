@@ -1,10 +1,15 @@
 import { prisma } from "../utils/db.utils.js";
 
-export const crearAdministrador = ({ correo, password, nombres, apellido }) => {
+export const crearAdministrador = ({
+  correo,
+  contraseña,
+  nombres,
+  apellido,
+}) => {
   return prisma.administrador.create({
     data: {
       correo: correo,
-      contraseña: password,
+      contraseña: contraseña,
       usuario: {
         create: {
           nombres: nombres,
