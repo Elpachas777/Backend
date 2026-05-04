@@ -1083,8 +1083,9 @@ export const EscuelaScalarFieldEnum = {
   nombre: 'nombre',
   ubicacion: 'ubicacion',
   director: 'director',
+  logo: 'logo',
   contacto: 'contacto',
-  contado_adicional: 'contado_adicional'
+  contacto_adicional: 'contacto_adicional'
 } as const
 
 export type EscuelaScalarFieldEnum = (typeof EscuelaScalarFieldEnum)[keyof typeof EscuelaScalarFieldEnum]
@@ -1193,8 +1194,9 @@ export const EscuelaOrderByRelevanceFieldEnum = {
   nombre: 'nombre',
   ubicacion: 'ubicacion',
   director: 'director',
+  logo: 'logo',
   contacto: 'contacto',
-  contado_adicional: 'contado_adicional'
+  contacto_adicional: 'contacto_adicional'
 } as const
 
 export type EscuelaOrderByRelevanceFieldEnum = (typeof EscuelaOrderByRelevanceFieldEnum)[keyof typeof EscuelaOrderByRelevanceFieldEnum]

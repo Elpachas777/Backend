@@ -1,10 +1,10 @@
 import {
-  registrarNuevoAlumno,
-  verInfoAlumno,
-  verInfoAlumnos,
   editarInfoAlumno,
   eliminarAlumnoPorId,
+  registrarNuevoAlumno,
   verAlumnosEnGrupo,
+  verInfoAlumno,
+  verInfoAlumnos,
 } from "../services/alumno.service.js";
 
 export async function registrarAlumno(req, res, next) {
@@ -13,10 +13,10 @@ export async function registrarAlumno(req, res, next) {
 
     return res.status(200).json({
       tipo: "success",
-      mensaje: "Alumno registrado con exito"
+      mensaje: "Alumno registrado con exito",
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
@@ -25,7 +25,7 @@ export async function consultarAlumnoInfo(req, res, next) {
     const respuesta = await verInfoAlumno(req.params);
     return res.status(200).json(respuesta);
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
@@ -34,25 +34,25 @@ export async function consultarAlumnosInfo(req, res, next) {
     const resultado = await verInfoAlumnos();
     return res.status(200).json(resultado);
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
 export async function modificarAlumno(req, res, next) {
   try {
     const { id } = req.params;
-    const { nombre, apellidos } = req.body;
+    const { nombres, apellidos } = req.body;
 
-    const data = { id, nombre, apellidos };
+    const data = { id, nombres, apellidos };
 
     await editarInfoAlumno(data);
 
     return res.status(200).json({
       tipo: "info",
-      mensaje: "Alumno editado con exito"
+      mensaje: "Alumno editado con exito",
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
@@ -61,10 +61,10 @@ export async function eliminarAlumno(req, res, next) {
     await eliminarAlumnoPorId(req.params);
     return res.status(200).json({
       tipo: "info",
-      mensaje: "Alumno eliminado con exito"
+      mensaje: "Alumno eliminado con exito",
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
@@ -73,8 +73,7 @@ export async function verAlumnosGrupo(req, res, next) {
     const respuesta = await verAlumnosEnGrupo(req.params);
 
     return res.status(200).json(respuesta);
-
   } catch (error) {
-    next(error)
+    next(error);
   }
 }

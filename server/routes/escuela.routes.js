@@ -1,8 +1,16 @@
-import { Router } from "express"
-import { verEscuelas } from "../controllers/escuela.controller.js"
+import { Router } from "express";
+import {
+  actualizar,
+  crear,
+  eliminar,
+  listar,
+} from "../controllers/escuela.controller.js";
 
-const router = Router()
+const router = Router();
 
-router.get("/verEscuelas", verEscuelas)
+router.post("/registrarEscuela", crear);
+router.get("/verEscuelas", listar);
+router.put("/actualizarEscuela/:id", actualizar);
+router.delete("/eliminarEscuela/:id", eliminar);
 
-export default router
+export default router;

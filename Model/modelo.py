@@ -2,6 +2,11 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 import matplotlib.pyplot as plt
 import math
+import numpy as np
+import seaborn as sns
+from sklearn.metrics import confusion_matrix
+import string
+
 
 TAMANO_LOTE=32
 
@@ -29,22 +34,32 @@ datos_pruebas = datos['test'].filter(filtrar_letras).map(arreglar_orientacion).m
 modelo = tf.keras.Sequential([
     tf.keras.layers.Input(shape=(28, 28, 1)),
 
-    tf.keras.layers.Conv2D(32,(3,3),activation='relu'),
-    tf.keras.layers.MaxPooling2D(2,2),
+    tf.keras.layers.Conv2D(32,(3,3), padding="same"),
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.Activation("relu"),
+    tf.keras.layers.MaxPooling2D(),
     
     tf.keras.layers.Conv2D(64,(3,3),activation='relu'),
-    tf.keras.layers.MaxPooling2D(2,2),
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.Activation("relu"),
+    tf.keras.layers.MaxPooling2D(),
 
-    tf.keras.layers.Dropout(0.3),
-    tf.keras.layers.Flatten(),
+    tf.keras.layers.Conv2D(128,(3,3),activation='relu'),
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.Activation("relu"),
+    tf.keras.layers.MaxPooling2D(),
+
+    tf.keras.layers.GlobalAveragePooling2D(),
+
     tf.keras.layers.Dense(units=128, activation='relu'),
+    tf.keras.layers.Dropout(0.5),
 
     tf.keras.layers.Dense(26, activation='softmax')
 ]
 )
 
 modelo.compile(
-    optimizer = "adam",
+    optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
     loss = "sparse_categorical_crossentropy",
     metrics = ['accuracy']
 )
@@ -62,12 +77,18 @@ parar = tf.keras.callbacks.EarlyStopping(
     restore_best_weights=True
 )
 
+lr_scheduler = tf.keras.callbacks.ReduceLROnPlateau(
+    monitor='val_loss',
+    factor=0.3,
+    patience=3
+)
+
 historial = modelo.fit(
     datos_entrenamiento,
     epochs = 20,
     validation_data= datos_pruebas,
     steps_per_epoch= math.ceil(num_datos_entrenamiento/TAMANO_LOTE),
-    callbacks = [parar]
+    callbacks=[parar, lr_scheduler]
 )
 
 print("Modelo entrenado")
@@ -86,6 +107,57 @@ plt.show()
 plt.plot(loss, label='Train Loss')
 plt.plot(val_loss, label='Val Loss')
 plt.legend()
+plt.show()
+
+y_true = []
+y_pred = []
+
+for imagenes, etiquetas in datos_pruebas:
+    predicciones = modelo.predict(imagenes, verbose=0)
+    predicciones = np.argmax(predicciones, axis=1)
+
+    y_true.extend(etiquetas.numpy())
+    y_pred.extend(predicciones)
+
+# 🔹 Crear matriz
+matriz_confusion = confusion_matrix(y_true, y_pred)
+
+# 🔹 Etiquetas A-Z
+letras = list(string.ascii_uppercase)
+
+# 🔹 Heatmap con valores
+plt.figure(figsize=(12,10))
+sns.heatmap(
+    matriz_confusion,
+    xticklabels=letras,
+    yticklabels=letras,
+    cmap='Blues',
+    annot=True,          # 👈 números dentro
+    fmt='d',             # enteros
+    annot_kws={"size":6} # 👈 texto más pequeño (importante con 26 clases)
+)
+plt.xlabel('Predicción')
+plt.ylabel('Etiqueta real')
+plt.title('Matriz de Confusión (valores absolutos)')
+plt.show()
+
+
+# 🔥 OPCIONAL: versión normalizada (porcentaje)
+matriz_norm = matriz_confusion.astype('float') / matriz_confusion.sum(axis=1)[:, np.newaxis]
+
+plt.figure(figsize=(12,10))
+sns.heatmap(
+    matriz_norm,
+    xticklabels=letras,
+    yticklabels=letras,
+    cmap='Blues',
+    annot=True,
+    fmt='.2f',
+    annot_kws={"size":6}
+)
+plt.xlabel('Predicción')
+plt.ylabel('Etiqueta real')
+plt.title('Matriz de Confusión (normalizada)')
 plt.show()
 
 modelo.export("Model/Modelo_Letras")

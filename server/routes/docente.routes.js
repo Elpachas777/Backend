@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   cambiarHabilitado,
+  checarContraseña,
   consultarDocenteInfo,
   consultarDocentesInfo,
   editarDocenteInfo,
@@ -18,5 +19,6 @@ router.get("/verDocente/:id", consultarDocenteInfo);
 router.delete("/eliminarDocente/:id", eliminarDocente);
 router.put("/editarDocente/:id", editarDocenteInfo);
 router.put("/cambiarHabilitado/:id", cambiarHabilitado);
+router.put("/verificarContra/:id", checarContraseña);
 
 export default router;

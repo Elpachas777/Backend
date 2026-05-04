@@ -93,10 +93,10 @@ export const editarInfoGrupo = async (data) => {
   }
 };
 
-export const eliminarGrupoId = async (data) => {
+export const eliminarGrupoId = async (id) => {
   try {
-    grupoId(data.id);
-    const grupoEliminado = await eliminarGrupoPorId(data.id);
+    await grupoId(id);
+    const grupoEliminado = await eliminarGrupoPorId(id);
 
     if (!grupoEliminado) {
       throw new ApiError(

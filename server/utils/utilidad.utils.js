@@ -57,7 +57,7 @@ export async function validarContraseña(contraseña, contraseñaHash) {
 }
 
 export async function remplazarContraseña(info) {
-  return { ...info, password: await hashear(info.password) };
+  return { ...info, contraseña: await hashear(info.contraseña) };
 }
 
 export function controlErrores(error) {
@@ -115,5 +115,21 @@ export async function grupoId(id) {
       500,
       "No se encontró el grupo",
     );
+  }
+}
+
+export function quitarVacios(datos) {
+  return Object.fromEntries(
+    Object.entries(datos).filter(([_, valor]) => valor),
+  );
+}
+
+export function objetoVacio(objeto) {
+  return Object.keys(objeto).length == 0;
+}
+
+export function peticionVacia(respuesta, mensaje) {
+  if (!respuesta) {
+    throw new ApiError("La petición devuelve un registro vacio", 500, mensaje);
   }
 }

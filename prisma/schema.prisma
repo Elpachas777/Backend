@@ -41,13 +41,14 @@ model Docente {
 }
 
 model Escuela {
-  id_escuela        Int       @id @default(autoincrement())
-  nombre            String
-  ubicacion         String?
-  director          String?
-  contacto          String?
-  contado_adicional String?
-  docentes          Docente[]
+  id_escuela         Int       @id @default(autoincrement())
+  nombre             String
+  ubicacion          String?
+  director           String?
+  logo               String?
+  contacto           String?
+  contacto_adicional String?
+  docentes           Docente[]
 }
 
 model Alumno {

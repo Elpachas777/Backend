@@ -1,3 +1,4 @@
+import { verificarToken } from "../services/credenciales.service.js";
 import {
   agregarAlumnoGrupo,
   crearGrupoNuevo,
@@ -9,7 +10,9 @@ import {
 
 export const registrarGrupo = async (req, res, next) => {
   try {
-    const { id } = req.user.sesion;
+    const token = req.cookies.access_token;
+
+    const { id } = verificarToken(token);
     const { nombre, turno } = req.body;
     const data = { id, nombre, turno };
 
@@ -62,7 +65,8 @@ export const editarGrupoInfo = async (req, res, next) => {
 
 export const eliminarGrupo = async (req, res, next) => {
   try {
-    await eliminarGrupoId(req.params);
+    const { id } = req.params;
+    await eliminarGrupoId(id);
 
     return res.status(200).json({
       tipo: "info",

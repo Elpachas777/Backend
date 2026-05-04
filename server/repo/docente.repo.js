@@ -5,14 +5,9 @@ export const consultarDocentePorId = (id) => {
     where: {
       id_docente: Number(id),
     },
-    select: {
+    include: {
+      usuario: true,
       escuela: true,
-      usuario: {
-        select: {
-          nombres: true,
-          apellido: true,
-        },
-      },
     },
   });
 };
@@ -27,7 +22,7 @@ export const consultarDocentePorCorreo = (correo) => {
 
 export const crearDocente = ({
   correo,
-  password,
+  contraseña,
   escuela,
   nombres,
   apellidos,
@@ -35,7 +30,7 @@ export const crearDocente = ({
   return prisma.docente.create({
     data: {
       correo: correo,
-      contraseña: password,
+      contraseña: contraseña,
       usuario: {
         create: {
           nombres: nombres,
@@ -76,22 +71,45 @@ export const consultarDocentes = () => {
   });
 };
 
-export const editarDocente = ({ id, escuela, nombres, apellidos }) => {
-  return prisma.docente.update({
+export const editarDocente = (db, id, data) => {
+  return db.docente.update({
+    where: {
+      id_docente: Number(id),
+    },
+    data: data,
+  });
+};
+
+export const editarDocenteUsuario = (db, id, data) => {
+  return db.docente.update({
     where: {
       id_docente: Number(id),
     },
     data: {
-      escuela: escuela,
       usuario: {
-        update: {
-          nombres: nombres,
-          apellido: apellidos,
-        },
+        update: data,
       },
     },
     include: {
       usuario: true,
+    },
+  });
+};
+
+export const editarDocenteEscuela = (db, id, escuela) => {
+  return db.docente.update({
+    where: {
+      id_docente: Number(id),
+    },
+    data: {
+      escuela: {
+        connect: {
+          id_escuela: Number(escuela),
+        },
+      },
+    },
+    include: {
+      escuela: true,
     },
   });
 };
@@ -118,10 +136,21 @@ export const modificarContraseñaDocente = (correo, passwordHash) => {
 export const modificarHabilitado = (id, habilitado) => {
   return prisma.docente.update({
     where: {
-      id_docente: id,
+      id_docente: Number(id),
     },
     data: {
       habilitado: habilitado,
+    },
+  });
+};
+
+export const obtenerContraseña = (id) => {
+  return prisma.docente.findUnique({
+    where: {
+      id_docente: Number(id),
+    },
+    select: {
+      contraseña: true,
     },
   });
 };
