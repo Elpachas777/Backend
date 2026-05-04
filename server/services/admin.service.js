@@ -11,7 +11,7 @@ import {
 export const registrarNuevoAdministrador = async (data) => {
   try {
     const infoAdmin = await remplazarContraseña(
-      validarCampos(data, ["correo", "password", "nombres", "apellido"]),
+      validarCampos(data, ["correo", "contraseña", "nombres", "apellido"]),
     );
 
     const nuevoAdministrador = await repo.crearAdministrador(infoAdmin);
