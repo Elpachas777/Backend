@@ -23,3 +23,12 @@ export const crearEjercicio = (
     },
   });
 };
+
+export const listarTipos = () => {
+  return prisma.tipoEjercicio.findMany({
+    select: {
+      id_tipo: true,
+      nombre: true,
+    },
+  });
+};
