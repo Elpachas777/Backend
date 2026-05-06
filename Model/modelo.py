@@ -31,8 +31,17 @@ datos, metadatos = tfds.load('emnist/byclass', as_supervised=True, with_info=Tru
 datos_entrenamiento = datos['train'].filter(filtrar_letras).map(arreglar_orientacion).map(normalizar).map(ajustar_etiquetas)
 datos_pruebas = datos['test'].filter(filtrar_letras).map(arreglar_orientacion).map(normalizar).map(ajustar_etiquetas)
 
+data_augmentation = tf.keras.Sequential([
+    tf.keras.layers.RandomRotation(0.05),
+    tf.keras.layers.RandomZoom(0.05),
+    tf.keras.layers.RandomTranslation(0.05, 0.05),
+])
+
+
 modelo = tf.keras.Sequential([
     tf.keras.layers.Input(shape=(28, 28, 1)),
+
+    data_augmentation,
 
     tf.keras.layers.Conv2D(32,(3,3), padding="same"),
     tf.keras.layers.BatchNormalization(),
@@ -44,7 +53,7 @@ modelo = tf.keras.Sequential([
     tf.keras.layers.Activation("relu"),
     tf.keras.layers.MaxPooling2D(),
 
-    tf.keras.layers.Conv2D(128,(3,3),activation='relu'),
+    tf.keras.layers.Conv2D(160,(3,3),activation='relu'),
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.Activation("relu"),
     tf.keras.layers.MaxPooling2D(),
