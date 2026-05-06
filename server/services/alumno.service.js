@@ -14,10 +14,11 @@ import {
   validarCampos,
 } from "../utils/utilidad.utils.js";
 
-export const registrarNuevoAlumno = async (data) => {
+export const registrarNuevoAlumno = async (id, data) => {
   try {
     const datos = validarCampos(data, ["nombre", "apellidos"]);
-    const nuevoAlumno = await crearAlumno(datos);
+    
+    const nuevoAlumno = await crearAlumno(id, datos);
 
     if (!nuevoAlumno) {
       throw new ApiError(
@@ -71,9 +72,9 @@ export const verInfoAlumno = async (data) => {
   }
 };
 
-export const verInfoAlumnos = async () => {
+export const verInfoAlumnos = async (id) => {
   try {
-    const alumnos = await consultarAlumnos();
+    const alumnos = await consultarAlumnos(id);
 
     if (!alumnos) {
       throw new ApiError(

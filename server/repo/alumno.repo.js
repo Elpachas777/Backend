@@ -1,6 +1,6 @@
 import { prisma } from "../utils/db.utils.js";
 
-export const crearAlumno = ({ nombre, apellidos }) => {
+export const crearAlumno = (id, { nombre, apellidos }) => {
   return prisma.alumno.create({
     data: {
       usuario: {
@@ -9,6 +9,11 @@ export const crearAlumno = ({ nombre, apellidos }) => {
           apellido: apellidos,
         },
       },
+      docente:{
+        connect:{
+          id_docente: Number(id)
+        }
+      }
     },
     include: {
       usuario: true,
@@ -64,8 +69,11 @@ export const consultarAlumnoPorId = ({ id }) => {
   });
 };
 
-export const consultarAlumnos = () => {
+export const consultarAlumnos = (id) => {
   return prisma.alumno.findMany({
+    where:{
+      id_docente : Number(id)
+    },
     select: {
       id_alumno: true,
       usuario: {

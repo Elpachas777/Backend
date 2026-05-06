@@ -44,6 +44,9 @@ export const consultarAdminPorCorreo = (correo) => {
     where: {
       correo: correo,
     },
+    include:{
+      usuario: true
+    }
   });
 };
 

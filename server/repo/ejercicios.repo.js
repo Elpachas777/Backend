@@ -42,12 +42,16 @@ export const listarTipos = () => {
   });
 };
 
-export const listar = () => {
-  return prisma.ejercicio.findMany();
+export const listar = (id) => {
+  return prisma.ejercicio.findMany({
+    where:{
+      id_docente: Number(id)
+    }
+  });
 };
 
 export const eliminar = (id) => {
   return prisma.ejercicio.delete({
-    where: Number(id),
+    where: { id_ejercicio: Number(id), }
   });
 };

@@ -26,10 +26,13 @@ export const consultarGrupoPorNombre = (nombre) => {
   });
 };
 
-export const consultarGrupos = () => {
+export const consultarGrupos = (id) => {
   return prisma.grupo.findMany({
-    omit: {
-      id_docente: true,
+    where:{
+      id_docente: Number(id)
+    },
+    include: {
+      docente: true,
     },
   });
 };

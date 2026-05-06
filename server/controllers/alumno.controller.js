@@ -6,10 +6,13 @@ import {
   verInfoAlumno,
   verInfoAlumnos,
 } from "../services/alumno.service.js";
+import { obtenerId } from "../utils/utilidad.utils.js";
 
 export async function registrarAlumno(req, res, next) {
   try {
-    await registrarNuevoAlumno(req.body);
+    const id = obtenerId(req.cookies)
+    const data = req.body
+    await registrarNuevoAlumno(id, data );
 
     return res.status(200).json({
       tipo: "success",
@@ -31,7 +34,9 @@ export async function consultarAlumnoInfo(req, res, next) {
 
 export async function consultarAlumnosInfo(req, res, next) {
   try {
-    const resultado = await verInfoAlumnos();
+    const id = obtenerId(req.cookies)
+    const resultado = await verInfoAlumnos(id);
+    
     return res.status(200).json(resultado);
   } catch (error) {
     next(error);

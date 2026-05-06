@@ -7,6 +7,7 @@ import {
 } from "../repo/docente.repo.js";
 import { consultarGrupoPorId } from "../repo/grupo.repo.js";
 import { ApiError } from "./errores.utils.js";
+import { verificarToken } from "../services/credenciales.service.js";
 
 export function validarCampos(datos, requeridos) {
   const validados = {};
@@ -132,4 +133,10 @@ export function peticionVacia(respuesta, mensaje) {
   if (!respuesta) {
     throw new ApiError("La petición devuelve un registro vacio", 500, mensaje);
   }
+}
+
+export function obtenerId(cookies){
+  const token = cookies.access_token || "";
+  const {id} = verificarToken(token)
+  return id
 }

@@ -7,12 +7,11 @@ import {
   verInfoGrupo,
   verInfoGrupos,
 } from "../services/grupo.service.js";
+import { obtenerId } from "../utils/utilidad.utils.js";
 
 export const registrarGrupo = async (req, res, next) => {
   try {
-    const token = req.cookies.access_token;
-
-    const { id } = verificarToken(token);
+    const id = obtenerId(req.cookies)
     const { nombre, turno } = req.body;
     const data = { id, nombre, turno };
 
@@ -38,7 +37,8 @@ export const consultarGrupoInfo = async (req, res, next) => {
 
 export const consultarGruposInfo = async (req, res, next) => {
   try {
-    const grupos = await verInfoGrupos();
+    const id = obtenerId(req.cookies)
+    const grupos = await verInfoGrupos(id);
 
     return res.status(200).json(grupos);
   } catch (error) {

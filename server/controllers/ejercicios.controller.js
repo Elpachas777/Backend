@@ -1,5 +1,6 @@
 import { verificarTokenAuth } from "../auth/auth.js";
 import * as service from "../services/ejercicios.service.js";
+import { obtenerId } from "../utils/utilidad.utils.js";
 
 export const registrarEjercicio = async (req, res, next) => {
   try {
@@ -29,7 +30,8 @@ export const listarTipos = async (req, res, next) => {
 
 export const listar = async (req, res, next) => {
   try {
-    const ejercicios = await service.listar();
+    const id = obtenerId(req.cookies)
+    const ejercicios = await service.listar(id);
     return res.status(200).json(ejercicios);
   } catch (error) {
     next(error);

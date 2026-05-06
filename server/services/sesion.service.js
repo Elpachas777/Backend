@@ -15,6 +15,7 @@ export const login = async ({ correo, password }) => {
 
       return {
         id: admin.id_admin,
+        nombre : admin.usuario.nombres,
         correo: admin.correo,
         rol: "admin",
       };
@@ -27,6 +28,7 @@ export const login = async ({ correo, password }) => {
 
       return {
         id: docente.id_docente,
+        nombre : docente.usuario.nombres,
         correo: docente.correo,
         rol: "docente",
       };

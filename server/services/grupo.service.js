@@ -52,9 +52,9 @@ export const verInfoGrupo = async (data) => {
   }
 };
 
-export const verInfoGrupos = async () => {
+export const verInfoGrupos = async (id) => {
   try {
-    const grupos = await consultarGrupos();
+    const grupos = await consultarGrupos(id);
 
     if (!grupos) {
       throw new ApiError(
