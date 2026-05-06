@@ -7,8 +7,6 @@ export const registrarEjercicio = async (req, res, next) => {
     const token = req.cookies?.access_token || "";
     const docente = verificarTokenAuth(token);
 
-    console.log(docente);
-
     await service.guardarEjercicio(JSON.stringify(data), docente.id);
 
     return res.status(200).json({
@@ -29,10 +27,39 @@ export const listarTipos = async (req, res, next) => {
   }
 };
 
-export const verEjercicio = (req, res, next) => {
+export const listar = async (req, res, next) => {
   try {
-    console.log("Hola");
-    return "Hola";
+    const ejercicios = await service.listar();
+    return res.status(200).json(ejercicios);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const actualizar = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const data = JSON.stringify(req.body);
+    await service.actualizar(id, data);
+
+    return res.status(200).json({
+      tipo: "success",
+      mensaje: "Ejercicio actualizado con exito",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const eliminar = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await service.eliminar(id);
+
+    return res.status(200).json({
+      tipo: "success",
+      mensaje: "Ejercicio eliminado con exito",
+    });
   } catch (error) {
     next(error);
   }
