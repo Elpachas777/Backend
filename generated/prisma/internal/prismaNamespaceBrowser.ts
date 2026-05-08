@@ -92,6 +92,7 @@ export const AdministradorScalarFieldEnum = {
   id_admin: 'id_admin',
   correo: 'correo',
   contraseña: 'contraseña',
+  foto: 'foto',
   habilitado: 'habilitado',
   usuarioId: 'usuarioId'
 } as const
@@ -103,6 +104,7 @@ export const DocenteScalarFieldEnum = {
   id_docente: 'id_docente',
   correo: 'correo',
   contraseña: 'contraseña',
+  foto: 'foto',
   id_escuela: 'id_escuela',
   habilitado: 'habilitado',
   usuarioId: 'usuarioId'
@@ -126,7 +128,9 @@ export type EscuelaScalarFieldEnum = (typeof EscuelaScalarFieldEnum)[keyof typeo
 
 export const AlumnoScalarFieldEnum = {
   id_alumno: 'id_alumno',
+  id_ingreso: 'id_ingreso',
   id_grupo: 'id_grupo',
+  id_docente: 'id_docente',
   usuarioId: 'usuarioId'
 } as const
 
@@ -199,9 +203,18 @@ export const UsuarioOrderByRelevanceFieldEnum = {
 export type UsuarioOrderByRelevanceFieldEnum = (typeof UsuarioOrderByRelevanceFieldEnum)[keyof typeof UsuarioOrderByRelevanceFieldEnum]
 
 
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
 export const AdministradorOrderByRelevanceFieldEnum = {
   correo: 'correo',
-  contraseña: 'contraseña'
+  contraseña: 'contraseña',
+  foto: 'foto'
 } as const
 
 export type AdministradorOrderByRelevanceFieldEnum = (typeof AdministradorOrderByRelevanceFieldEnum)[keyof typeof AdministradorOrderByRelevanceFieldEnum]
@@ -209,18 +222,11 @@ export type AdministradorOrderByRelevanceFieldEnum = (typeof AdministradorOrderB
 
 export const DocenteOrderByRelevanceFieldEnum = {
   correo: 'correo',
-  contraseña: 'contraseña'
+  contraseña: 'contraseña',
+  foto: 'foto'
 } as const
 
 export type DocenteOrderByRelevanceFieldEnum = (typeof DocenteOrderByRelevanceFieldEnum)[keyof typeof DocenteOrderByRelevanceFieldEnum]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 export const EscuelaOrderByRelevanceFieldEnum = {
@@ -233,6 +239,13 @@ export const EscuelaOrderByRelevanceFieldEnum = {
 } as const
 
 export type EscuelaOrderByRelevanceFieldEnum = (typeof EscuelaOrderByRelevanceFieldEnum)[keyof typeof EscuelaOrderByRelevanceFieldEnum]
+
+
+export const AlumnoOrderByRelevanceFieldEnum = {
+  id_ingreso: 'id_ingreso'
+} as const
+
+export type AlumnoOrderByRelevanceFieldEnum = (typeof AlumnoOrderByRelevanceFieldEnum)[keyof typeof AlumnoOrderByRelevanceFieldEnum]
 
 
 export const GrupoOrderByRelevanceFieldEnum = {

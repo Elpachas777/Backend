@@ -1,11 +1,5 @@
-import {
-  agregarAlumnoGrupo,
-  crearGrupoNuevo,
-  editarInfoGrupo,
-  eliminarGrupoId,
-  verInfoGrupo,
-  verInfoGrupos,
-} from "../services/grupo.service.js";
+import { actualizarId } from "../services/alumno.service.js";
+import * as service from "../services/grupo.service.js";
 import { obtenerId } from "../utils/utilidad.utils.js";
 
 export const registrarGrupo = async (req, res, next) => {
@@ -14,7 +8,7 @@ export const registrarGrupo = async (req, res, next) => {
     const { nombre, turno } = req.body;
     const data = { id, nombre, turno };
 
-    await crearGrupoNuevo(data);
+    await service.crearGrupoNuevo(data);
 
     return res.status(200).json({
       tipo: "success",
@@ -27,7 +21,7 @@ export const registrarGrupo = async (req, res, next) => {
 
 export const consultarGrupoInfo = async (req, res, next) => {
   try {
-    const grupo = await verInfoGrupo(req.body);
+    const grupo = await service.verInfoGrupo(req.body);
     res.status(200).json(grupo);
   } catch (error) {
     next(error);
@@ -37,7 +31,7 @@ export const consultarGrupoInfo = async (req, res, next) => {
 export const consultarGruposInfo = async (req, res, next) => {
   try {
     const id = obtenerId(req.cookies);
-    const grupos = await verInfoGrupos(id);
+    const grupos = await service.verInfoGrupos(id);
 
     return res.status(200).json(grupos);
   } catch (error) {
@@ -51,7 +45,7 @@ export const editarGrupoInfo = async (req, res, next) => {
     const { nombre, turno } = req.body;
     const data = { id, nombre, turno };
 
-    await editarInfoGrupo(data);
+    await service.editarInfoGrupo(data);
 
     return res.status(200).json({
       tipo: "info",
@@ -65,7 +59,7 @@ export const editarGrupoInfo = async (req, res, next) => {
 export const eliminarGrupo = async (req, res, next) => {
   try {
     const { id } = req.params;
-    await eliminarGrupoId(id);
+    await service.eliminarGrupoId(id);
 
     return res.status(200).json({
       tipo: "info",
@@ -79,9 +73,14 @@ export const eliminarGrupo = async (req, res, next) => {
 export const agregarAlumnoAGrupo = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const data = req.body;
+    const { grupo, alumnos } = req.body;
 
-    await agregarAlumnoGrupo(id, data);
+    await service.agregarAlumnoGrupo(id, alumnos);
+
+    for (const alumno of alumnos) {
+      await actualizarId(alumno.id, grupo, alumno.apellidos);
+    }
+
 
     res.status(200).json({
       tipo: "success",
@@ -91,3 +90,14 @@ export const agregarAlumnoAGrupo = async (req, res, next) => {
     next(error);
   }
 };
+
+export async function listarAlumnos(req, res, next) {
+  try {
+    const { id } = req.params
+    const lista = await service.listarAlumnos(id)
+
+    res.status(200).json(lista)
+  } catch (error) {
+    next(error)
+  }
+}

@@ -30,12 +30,24 @@ export const consultarGrupos = (id) => {
   return prisma.grupo.findMany({
     where: {
       id_docente: Number(id),
-    },
-    include: {
-      alumnos: true,
-    },
+    }
   });
 };
+
+export const listarAlumnos = (id) => {
+  return prisma.grupo.findUnique({
+    where: {
+      id_grupo: Number(id)
+    },
+    include: {
+      alumnos: {
+        include: {
+          usuario: true
+        }
+      }
+    }
+  })
+}
 
 export const editarGrupo = ({ id, nombre, turno }) => {
   return prisma.grupo.update({

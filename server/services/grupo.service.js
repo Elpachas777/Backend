@@ -1,12 +1,5 @@
 import { consultarDocentePorId } from "../repo/docente.repo.js";
-import {
-  agregar,
-  consultarGrupoPorNombre,
-  consultarGrupos,
-  crearGrupo,
-  editarGrupo,
-  eliminarGrupoPorId,
-} from "../repo/grupo.repo.js";
+import * as repo from "../repo/grupo.repo.js";
 import { ApiError } from "../utils/errores.utils.js";
 import {
   controlErrores,
@@ -16,7 +9,7 @@ import {
 
 export const crearGrupoNuevo = async (data) => {
   try {
-    if (!consultarDocentePorId(data.id)) {
+    if (! await consultarDocentePorId(data.id)) {
       throw new ApiError(
         "La petición devuelve un registro vacio",
         400,
@@ -24,7 +17,7 @@ export const crearGrupoNuevo = async (data) => {
       );
     }
 
-    const nuevoGrupo = await crearGrupo(data);
+    const nuevoGrupo = await repo.crearGrupo(data);
 
     if (!nuevoGrupo) {
       throw new ApiError(
@@ -40,7 +33,7 @@ export const crearGrupoNuevo = async (data) => {
 
 export const verInfoGrupo = async (data) => {
   try {
-    const grupoInfo = await consultarGrupoPorNombre(data.nombre);
+    const grupoInfo = await repo.consultarGrupoPorNombre(data.nombre);
 
     if (!grupoInfo) {
       throw new ApiError(
@@ -58,7 +51,7 @@ export const verInfoGrupo = async (data) => {
 
 export const verInfoGrupos = async (id) => {
   try {
-    const grupos = await consultarGrupos(id);
+    const grupos = await repo.consultarGrupos(id);
 
     if (!grupos) {
       throw new ApiError(
@@ -67,11 +60,11 @@ export const verInfoGrupos = async (id) => {
         "No se encontró ningun grupo registrado",
       );
     }
+
     const gruposInfo = grupos.map((datos) => ({
       id: datos.id_grupo,
       nombre: datos.nombre_grupo,
       turno: datos.turno,
-      alumnos: datos.alumnos,
     }));
 
     return gruposInfo;
@@ -80,10 +73,28 @@ export const verInfoGrupos = async (id) => {
   }
 };
 
+export const listarAlumnos = async (id) => {
+  try {
+    const grupo = await repo.listarAlumnos(id)
+    peticionVacia(grupo, "No se pudo consultar la información de los alumnos")
+    
+    const listaAlumnos = grupo.alumnos.map((alumno) => ({
+      id: alumno.id_ingreso || "",
+      nombre: alumno.usuario.nombres,
+      apellidos: alumno.usuario.apellido
+    }))
+
+    return listaAlumnos;
+  } catch (error) {
+    controlErrores(error)
+  }
+}
+
+
 export const editarInfoGrupo = async (data) => {
   try {
     grupoId(data.id);
-    const grupoEditado = await editarGrupo(data);
+    const grupoEditado = await repo.editarGrupo(data);
 
     if (!grupoEditado) {
       throw new ApiError(
@@ -100,7 +111,7 @@ export const editarInfoGrupo = async (data) => {
 export const eliminarGrupoId = async (id) => {
   try {
     await grupoId(id);
-    const grupoEliminado = await eliminarGrupoPorId(id);
+    const grupoEliminado = await repo.eliminarGrupoPorId(id);
 
     if (!grupoEliminado) {
       throw new ApiError(
@@ -116,9 +127,11 @@ export const eliminarGrupoId = async (id) => {
 
 export const agregarAlumnoGrupo = async (id, data) => {
   try {
-    const datos = data.map(Number);
-    const agregado = await agregar(id, datos);
-    peticionVacia(agregado);
+    const ids = data.map((alumno) => alumno.id);
+    const datos = ids.map(Number);
+    
+    const agregado = await repo.agregar(id, datos);
+    peticionVacia(agregado, "No se pudo agregar el alumno al grupo");
   } catch (error) {
     controlErrores(error);
   }
