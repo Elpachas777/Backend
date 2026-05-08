@@ -17,9 +17,9 @@ export const consultarDocentePorCorreo = (correo) => {
     where: {
       correo: correo,
     },
-    include:{
-      usuario: true
-    }
+    include: {
+      usuario: true,
+    },
   });
 };
 

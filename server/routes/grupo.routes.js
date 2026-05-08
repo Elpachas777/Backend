@@ -17,6 +17,6 @@ router.get("/verGrupos", consultarGruposInfo);
 router.post("/registrarseGrupo", auth, registrarGrupo);
 router.put("/actualizarGrupo/:id", editarGrupoInfo);
 router.delete("/eliminarGrupo/:id", eliminarGrupo);
-router.put("/agregarAlumno", agregarAlumnoAGrupo);
+router.put("/agregarAlumnos/:id", agregarAlumnoAGrupo);
 
 export default router;

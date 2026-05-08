@@ -1,6 +1,6 @@
-import { agregarAlumno, consultarAlumnoPorDatos } from "../repo/alumno.repo.js";
 import { consultarDocentePorId } from "../repo/docente.repo.js";
 import {
+  agregar,
   consultarGrupoPorNombre,
   consultarGrupos,
   crearGrupo,
@@ -8,7 +8,11 @@ import {
   eliminarGrupoPorId,
 } from "../repo/grupo.repo.js";
 import { ApiError } from "../utils/errores.utils.js";
-import { controlErrores, grupoId } from "../utils/utilidad.utils.js";
+import {
+  controlErrores,
+  grupoId,
+  peticionVacia,
+} from "../utils/utilidad.utils.js";
 
 export const crearGrupoNuevo = async (data) => {
   try {
@@ -63,11 +67,11 @@ export const verInfoGrupos = async (id) => {
         "No se encontró ningun grupo registrado",
       );
     }
-
     const gruposInfo = grupos.map((datos) => ({
       id: datos.id_grupo,
       nombre: datos.nombre_grupo,
       turno: datos.turno,
+      alumnos: datos.alumnos,
     }));
 
     return gruposInfo;
@@ -110,32 +114,11 @@ export const eliminarGrupoId = async (id) => {
   }
 };
 
-export const agregarAlumnoGrupo = async (data) => {
+export const agregarAlumnoGrupo = async (id, data) => {
   try {
-    const info = data.data;
-    const alumno = await consultarAlumnoPorDatos(info);
-
-    if (alumno) {
-      const alumnoNuevo = await agregarAlumno({
-        idAlumno: alumno.id_alumno,
-        idGrupo: data.id,
-      });
-
-      if (!alumnoNuevo) {
-        throw new ApiError(
-          "La petición devuelve un registro vacio",
-          400,
-          "No se pudo agregar al alumno al grupo",
-        );
-      }
-    } else {
-      const datos = {
-        idGrupo: data.id,
-        nombre: info.nombre,
-        apellidos: info.apellidos,
-      };
-      await registrarConGrupo(datos);
-    }
+    const datos = data.map(Number);
+    const agregado = await agregar(id, datos);
+    peticionVacia(agregado);
   } catch (error) {
     controlErrores(error);
   }

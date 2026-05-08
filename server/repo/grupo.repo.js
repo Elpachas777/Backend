@@ -28,11 +28,11 @@ export const consultarGrupoPorNombre = (nombre) => {
 
 export const consultarGrupos = (id) => {
   return prisma.grupo.findMany({
-    where:{
-      id_docente: Number(id)
+    where: {
+      id_docente: Number(id),
     },
     include: {
-      docente: true,
+      alumnos: true,
     },
   });
 };
@@ -53,6 +53,19 @@ export const eliminarGrupoPorId = (id) => {
   return prisma.grupo.delete({
     where: {
       id_grupo: Number(id),
+    },
+  });
+};
+
+export const agregar = (id_grupo, datos) => {
+  return prisma.alumno.updateMany({
+    where: {
+      id_alumno: {
+        in: datos,
+      },
+    },
+    data: {
+      id_grupo: Number(id_grupo),
     },
   });
 };
