@@ -4,7 +4,9 @@ import {
   consultarGrupoInfo,
   consultarGruposInfo,
   editarGrupoInfo,
+  eliminarAlumno,
   eliminarGrupo,
+  listarAlumnos,
   registrarGrupo,
 } from "../controllers/grupo.controller.js";
 
@@ -17,6 +19,8 @@ router.get("/verGrupos", consultarGruposInfo);
 router.post("/registrarseGrupo", auth, registrarGrupo);
 router.put("/actualizarGrupo/:id", editarGrupoInfo);
 router.delete("/eliminarGrupo/:id", eliminarGrupo);
-router.put("/agregarAlumno", agregarAlumnoAGrupo);
+router.put("/agregarAlumnos/:id", agregarAlumnoAGrupo);
+router.get("/listarAlumnos/:id",listarAlumnos)
+router.put("/eliminarDelGrupo/:id",eliminarAlumno)
 
 export default router;

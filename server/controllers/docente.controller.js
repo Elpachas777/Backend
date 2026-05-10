@@ -1,18 +1,9 @@
 import { validarTokenCorreo } from "../services/correo.service.js";
-import {
-  actualizarHabilitado,
-  comprobarContraseña,
-  editarInfoDocente,
-  eliminarDocentePorId,
-  registrarNuevoDocente,
-  validarCorreoDocente,
-  verInfoDocente,
-  verInfoDocentes,
-} from "../services/docente.service.js";
+import * as service from "../services/docente.service.js";
 
 export async function registarDocente(req, res, next) {
   try {
-    const docente = await registrarNuevoDocente(req.body);
+    const docente = await service.registrarNuevoDocente(req.body);
     //    enviarTokenCorreo(docente);
 
     res.status(201).json({
@@ -42,7 +33,7 @@ export async function verificarCorreoDocente(req, res, next) {
 export async function consultarDocenteInfo(req, res, next) {
   try {
     const { id } = req.params;
-    const docente = await verInfoDocente(id);
+    const docente = await service.verInfoDocente(id);
     res.status(200).json(docente);
   } catch (error) {
     next(error);
@@ -51,7 +42,7 @@ export async function consultarDocenteInfo(req, res, next) {
 
 export async function consultarDocentesInfo(req, res, next) {
   try {
-    const docentes = await verInfoDocentes();
+    const docentes = await service.verInfoDocentes();
     res.status(200).json(docentes);
   } catch (error) {
     next(error);
@@ -63,7 +54,7 @@ export async function editarDocenteInfo(req, res, next) {
     const { id } = req.params;
     const data = req.body;
 
-    await editarInfoDocente(id, data);
+    await service.editarInfoDocente(id, data);
 
     return res.status(200).json({
       tipo: "info",
@@ -77,7 +68,7 @@ export async function editarDocenteInfo(req, res, next) {
 export async function eliminarDocente(req, res, next) {
   try {
     const { id } = req.params;
-    await eliminarDocentePorId(id);
+    await service.eliminarDocentePorId(id);
 
     return res.status(200).json({
       tipo: "info",
@@ -93,7 +84,7 @@ export async function cambiarHabilitado(req, res, next) {
     const { id } = req.params;
     const { habilitado } = req.body;
 
-    await actualizarHabilitado(id, habilitado);
+    await service.actualizarHabilitado(id, habilitado);
 
     return res.status(200).json({
       tipo: "info",
@@ -109,7 +100,7 @@ export async function checarContraseña(req, res, next) {
     const { id } = req.params;
     const { contraseña } = req.body;
 
-    await comprobarContraseña(id, contraseña);
+    await service.comprobarContraseña(id, contraseña);
 
     return res.status(200).json({
       tipo: "info",
@@ -119,3 +110,4 @@ export async function checarContraseña(req, res, next) {
     next(error);
   }
 }
+

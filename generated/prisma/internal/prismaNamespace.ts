@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.4.2
- * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
+ * Prisma Client JS version: 7.8.0
+ * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.4.2",
-  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
+  client: "7.8.0",
+  engine: "3c6e192761c0362d496ed980de936e2f3cebcd3a"
 }
 
 /**
@@ -1059,6 +1059,7 @@ export const AdministradorScalarFieldEnum = {
   id_admin: 'id_admin',
   correo: 'correo',
   contraseña: 'contraseña',
+  foto: 'foto',
   habilitado: 'habilitado',
   usuarioId: 'usuarioId'
 } as const
@@ -1070,6 +1071,7 @@ export const DocenteScalarFieldEnum = {
   id_docente: 'id_docente',
   correo: 'correo',
   contraseña: 'contraseña',
+  foto: 'foto',
   id_escuela: 'id_escuela',
   habilitado: 'habilitado',
   usuarioId: 'usuarioId'
@@ -1093,7 +1095,9 @@ export type EscuelaScalarFieldEnum = (typeof EscuelaScalarFieldEnum)[keyof typeo
 
 export const AlumnoScalarFieldEnum = {
   id_alumno: 'id_alumno',
+  id_ingreso: 'id_ingreso',
   id_grupo: 'id_grupo',
+  id_docente: 'id_docente',
   usuarioId: 'usuarioId'
 } as const
 
@@ -1166,9 +1170,18 @@ export const UsuarioOrderByRelevanceFieldEnum = {
 export type UsuarioOrderByRelevanceFieldEnum = (typeof UsuarioOrderByRelevanceFieldEnum)[keyof typeof UsuarioOrderByRelevanceFieldEnum]
 
 
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
 export const AdministradorOrderByRelevanceFieldEnum = {
   correo: 'correo',
-  contraseña: 'contraseña'
+  contraseña: 'contraseña',
+  foto: 'foto'
 } as const
 
 export type AdministradorOrderByRelevanceFieldEnum = (typeof AdministradorOrderByRelevanceFieldEnum)[keyof typeof AdministradorOrderByRelevanceFieldEnum]
@@ -1176,18 +1189,11 @@ export type AdministradorOrderByRelevanceFieldEnum = (typeof AdministradorOrderB
 
 export const DocenteOrderByRelevanceFieldEnum = {
   correo: 'correo',
-  contraseña: 'contraseña'
+  contraseña: 'contraseña',
+  foto: 'foto'
 } as const
 
 export type DocenteOrderByRelevanceFieldEnum = (typeof DocenteOrderByRelevanceFieldEnum)[keyof typeof DocenteOrderByRelevanceFieldEnum]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 export const EscuelaOrderByRelevanceFieldEnum = {
@@ -1200,6 +1206,13 @@ export const EscuelaOrderByRelevanceFieldEnum = {
 } as const
 
 export type EscuelaOrderByRelevanceFieldEnum = (typeof EscuelaOrderByRelevanceFieldEnum)[keyof typeof EscuelaOrderByRelevanceFieldEnum]
+
+
+export const AlumnoOrderByRelevanceFieldEnum = {
+  id_ingreso: 'id_ingreso'
+} as const
+
+export type AlumnoOrderByRelevanceFieldEnum = (typeof AlumnoOrderByRelevanceFieldEnum)[keyof typeof AlumnoOrderByRelevanceFieldEnum]
 
 
 export const GrupoOrderByRelevanceFieldEnum = {
@@ -1395,6 +1408,21 @@ export type PrismaClientOptions = ({
    * ```
    */
   comments?: runtime.SqlCommenterPlugin[]
+  /**
+   * Optional maximum size for the query plan cache. If not provided, a default size will be used.
+   * A value of `0` can be used to disable the cache entirely. A higher cache size can improve
+   * performance for applications that execute a large number of unique queries, while a smaller
+   * cache size can reduce memory usage.
+   * 
+   * @example
+   * ```
+   * const prisma = new PrismaClient({
+   *   adapter,
+   *   queryPlanCacheMaxSize: 100,
+   * })
+   * ```
+   */
+  queryPlanCacheMaxSize?: number
 }
 export type GlobalOmitConfig = {
   usuario?: Prisma.UsuarioOmit

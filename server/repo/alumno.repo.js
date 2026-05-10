@@ -1,6 +1,6 @@
 import { prisma } from "../utils/db.utils.js";
 
-export const crearAlumno = ({ nombre, apellidos }) => {
+export const crearAlumno = (id, { nombre, apellidos }) => {
   return prisma.alumno.create({
     data: {
       usuario: {
@@ -9,6 +9,11 @@ export const crearAlumno = ({ nombre, apellidos }) => {
           apellido: apellidos,
         },
       },
+      docente: {
+        connect: {
+          id_docente: Number(id)
+        }
+      }
     },
     include: {
       usuario: true,
@@ -64,16 +69,25 @@ export const consultarAlumnoPorId = ({ id }) => {
   });
 };
 
-export const consultarAlumnos = () => {
+export const consultarAlumnos = (id) => {
   return prisma.alumno.findMany({
+    where: {
+      id_docente: Number(id)
+    },
     select: {
       id_alumno: true,
+      id_ingreso: true,
       usuario: {
         select: {
           nombres: true,
           apellido: true,
         },
       },
+      grupo: {
+        select: {
+          nombre_grupo: true
+        }
+      }
     },
   });
 };
@@ -133,3 +147,35 @@ export const agregarAlumno = ({ idAlumno, idGrupo }) => {
     },
   });
 };
+
+export const contarIds = (inicio) => {
+  return prisma.alumno.count({
+    where: {
+      id_ingreso: {
+        startsWith: inicio
+      }
+    }
+  })
+}
+
+export const actualizarId = (id, id_ingreso) => {
+  return prisma.alumno.update({
+    where: {
+      id_alumno: Number(id)
+    },
+    data: {
+      id_ingreso: id_ingreso
+    }
+  })
+}
+
+export const modificarId = (id_vieja, id_nueva) => {
+  return prisma.alumno.update({
+    where: {
+      id_ingreso: id_vieja
+    },
+    data: {
+      id_ingreso: id_nueva
+    }
+  })
+}

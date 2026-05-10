@@ -9,6 +9,7 @@ import string
 
 
 TAMANO_LOTE=32
+AUTOTUNE = tf.data.AUTOTUNE
 
 def normalizar(imagen, etiqueta):
     imagen = tf.cast(imagen, tf.float32)
@@ -28,13 +29,33 @@ def filtrar_letras(img, lbl):
 
 datos, metadatos = tfds.load('emnist/byclass', as_supervised=True, with_info=True)
 
-datos_entrenamiento = datos['train'].filter(filtrar_letras).map(arreglar_orientacion).map(normalizar).map(ajustar_etiquetas)
-datos_pruebas = datos['test'].filter(filtrar_letras).map(arreglar_orientacion).map(normalizar).map(ajustar_etiquetas)
+datos_entrenamiento = (
+    datos['train']
+    .filter(filtrar_letras)
+    .map(arreglar_orientacion, num_parallel_calls=AUTOTUNE)
+    .map(normalizar, num_parallel_calls=AUTOTUNE)
+    .map(ajustar_etiquetas, num_parallel_calls=AUTOTUNE)
+    .shuffle(10000)
+    .batch(TAMANO_LOTE)
+    .prefetch(AUTOTUNE)
+)
+
+datos_pruebas = (
+    datos['test']
+    .filter(filtrar_letras)
+    .map(arreglar_orientacion, num_parallel_calls=AUTOTUNE)
+    .map(normalizar, num_parallel_calls=AUTOTUNE)
+    .map(ajustar_etiquetas, num_parallel_calls=AUTOTUNE)
+    .batch(TAMANO_LOTE)
+    .prefetch(AUTOTUNE)
+)
 
 data_augmentation = tf.keras.Sequential([
     tf.keras.layers.RandomRotation(0.05),
     tf.keras.layers.RandomZoom(0.05),
     tf.keras.layers.RandomTranslation(0.05, 0.05),
+    tf.keras.layers.RandomContrast(0.05),
+    tf.keras.layers.RandomBrightness(0.05, value_range=(0, 1)),
 ])
 
 
@@ -48,20 +69,20 @@ modelo = tf.keras.Sequential([
     tf.keras.layers.Activation("relu"),
     tf.keras.layers.MaxPooling2D(),
     
-    tf.keras.layers.Conv2D(64,(3,3),activation='relu'),
+    tf.keras.layers.Conv2D(64,(3,3),padding='same'),
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.Activation("relu"),
     tf.keras.layers.MaxPooling2D(),
 
-    tf.keras.layers.Conv2D(160,(3,3),activation='relu'),
+    tf.keras.layers.Conv2D(128,(3,3),padding='same'),
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.Activation("relu"),
     tf.keras.layers.MaxPooling2D(),
 
-    tf.keras.layers.GlobalAveragePooling2D(),
+    tf.keras.layers.Flatten(),
 
     tf.keras.layers.Dense(units=128, activation='relu'),
-    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dropout(0.3),
 
     tf.keras.layers.Dense(26, activation='softmax')
 ]
@@ -73,12 +94,6 @@ modelo.compile(
     metrics = ['accuracy']
 )
 
-
-num_datos_entrenamiento = metadatos.splits["train"].num_examples
-num_datos_pruebas = metadatos.splits["test"].num_examples
-
-datos_entrenamiento = datos_entrenamiento.repeat().shuffle(num_datos_entrenamiento).batch(TAMANO_LOTE)
-datos_pruebas = datos_pruebas.batch(TAMANO_LOTE)
 
 parar = tf.keras.callbacks.EarlyStopping(
     monitor="val_loss",
@@ -96,7 +111,6 @@ historial = modelo.fit(
     datos_entrenamiento,
     epochs = 20,
     validation_data= datos_pruebas,
-    steps_per_epoch= math.ceil(num_datos_entrenamiento/TAMANO_LOTE),
     callbacks=[parar, lr_scheduler]
 )
 
@@ -128,22 +142,19 @@ for imagenes, etiquetas in datos_pruebas:
     y_true.extend(etiquetas.numpy())
     y_pred.extend(predicciones)
 
-# 🔹 Crear matriz
 matriz_confusion = confusion_matrix(y_true, y_pred)
 
-# 🔹 Etiquetas A-Z
 letras = list(string.ascii_uppercase)
 
-# 🔹 Heatmap con valores
 plt.figure(figsize=(12,10))
 sns.heatmap(
     matriz_confusion,
     xticklabels=letras,
     yticklabels=letras,
     cmap='Blues',
-    annot=True,          # 👈 números dentro
-    fmt='d',             # enteros
-    annot_kws={"size":6} # 👈 texto más pequeño (importante con 26 clases)
+    annot=True,          
+    fmt='d',             
+    annot_kws={"size":6}
 )
 plt.xlabel('Predicción')
 plt.ylabel('Etiqueta real')
@@ -151,7 +162,6 @@ plt.title('Matriz de Confusión (valores absolutos)')
 plt.show()
 
 
-# 🔥 OPCIONAL: versión normalizada (porcentaje)
 matriz_norm = matriz_confusion.astype('float') / matriz_confusion.sum(axis=1)[:, np.newaxis]
 
 plt.figure(figsize=(12,10))

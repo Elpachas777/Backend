@@ -30,9 +30,9 @@ export const listarTipos = async () => {
   }
 };
 
-export const listar = async () => {
+export const listar = async (id) => {
   try {
-    const ejercicios = await repo.listar();
+    const ejercicios = await repo.listar(id);
     peticionVacia(ejercicios, "No se pudieron obtener los ejercicios");
     return ejercicios;
   } catch (error) {
@@ -48,3 +48,12 @@ export const eliminar = async (id) => {
     controlErrores(error);
   }
 };
+
+export const asignar = async (id, data) => {
+  try {
+    const asignado = await repo.asignar(id, data.id)
+    peticionVacia(asignado, "No se pudo asignar el ejercicio al grupo")
+  } catch (error) {
+    controlErrores(error)
+  }
+}

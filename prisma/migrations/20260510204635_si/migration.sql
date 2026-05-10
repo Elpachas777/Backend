@@ -13,6 +13,7 @@ CREATE TABLE `Administrador` (
     `id_admin` INTEGER NOT NULL AUTO_INCREMENT,
     `correo` VARCHAR(191) NOT NULL,
     `contraseña` VARCHAR(191) NOT NULL,
+    `foto` VARCHAR(191) NULL,
     `habilitado` BOOLEAN NOT NULL DEFAULT false,
     `usuarioId` INTEGER NOT NULL,
 
@@ -26,6 +27,7 @@ CREATE TABLE `Docente` (
     `id_docente` INTEGER NOT NULL AUTO_INCREMENT,
     `correo` VARCHAR(191) NOT NULL,
     `contraseña` VARCHAR(191) NOT NULL,
+    `foto` VARCHAR(191) NULL,
     `id_escuela` INTEGER NOT NULL,
     `habilitado` BOOLEAN NOT NULL DEFAULT false,
     `usuarioId` INTEGER NOT NULL,
@@ -51,11 +53,15 @@ CREATE TABLE `Escuela` (
 -- CreateTable
 CREATE TABLE `Alumno` (
     `id_alumno` INTEGER NOT NULL AUTO_INCREMENT,
+    `id_ingreso` VARCHAR(191) NULL,
     `id_grupo` INTEGER NULL,
+    `id_docente` INTEGER NOT NULL,
     `usuarioId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `Alumno_id_ingreso_key`(`id_ingreso`),
     UNIQUE INDEX `Alumno_usuarioId_key`(`usuarioId`),
     INDEX `Alumno_id_grupo_fkey`(`id_grupo`),
+    INDEX `Alumno_id_docente_fkey`(`id_docente`),
     PRIMARY KEY (`id_alumno`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -120,6 +126,9 @@ ALTER TABLE `Docente` ADD CONSTRAINT `Docente_id_escuela_fkey` FOREIGN KEY (`id_
 
 -- AddForeignKey
 ALTER TABLE `Alumno` ADD CONSTRAINT `Alumno_id_grupo_fkey` FOREIGN KEY (`id_grupo`) REFERENCES `Grupo`(`id_grupo`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Alumno` ADD CONSTRAINT `Alumno_id_docente_fkey` FOREIGN KEY (`id_docente`) REFERENCES `Docente`(`id_docente`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Alumno` ADD CONSTRAINT `Alumno_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;

@@ -221,7 +221,7 @@ export type EjercicioGroupByOutputType = {
   _max: EjercicioMaxAggregateOutputType | null
 }
 
-type GetEjercicioGroupByPayload<T extends EjercicioGroupByArgs> = Prisma.PrismaPromise<
+export type GetEjercicioGroupByPayload<T extends EjercicioGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<EjercicioGroupByOutputType, T['by']> &
       {
@@ -1598,6 +1598,11 @@ export type EjercicioFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Skip the first `n` Ejercicios.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Ejercicios.
+   */
   distinct?: Prisma.EjercicioScalarFieldEnum | Prisma.EjercicioScalarFieldEnum[]
 }
 
