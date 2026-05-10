@@ -21,7 +21,7 @@ export function generarToken(objeto, duracion) {
 export function objetoSesion() {
   return {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "none",
     maxAge: 1000 * 60 * 60,
   };
