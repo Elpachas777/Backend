@@ -44,7 +44,7 @@ export const listarTipos = () => {
 
 export const listar = (id) => {
   return prisma.ejercicio.findMany({
-    where:{
+    where: {
       id_docente: Number(id)
     }
   });
@@ -55,3 +55,14 @@ export const eliminar = (id) => {
     where: { id_ejercicio: Number(id), }
   });
 };
+
+export const asignar = async (id, id_grupo) => {
+  return prisma.ejercicio.update({
+    where: {
+      id_ejercicio: Number(id)
+    },
+    data: {
+      id_grupo: Number(id_grupo)
+    }
+  })
+}

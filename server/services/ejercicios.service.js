@@ -48,3 +48,12 @@ export const eliminar = async (id) => {
     controlErrores(error);
   }
 };
+
+export const asignar = async (id, data) => {
+  try {
+    const asignado = await repo.asignar(id, data.id)
+    peticionVacia(asignado, "No se pudo asignar el ejercicio al grupo")
+  } catch (error) {
+    controlErrores(error)
+  }
+}

@@ -76,7 +76,7 @@ export const consultarAlumnos = (id) => {
     },
     select: {
       id_alumno: true,
-      id_ingreso : true,
+      id_ingreso: true,
       usuario: {
         select: {
           nombres: true,
@@ -152,7 +152,7 @@ export const contarIds = (inicio) => {
   return prisma.alumno.count({
     where: {
       id_ingreso: {
-        startsWith: inicio  
+        startsWith: inicio
       }
     }
   })
@@ -165,6 +165,17 @@ export const actualizarId = (id, id_ingreso) => {
     },
     data: {
       id_ingreso: id_ingreso
+    }
+  })
+}
+
+export const modificarId = (id_vieja, id_nueva) => {
+  return prisma.alumno.update({
+    where: {
+      id_ingreso: id_vieja
+    },
+    data: {
+      id_ingreso: id_nueva
     }
   })
 }

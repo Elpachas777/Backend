@@ -30,21 +30,21 @@ export const consultarGrupos = (id) => {
   return prisma.grupo.findMany({
     where: {
       id_docente: Number(id),
+    },
+    include:{
+      ejercicios : true
     }
   });
 };
 
 export const listarAlumnos = (id) => {
-  return prisma.grupo.findUnique({
+  return prisma.alumno.findMany({
     where: {
       id_grupo: Number(id)
     },
     include: {
-      alumnos: {
-        include: {
-          usuario: true
-        }
-      }
+      usuario: true,
+      grupo: true
     }
   })
 }
@@ -69,6 +69,17 @@ export const eliminarGrupoPorId = (id) => {
   });
 };
 
+export const eliminarAlumnos = () => {
+  return prisma.alumno.updateMany({
+    where: {
+      id_grupo: null
+    },
+    data: {
+      id_ingreso: null,
+    }
+  })
+}
+
 export const agregar = (id_grupo, datos) => {
   return prisma.alumno.updateMany({
     where: {
@@ -81,3 +92,18 @@ export const agregar = (id_grupo, datos) => {
     },
   });
 };
+
+export const eliminarAlumno = (id_grupo, alumnos) => {
+  return prisma.alumno.updateMany({
+    where: {
+      id_grupo: Number(id_grupo),
+      id_ingreso: {
+        in: alumnos
+      }
+    },
+    data: {
+      id_ingreso: null,
+      id_grupo: null
+    }
+  })
+}

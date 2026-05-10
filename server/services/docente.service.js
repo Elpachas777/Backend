@@ -163,6 +163,9 @@ export const editarInfoDocente = async (id, data) => {
       if (escuela) {
         await editarDocenteEscuela(tx, id, escuela);
       }
+
+      
+
       return "ok";
     });
 

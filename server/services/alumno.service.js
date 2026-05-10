@@ -82,7 +82,7 @@ export const verInfoAlumnos = async (id) => {
       nombres: datos.usuario.nombres,
       apellidos: datos.usuario.apellido,
       grupo: datos.grupo?.nombre_grupo || "",
-      id_ingreso : datos.id_ingreso || ""
+      id_ingreso: datos.id_ingreso || ""
     }));
 
     return alumnosInfo;
@@ -153,7 +153,7 @@ export const verAlumnosEnGrupo = async (data) => {
 
 export const actualizarId = async (id, grupo, apellidos) => {
   try {
-    
+
     let separados = apellidos.toUpperCase().split(" ")
     const inicio = separados[0].charAt(0) + separados[1].charAt(0) + grupo
 

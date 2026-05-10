@@ -4,6 +4,7 @@ import {
   consultarGrupoInfo,
   consultarGruposInfo,
   editarGrupoInfo,
+  eliminarAlumno,
   eliminarGrupo,
   listarAlumnos,
   registrarGrupo,
@@ -20,5 +21,6 @@ router.put("/actualizarGrupo/:id", editarGrupoInfo);
 router.delete("/eliminarGrupo/:id", eliminarGrupo);
 router.put("/agregarAlumnos/:id", agregarAlumnoAGrupo);
 router.get("/listarAlumnos/:id",listarAlumnos)
+router.put("/eliminarDelGrupo/:id",eliminarAlumno)
 
 export default router;

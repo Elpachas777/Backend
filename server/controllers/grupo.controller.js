@@ -47,6 +47,13 @@ export const editarGrupoInfo = async (req, res, next) => {
 
     await service.editarInfoGrupo(data);
 
+    const alumnos = await service.listarAlumnos(id)
+    if (alumnos) {
+      for (const alumno of alumnos) {
+        await service.actualizarId(alumno, nombre)
+      }
+    }
+
     return res.status(200).json({
       tipo: "info",
       mensaje: "Grupo modificado con exito",
@@ -81,7 +88,6 @@ export const agregarAlumnoAGrupo = async (req, res, next) => {
       await actualizarId(alumno.id, grupo, alumno.apellidos);
     }
 
-
     res.status(200).json({
       tipo: "success",
       mensaje: "Alumno registrado con exito",
@@ -97,6 +103,22 @@ export async function listarAlumnos(req, res, next) {
     const lista = await service.listarAlumnos(id)
 
     res.status(200).json(lista)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export async function eliminarAlumno(req, res, next) {
+  try {
+    const { id } = req.params
+    const data = req.body
+    
+    await service.eliminarAlumno(id, data)
+
+    return res.status(200).json({
+      tipo: "info",
+      mensaje: "Alumnos eliminados del grupo con exito",
+    })
   } catch (error) {
     next(error)
   }

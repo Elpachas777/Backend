@@ -4,7 +4,8 @@ import {
   listar,
   listarTipos,
   registrarEjercicio,
-  eliminar
+  eliminar,
+  asignar
 } from "../controllers/ejercicios.controller.js";
 
 const router = Router();
@@ -14,5 +15,6 @@ router.get("/obtenerTipos", listarTipos);
 router.get("/obtenerEjercicios", listar);
 router.put("/editarEjercicio/:id", actualizar);
 router.delete("/eliminarEjercicio/:id", eliminar);
+router.put("/asignar/:id", asignar)
 
 export default router;

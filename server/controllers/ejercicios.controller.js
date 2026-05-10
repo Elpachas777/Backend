@@ -66,3 +66,19 @@ export const eliminar = async (req, res, next) => {
     next(error);
   }
 };
+
+export const asignar = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const data = req.body
+    
+    await service.asignar(id, data)
+
+    return res.status(200).json({
+      tipo: "info",
+      mensaje: "Ejercicio asignado con exito"
+    })
+  } catch (error) {
+    next(error)
+  }
+}
