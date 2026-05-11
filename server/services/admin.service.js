@@ -3,6 +3,7 @@ import { consultarDocentePorId } from "../repo/docente.repo.js";
 import { ApiError } from "../utils/errores.utils.js";
 import {
   controlErrores,
+  hashear,
   remplazarContraseña,
   validarCampos,
   validarContraseña,
@@ -47,9 +48,10 @@ export const verificar = async (id, rol, contraseña) => {
 
 export const actualizarContraseñaAdministador = async (data) => {
   try {
+    const contra = await hashear(data.password)
     const modificado = await repo.modificarContraseñaAdministrador(
       data.correo,
-      hashear(data.password),
+      contra,
     );
 
     if (!modificado) {

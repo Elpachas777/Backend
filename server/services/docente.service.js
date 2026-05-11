@@ -9,6 +9,7 @@ import {
   editarDocenteEscuela,
   editarDocenteUsuario,
   eliminarDocenteId,
+  modificarContraseñaDocente,
   modificarHabilitado,
   obtenerContraseña,
   validarCorreo,
@@ -52,14 +53,15 @@ export const registrarNuevoDocente = async (data) => {
 
 export const validarCorreoDocente = async (data) => {
   try {
-    if (!consultarDocentePorCorreo(data.correo))
+    const docente = await consultarDocentePorCorreo(data.correo)
+    if (!docente)
       throw new ApiError(
         "La petición devuelve un registro vacio",
         500,
         "No se ha encontrado el docente asociado al correo",
       );
 
-    const docenteVerificado = await validarCorreo(data.id);
+    const docenteVerificado = await validarCorreo(docente.id_docente);
 
     if (!docenteVerificado) {
       throw new ApiError(
@@ -195,9 +197,10 @@ export const eliminarDocentePorId = async (id) => {
 
 export const actualizarContraseñaDocente = async (data) => {
   try {
-    const modificado = await modificarContraseñaAdministrador(
+    const contra = await hashear(data.password)
+    const modificado = await modificarContraseñaDocente(
       data.correo,
-      hashear(data.password),
+      contra,
     );
 
     if (!modificado) {

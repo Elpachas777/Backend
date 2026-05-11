@@ -19,9 +19,10 @@ export async function iniciarSesion(req, res, next) {
 
 export async function correoContraseña(req, res, next) {
   try {
-    const info = await correoRecuperarContraseña(req.body);
+    const data = req.body
+    const info = await correoRecuperarContraseña(data);
     const token = generarToken(info, "15m");
-    enviarCorreoContraseña(token);
+    await enviarCorreoContraseña(info, token);
 
     return res.status(200).json({
       tipo: "info",
