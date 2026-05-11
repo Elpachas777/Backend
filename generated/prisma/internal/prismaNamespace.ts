@@ -1118,7 +1118,6 @@ export const EjercicioScalarFieldEnum = {
   id_ejercicio: 'id_ejercicio',
   fecha_inicio: 'fecha_inicio',
   fecha_final: 'fecha_final',
-  id_grupo: 'id_grupo',
   id_docente: 'id_docente',
   id_tipo: 'id_tipo',
   titulo: 'titulo',

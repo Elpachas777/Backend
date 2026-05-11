@@ -81,14 +81,12 @@ CREATE TABLE `Ejercicio` (
     `id_ejercicio` INTEGER NOT NULL AUTO_INCREMENT,
     `fecha_inicio` DATETIME(3) NOT NULL,
     `fecha_final` DATETIME(3) NOT NULL,
-    `id_grupo` INTEGER NULL,
     `id_docente` INTEGER NOT NULL,
     `id_tipo` INTEGER NOT NULL,
     `titulo` VARCHAR(191) NOT NULL,
     `contenido` JSON NOT NULL,
 
     INDEX `Ejercicio_id_docente_fkey`(`id_docente`),
-    INDEX `Ejercicio_id_grupo_fkey`(`id_grupo`),
     INDEX `Ejercicio_id_tipo_fkey`(`id_tipo`),
     PRIMARY KEY (`id_ejercicio`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -113,6 +111,15 @@ CREATE TABLE `Respuesta` (
     INDEX `Respuesta_id_alumno_fkey`(`id_alumno`),
     INDEX `Respuesta_id_ejercicio_fkey`(`id_ejercicio`),
     PRIMARY KEY (`id_respuesta`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `_EjercicioToGrupo` (
+    `A` INTEGER NOT NULL,
+    `B` INTEGER NOT NULL,
+
+    UNIQUE INDEX `_EjercicioToGrupo_AB_unique`(`A`, `B`),
+    INDEX `_EjercicioToGrupo_B_index`(`B`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
@@ -140,9 +147,6 @@ ALTER TABLE `Grupo` ADD CONSTRAINT `Grupo_id_docente_fkey` FOREIGN KEY (`id_doce
 ALTER TABLE `Ejercicio` ADD CONSTRAINT `Ejercicio_id_docente_fkey` FOREIGN KEY (`id_docente`) REFERENCES `Docente`(`id_docente`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Ejercicio` ADD CONSTRAINT `Ejercicio_id_grupo_fkey` FOREIGN KEY (`id_grupo`) REFERENCES `Grupo`(`id_grupo`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE `Ejercicio` ADD CONSTRAINT `Ejercicio_id_tipo_fkey` FOREIGN KEY (`id_tipo`) REFERENCES `TipoEjercicio`(`id_tipo`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -150,3 +154,9 @@ ALTER TABLE `Respuesta` ADD CONSTRAINT `Respuesta_id_alumno_fkey` FOREIGN KEY (`
 
 -- AddForeignKey
 ALTER TABLE `Respuesta` ADD CONSTRAINT `Respuesta_id_ejercicio_fkey` FOREIGN KEY (`id_ejercicio`) REFERENCES `Ejercicio`(`id_ejercicio`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_EjercicioToGrupo` ADD CONSTRAINT `_EjercicioToGrupo_A_fkey` FOREIGN KEY (`A`) REFERENCES `Ejercicio`(`id_ejercicio`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_EjercicioToGrupo` ADD CONSTRAINT `_EjercicioToGrupo_B_fkey` FOREIGN KEY (`B`) REFERENCES `Grupo`(`id_grupo`) ON DELETE CASCADE ON UPDATE CASCADE;

@@ -21,6 +21,7 @@ import {
   docenteId,
   hashear,
   objetoVacio,
+  peticionVacia,
   quitarVacios,
   remplazarContraseña,
   validarCampos,
@@ -29,7 +30,7 @@ import {
 
 export const registrarNuevoDocente = async (data) => {
   try {
-    correoRegistrado(data.correo);
+    await correoRegistrado(data.correo);
 
     const infoDocente = await remplazarContraseña(
       validarCampos(data, [
@@ -41,14 +42,7 @@ export const registrarNuevoDocente = async (data) => {
       ]),
     );
     const nuevoDocente = await crearDocente(infoDocente);
-
-    if (!nuevoDocente) {
-      throw new ApiError(
-        "La petición devuelve un registro vacio",
-        500,
-        "No se pudo registrar al docente",
-      );
-    }
+    peticionVacia(nuevoDocente, "No se pudo registrar al docente")
 
     return nuevoDocente;
   } catch (error) {
@@ -129,6 +123,7 @@ export const verInfoDocentes = async () => {
       grupos: datos.grupos.map((propiedades) => ({
         id: propiedades.id_grupo,
         nombre: propiedades.nombre_grupo,
+        turno: propiedades.turno
       })),
     }));
 
@@ -164,7 +159,7 @@ export const editarInfoDocente = async (id, data) => {
         await editarDocenteEscuela(tx, id, escuela);
       }
 
-      
+
 
       return "ok";
     });
