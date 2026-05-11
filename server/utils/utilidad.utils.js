@@ -6,8 +6,8 @@ import {
   consultarDocentePorId,
 } from "../repo/docente.repo.js";
 import { consultarGrupoPorId } from "../repo/grupo.repo.js";
-import { ApiError } from "./errores.utils.js";
 import { verificarToken } from "../services/credenciales.service.js";
+import { ApiError } from "./errores.utils.js";
 
 export function validarCampos(datos, requeridos) {
   const validados = {};
@@ -71,7 +71,6 @@ export function controlErrores(error) {
 
 export async function correoRegistrado(correo) {
   const existeAdmin = await consultarAdminPorCorreo(correo);
-
 
   if (existeAdmin)
     throw new ApiError(
@@ -137,6 +136,6 @@ export function peticionVacia(respuesta, mensaje) {
 
 export function obtenerId(cookies) {
   const token = cookies.access_token || "";
-  const { id } = verificarToken(token)
-  return id
+  const { id } = verificarToken(token);
+  return id;
 }
