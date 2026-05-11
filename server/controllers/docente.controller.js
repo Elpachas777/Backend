@@ -1,12 +1,12 @@
-import { validarTokenCorreo } from "../services/correo.service.js";
+import { enviarTokenCorreo, validarTokenCorreo } from "../services/correo.service.js";
 import * as service from "../services/docente.service.js";
 
 export async function registarDocente(req, res, next) {
   try {
     const docente = await service.registrarNuevoDocente(req.body);
-    //    enviarTokenCorreo(docente);
+    await enviarTokenCorreo(docente);
 
-    res.status(201).json({
+    return res.status(201).json({
       tipo: "success",
       mensaje:
         "Docente registrado con exito, favor de revisar el correo enviado.",
@@ -19,12 +19,9 @@ export async function registarDocente(req, res, next) {
 export async function verificarCorreoDocente(req, res, next) {
   try {
     const datosToken = validarTokenCorreo(req.query);
-    await validarCorreoDocente(datosToken.id, datosToken.correo);
+    await service.validarCorreoDocente(datosToken);
 
-    res.status(201).json({
-      tipo: "info",
-      mensaje: "Correo verificado con exito",
-    });
+    return res.redirect(process.env.URL_FRONT_END);
   } catch (error) {
     next(error);
   }
@@ -34,7 +31,7 @@ export async function consultarDocenteInfo(req, res, next) {
   try {
     const { id } = req.params;
     const docente = await service.verInfoDocente(id);
-    res.status(200).json(docente);
+    return res.status(200).json(docente);
   } catch (error) {
     next(error);
   }
@@ -43,7 +40,7 @@ export async function consultarDocenteInfo(req, res, next) {
 export async function consultarDocentesInfo(req, res, next) {
   try {
     const docentes = await service.verInfoDocentes();
-    res.status(200).json(docentes);
+    return res.status(200).json(docentes);
   } catch (error) {
     next(error);
   }

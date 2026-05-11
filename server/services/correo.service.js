@@ -1,35 +1,35 @@
-import { verificarTokenAuth } from "../auth/auth.js";
+import { generarToken, verificarTokenAuth } from "../auth/auth.js";
 import { ApiError } from "../utils/errores.utils.js";
+import enviarCorreo from "../utils/mail.utils.js";
 import sendEmail from "../utils/mail.utils.js";
 import { controlErrores } from "../utils/utilidad.utils.js";
+import "dotenv/config";
 
-export function enviarTokenCorreo({ idDocente, correo, nombres }) {
+export async function enviarTokenCorreo({ idDocente, correo, usuario }) {
   try {
     const objeto = { id: idDocente, correo: correo, tipo: "verificación" };
     const tokenVerificacion = generarToken(objeto, "1h");
 
-    const pagina = `http://localhost:4000/verificar?token=${tokenVerificacion}`;
-    sendEmail(
+    const pagina = `${process.env.URL_BACK_END}/verificar?token=${tokenVerificacion}`;
+
+    await enviarCorreo(
       correo,
       "Confirmación de correo",
-      ` <h1>Hola, ${nombres}</h1>
+      ` <h1>Hola, ${usuario.nombres}</h1>
           <p>Gracias por registrarte. Haz clic para confirmar tu correo:</p>
           <p><a href="${pagina}">Confirmar correo</a></p>`,
     );
+
   } catch (error) {
-    throw new ApiError(
-      error.message,
-      500,
-      "Error al enviar el correo con el token de confirmación",
-    );
+    controlErrores(error)
   }
 }
 
-export const enviarCorreoContraseña = (token) => {
+export const enviarCorreoContraseña = async (admin, token) => {
   try {
-    const pagina = `http://localhost:5173/RecuperarContraseña?token=${token}`;
+    const pagina = `${process.env.URL_FRONT_END}/RecuperarContraseña?token=${token}`;
 
-    sendEmail(
+    await enviarCorreo(
       admin.correo,
       "Recuperación de contraseña",
       `<h1>Recuperación de contraseña</h1>
@@ -37,15 +37,11 @@ export const enviarCorreoContraseña = (token) => {
             <p><a href="${pagina}">Recuperar contraseña</a></p>`,
     );
   } catch (error) {
-    throw new ApiError(
-      error.message,
-      500,
-      "Error al enviar el correo para recuperar la constraseña",
-    );
+    controlErrores(error)
   }
 };
 
-export function validarTokenCorreo(token) {
+export function validarTokenCorreo({ token }) {
   try {
     const datosToken = verificarTokenAuth(token);
 

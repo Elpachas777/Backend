@@ -72,6 +72,7 @@ export function controlErrores(error) {
 export async function correoRegistrado(correo) {
   const existeAdmin = await consultarAdminPorCorreo(correo);
 
+
   if (existeAdmin)
     throw new ApiError(
       "El correo se registró en otro usuario",
@@ -80,7 +81,6 @@ export async function correoRegistrado(correo) {
     );
 
   const existeDocente = await consultarDocentePorCorreo(correo);
-
   if (existeDocente)
     throw new ApiError(
       "El correo se registró en otro usuario",
@@ -135,8 +135,8 @@ export function peticionVacia(respuesta, mensaje) {
   }
 }
 
-export function obtenerId(cookies){
+export function obtenerId(cookies) {
   const token = cookies.access_token || "";
-  const {id} = verificarToken(token)
+  const { id } = verificarToken(token)
   return id
 }

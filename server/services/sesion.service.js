@@ -15,7 +15,7 @@ export const login = async ({ correo, password }) => {
 
       return {
         id: admin.id_admin,
-        nombre : admin.usuario.nombres,
+        nombre: admin.usuario.nombres,
         correo: admin.correo,
         rol: "admin",
       };
@@ -28,7 +28,7 @@ export const login = async ({ correo, password }) => {
 
       return {
         id: docente.id_docente,
-        nombre : docente.usuario.nombres,
+        nombre: docente.usuario.nombres,
         correo: docente.correo,
         rol: "docente",
       };
@@ -56,7 +56,7 @@ export const correoRecuperarContraseña = async (data) => {
       };
     }
 
-    const docente = await consultarDocentePorCorreo(correo);
+    const docente = await consultarDocentePorCorreo(data.correo);
 
     if (docente) {
       return {
@@ -89,16 +89,16 @@ export const modificarContraseña = async (data) => {
 
     const datos = { correo: datosToken.correo, password: data.password };
     const existeAdmin = await consultarAdminPorCorreo(datosToken.correo);
-
+    
     if (existeAdmin) {
-      await actualizarContraseñaDocente(datos);
+      await actualizarContraseñaAdministador(datos);
       return;
     }
 
     const existeDocente = await consultarDocentePorCorreo(datosToken.correo);
 
     if (existeDocente) {
-      await actualizarContraseñaAdministador(datos);
+      await actualizarContraseñaDocente(datos);
       return;
     }
 
