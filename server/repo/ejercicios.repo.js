@@ -62,7 +62,11 @@ export const asignar = async (id, id_grupo) => {
       id_ejercicio: Number(id)
     },
     data: {
-      id_grupo: Number(id_grupo)
+      grupos: {
+        connect: {
+          id_grupo: Number(id_grupo)
+        }
+      }
     }
   })
 }

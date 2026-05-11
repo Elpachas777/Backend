@@ -55,11 +55,11 @@ model Escuela {
 }
 
 model Alumno {
-  id_alumno  Int    @id @default(autoincrement())
+  id_alumno  Int     @id @default(autoincrement())
   id_ingreso String? @unique
   id_grupo   Int?
   id_docente Int
-  usuarioId  Int    @unique
+  usuarioId  Int     @unique
 
   grupo      Grupo?      @relation(fields: [id_grupo], references: [id_grupo])
   docente    Docente     @relation(fields: [id_docente], references: [id_docente])
@@ -86,19 +86,17 @@ model Ejercicio {
   id_ejercicio Int      @id @default(autoincrement())
   fecha_inicio DateTime
   fecha_final  DateTime
-  id_grupo     Int?
   id_docente   Int
   id_tipo      Int
   titulo       String
   contenido    Json
 
   docente    Docente       @relation(fields: [id_docente], references: [id_docente])
-  grupo      Grupo?        @relation(fields: [id_grupo], references: [id_grupo])
+  grupos     Grupo[]
   tipo       TipoEjercicio @relation(fields: [id_tipo], references: [id_tipo])
   respuestas Respuesta[]
 
   @@index([id_docente], map: "Ejercicio_id_docente_fkey")
-  @@index([id_grupo], map: "Ejercicio_id_grupo_fkey")
   @@index([id_tipo], map: "Ejercicio_id_tipo_fkey")
 }
 

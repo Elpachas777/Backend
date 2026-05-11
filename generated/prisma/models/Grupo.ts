@@ -267,7 +267,7 @@ export type GrupoCreateInput = {
   nombre_grupo: string
   turno: string
   alumnos?: Prisma.AlumnoCreateNestedManyWithoutGrupoInput
-  ejercicios?: Prisma.EjercicioCreateNestedManyWithoutGrupoInput
+  ejercicios?: Prisma.EjercicioCreateNestedManyWithoutGruposInput
   docente: Prisma.DocenteCreateNestedOneWithoutGruposInput
 }
 
@@ -277,14 +277,14 @@ export type GrupoUncheckedCreateInput = {
   id_docente: number
   turno: string
   alumnos?: Prisma.AlumnoUncheckedCreateNestedManyWithoutGrupoInput
-  ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutGrupoInput
+  ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutGruposInput
 }
 
 export type GrupoUpdateInput = {
   nombre_grupo?: Prisma.StringFieldUpdateOperationsInput | string
   turno?: Prisma.StringFieldUpdateOperationsInput | string
   alumnos?: Prisma.AlumnoUpdateManyWithoutGrupoNestedInput
-  ejercicios?: Prisma.EjercicioUpdateManyWithoutGrupoNestedInput
+  ejercicios?: Prisma.EjercicioUpdateManyWithoutGruposNestedInput
   docente?: Prisma.DocenteUpdateOneRequiredWithoutGruposNestedInput
 }
 
@@ -294,7 +294,7 @@ export type GrupoUncheckedUpdateInput = {
   id_docente?: Prisma.IntFieldUpdateOperationsInput | number
   turno?: Prisma.StringFieldUpdateOperationsInput | string
   alumnos?: Prisma.AlumnoUncheckedUpdateManyWithoutGrupoNestedInput
-  ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutGrupoNestedInput
+  ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutGruposNestedInput
 }
 
 export type GrupoCreateManyInput = {
@@ -426,27 +426,49 @@ export type GrupoUpdateOneWithoutAlumnosNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.GrupoUpdateToOneWithWhereWithoutAlumnosInput, Prisma.GrupoUpdateWithoutAlumnosInput>, Prisma.GrupoUncheckedUpdateWithoutAlumnosInput>
 }
 
-export type GrupoCreateNestedOneWithoutEjerciciosInput = {
-  create?: Prisma.XOR<Prisma.GrupoCreateWithoutEjerciciosInput, Prisma.GrupoUncheckedCreateWithoutEjerciciosInput>
-  connectOrCreate?: Prisma.GrupoCreateOrConnectWithoutEjerciciosInput
-  connect?: Prisma.GrupoWhereUniqueInput
+export type GrupoCreateNestedManyWithoutEjerciciosInput = {
+  create?: Prisma.XOR<Prisma.GrupoCreateWithoutEjerciciosInput, Prisma.GrupoUncheckedCreateWithoutEjerciciosInput> | Prisma.GrupoCreateWithoutEjerciciosInput[] | Prisma.GrupoUncheckedCreateWithoutEjerciciosInput[]
+  connectOrCreate?: Prisma.GrupoCreateOrConnectWithoutEjerciciosInput | Prisma.GrupoCreateOrConnectWithoutEjerciciosInput[]
+  connect?: Prisma.GrupoWhereUniqueInput | Prisma.GrupoWhereUniqueInput[]
 }
 
-export type GrupoUpdateOneWithoutEjerciciosNestedInput = {
-  create?: Prisma.XOR<Prisma.GrupoCreateWithoutEjerciciosInput, Prisma.GrupoUncheckedCreateWithoutEjerciciosInput>
-  connectOrCreate?: Prisma.GrupoCreateOrConnectWithoutEjerciciosInput
-  upsert?: Prisma.GrupoUpsertWithoutEjerciciosInput
-  disconnect?: Prisma.GrupoWhereInput | boolean
-  delete?: Prisma.GrupoWhereInput | boolean
-  connect?: Prisma.GrupoWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.GrupoUpdateToOneWithWhereWithoutEjerciciosInput, Prisma.GrupoUpdateWithoutEjerciciosInput>, Prisma.GrupoUncheckedUpdateWithoutEjerciciosInput>
+export type GrupoUncheckedCreateNestedManyWithoutEjerciciosInput = {
+  create?: Prisma.XOR<Prisma.GrupoCreateWithoutEjerciciosInput, Prisma.GrupoUncheckedCreateWithoutEjerciciosInput> | Prisma.GrupoCreateWithoutEjerciciosInput[] | Prisma.GrupoUncheckedCreateWithoutEjerciciosInput[]
+  connectOrCreate?: Prisma.GrupoCreateOrConnectWithoutEjerciciosInput | Prisma.GrupoCreateOrConnectWithoutEjerciciosInput[]
+  connect?: Prisma.GrupoWhereUniqueInput | Prisma.GrupoWhereUniqueInput[]
+}
+
+export type GrupoUpdateManyWithoutEjerciciosNestedInput = {
+  create?: Prisma.XOR<Prisma.GrupoCreateWithoutEjerciciosInput, Prisma.GrupoUncheckedCreateWithoutEjerciciosInput> | Prisma.GrupoCreateWithoutEjerciciosInput[] | Prisma.GrupoUncheckedCreateWithoutEjerciciosInput[]
+  connectOrCreate?: Prisma.GrupoCreateOrConnectWithoutEjerciciosInput | Prisma.GrupoCreateOrConnectWithoutEjerciciosInput[]
+  upsert?: Prisma.GrupoUpsertWithWhereUniqueWithoutEjerciciosInput | Prisma.GrupoUpsertWithWhereUniqueWithoutEjerciciosInput[]
+  set?: Prisma.GrupoWhereUniqueInput | Prisma.GrupoWhereUniqueInput[]
+  disconnect?: Prisma.GrupoWhereUniqueInput | Prisma.GrupoWhereUniqueInput[]
+  delete?: Prisma.GrupoWhereUniqueInput | Prisma.GrupoWhereUniqueInput[]
+  connect?: Prisma.GrupoWhereUniqueInput | Prisma.GrupoWhereUniqueInput[]
+  update?: Prisma.GrupoUpdateWithWhereUniqueWithoutEjerciciosInput | Prisma.GrupoUpdateWithWhereUniqueWithoutEjerciciosInput[]
+  updateMany?: Prisma.GrupoUpdateManyWithWhereWithoutEjerciciosInput | Prisma.GrupoUpdateManyWithWhereWithoutEjerciciosInput[]
+  deleteMany?: Prisma.GrupoScalarWhereInput | Prisma.GrupoScalarWhereInput[]
+}
+
+export type GrupoUncheckedUpdateManyWithoutEjerciciosNestedInput = {
+  create?: Prisma.XOR<Prisma.GrupoCreateWithoutEjerciciosInput, Prisma.GrupoUncheckedCreateWithoutEjerciciosInput> | Prisma.GrupoCreateWithoutEjerciciosInput[] | Prisma.GrupoUncheckedCreateWithoutEjerciciosInput[]
+  connectOrCreate?: Prisma.GrupoCreateOrConnectWithoutEjerciciosInput | Prisma.GrupoCreateOrConnectWithoutEjerciciosInput[]
+  upsert?: Prisma.GrupoUpsertWithWhereUniqueWithoutEjerciciosInput | Prisma.GrupoUpsertWithWhereUniqueWithoutEjerciciosInput[]
+  set?: Prisma.GrupoWhereUniqueInput | Prisma.GrupoWhereUniqueInput[]
+  disconnect?: Prisma.GrupoWhereUniqueInput | Prisma.GrupoWhereUniqueInput[]
+  delete?: Prisma.GrupoWhereUniqueInput | Prisma.GrupoWhereUniqueInput[]
+  connect?: Prisma.GrupoWhereUniqueInput | Prisma.GrupoWhereUniqueInput[]
+  update?: Prisma.GrupoUpdateWithWhereUniqueWithoutEjerciciosInput | Prisma.GrupoUpdateWithWhereUniqueWithoutEjerciciosInput[]
+  updateMany?: Prisma.GrupoUpdateManyWithWhereWithoutEjerciciosInput | Prisma.GrupoUpdateManyWithWhereWithoutEjerciciosInput[]
+  deleteMany?: Prisma.GrupoScalarWhereInput | Prisma.GrupoScalarWhereInput[]
 }
 
 export type GrupoCreateWithoutDocenteInput = {
   nombre_grupo: string
   turno: string
   alumnos?: Prisma.AlumnoCreateNestedManyWithoutGrupoInput
-  ejercicios?: Prisma.EjercicioCreateNestedManyWithoutGrupoInput
+  ejercicios?: Prisma.EjercicioCreateNestedManyWithoutGruposInput
 }
 
 export type GrupoUncheckedCreateWithoutDocenteInput = {
@@ -454,7 +476,7 @@ export type GrupoUncheckedCreateWithoutDocenteInput = {
   nombre_grupo: string
   turno: string
   alumnos?: Prisma.AlumnoUncheckedCreateNestedManyWithoutGrupoInput
-  ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutGrupoInput
+  ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutGruposInput
 }
 
 export type GrupoCreateOrConnectWithoutDocenteInput = {
@@ -496,7 +518,7 @@ export type GrupoScalarWhereInput = {
 export type GrupoCreateWithoutAlumnosInput = {
   nombre_grupo: string
   turno: string
-  ejercicios?: Prisma.EjercicioCreateNestedManyWithoutGrupoInput
+  ejercicios?: Prisma.EjercicioCreateNestedManyWithoutGruposInput
   docente: Prisma.DocenteCreateNestedOneWithoutGruposInput
 }
 
@@ -505,7 +527,7 @@ export type GrupoUncheckedCreateWithoutAlumnosInput = {
   nombre_grupo: string
   id_docente: number
   turno: string
-  ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutGrupoInput
+  ejercicios?: Prisma.EjercicioUncheckedCreateNestedManyWithoutGruposInput
 }
 
 export type GrupoCreateOrConnectWithoutAlumnosInput = {
@@ -527,7 +549,7 @@ export type GrupoUpdateToOneWithWhereWithoutAlumnosInput = {
 export type GrupoUpdateWithoutAlumnosInput = {
   nombre_grupo?: Prisma.StringFieldUpdateOperationsInput | string
   turno?: Prisma.StringFieldUpdateOperationsInput | string
-  ejercicios?: Prisma.EjercicioUpdateManyWithoutGrupoNestedInput
+  ejercicios?: Prisma.EjercicioUpdateManyWithoutGruposNestedInput
   docente?: Prisma.DocenteUpdateOneRequiredWithoutGruposNestedInput
 }
 
@@ -536,7 +558,7 @@ export type GrupoUncheckedUpdateWithoutAlumnosInput = {
   nombre_grupo?: Prisma.StringFieldUpdateOperationsInput | string
   id_docente?: Prisma.IntFieldUpdateOperationsInput | number
   turno?: Prisma.StringFieldUpdateOperationsInput | string
-  ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutGrupoNestedInput
+  ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutGruposNestedInput
 }
 
 export type GrupoCreateWithoutEjerciciosInput = {
@@ -559,15 +581,47 @@ export type GrupoCreateOrConnectWithoutEjerciciosInput = {
   create: Prisma.XOR<Prisma.GrupoCreateWithoutEjerciciosInput, Prisma.GrupoUncheckedCreateWithoutEjerciciosInput>
 }
 
-export type GrupoUpsertWithoutEjerciciosInput = {
+export type GrupoUpsertWithWhereUniqueWithoutEjerciciosInput = {
+  where: Prisma.GrupoWhereUniqueInput
   update: Prisma.XOR<Prisma.GrupoUpdateWithoutEjerciciosInput, Prisma.GrupoUncheckedUpdateWithoutEjerciciosInput>
   create: Prisma.XOR<Prisma.GrupoCreateWithoutEjerciciosInput, Prisma.GrupoUncheckedCreateWithoutEjerciciosInput>
-  where?: Prisma.GrupoWhereInput
 }
 
-export type GrupoUpdateToOneWithWhereWithoutEjerciciosInput = {
-  where?: Prisma.GrupoWhereInput
+export type GrupoUpdateWithWhereUniqueWithoutEjerciciosInput = {
+  where: Prisma.GrupoWhereUniqueInput
   data: Prisma.XOR<Prisma.GrupoUpdateWithoutEjerciciosInput, Prisma.GrupoUncheckedUpdateWithoutEjerciciosInput>
+}
+
+export type GrupoUpdateManyWithWhereWithoutEjerciciosInput = {
+  where: Prisma.GrupoScalarWhereInput
+  data: Prisma.XOR<Prisma.GrupoUpdateManyMutationInput, Prisma.GrupoUncheckedUpdateManyWithoutEjerciciosInput>
+}
+
+export type GrupoCreateManyDocenteInput = {
+  id_grupo?: number
+  nombre_grupo: string
+  turno: string
+}
+
+export type GrupoUpdateWithoutDocenteInput = {
+  nombre_grupo?: Prisma.StringFieldUpdateOperationsInput | string
+  turno?: Prisma.StringFieldUpdateOperationsInput | string
+  alumnos?: Prisma.AlumnoUpdateManyWithoutGrupoNestedInput
+  ejercicios?: Prisma.EjercicioUpdateManyWithoutGruposNestedInput
+}
+
+export type GrupoUncheckedUpdateWithoutDocenteInput = {
+  id_grupo?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre_grupo?: Prisma.StringFieldUpdateOperationsInput | string
+  turno?: Prisma.StringFieldUpdateOperationsInput | string
+  alumnos?: Prisma.AlumnoUncheckedUpdateManyWithoutGrupoNestedInput
+  ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutGruposNestedInput
+}
+
+export type GrupoUncheckedUpdateManyWithoutDocenteInput = {
+  id_grupo?: Prisma.IntFieldUpdateOperationsInput | number
+  nombre_grupo?: Prisma.StringFieldUpdateOperationsInput | string
+  turno?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type GrupoUpdateWithoutEjerciciosInput = {
@@ -585,30 +639,10 @@ export type GrupoUncheckedUpdateWithoutEjerciciosInput = {
   alumnos?: Prisma.AlumnoUncheckedUpdateManyWithoutGrupoNestedInput
 }
 
-export type GrupoCreateManyDocenteInput = {
-  id_grupo?: number
-  nombre_grupo: string
-  turno: string
-}
-
-export type GrupoUpdateWithoutDocenteInput = {
-  nombre_grupo?: Prisma.StringFieldUpdateOperationsInput | string
-  turno?: Prisma.StringFieldUpdateOperationsInput | string
-  alumnos?: Prisma.AlumnoUpdateManyWithoutGrupoNestedInput
-  ejercicios?: Prisma.EjercicioUpdateManyWithoutGrupoNestedInput
-}
-
-export type GrupoUncheckedUpdateWithoutDocenteInput = {
+export type GrupoUncheckedUpdateManyWithoutEjerciciosInput = {
   id_grupo?: Prisma.IntFieldUpdateOperationsInput | number
   nombre_grupo?: Prisma.StringFieldUpdateOperationsInput | string
-  turno?: Prisma.StringFieldUpdateOperationsInput | string
-  alumnos?: Prisma.AlumnoUncheckedUpdateManyWithoutGrupoNestedInput
-  ejercicios?: Prisma.EjercicioUncheckedUpdateManyWithoutGrupoNestedInput
-}
-
-export type GrupoUncheckedUpdateManyWithoutDocenteInput = {
-  id_grupo?: Prisma.IntFieldUpdateOperationsInput | number
-  nombre_grupo?: Prisma.StringFieldUpdateOperationsInput | string
+  id_docente?: Prisma.IntFieldUpdateOperationsInput | number
   turno?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
