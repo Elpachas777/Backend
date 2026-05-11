@@ -12,7 +12,6 @@ if (!globalPrisma.prisma) {
     database: process.env.DATABASE_NAME,
     port: Number(process.env.DATABASE_PORT),
     connectionLimit: 10,
-    ssl: { rejectUnauthorized: false },
   });
 
   globalPrisma.prisma = new PrismaClient({ adapter });
