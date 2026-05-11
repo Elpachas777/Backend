@@ -1,13 +1,13 @@
-import { Resend } from "resend";
 import "dotenv/config";
+import { Resend } from "resend";
 import { ApiError } from "./errores.utils.js";
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function enviarCorreo(destinatario, asunto, cuerpo) {
   try {
     const { data, error } = await resend.emails.send({
-      from: "Silabando <onboarding@resend.dev>",
+      from: "Silabando <noreply@silabando.com>",
       to: destinatario,
       subject: asunto,
       html: cuerpo,
@@ -25,5 +25,4 @@ export default async function enviarCorreo(destinatario, asunto, cuerpo) {
       "Error al enviar o construir el correo",
     );
   }
-};
-
+}
