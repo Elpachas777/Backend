@@ -20,7 +20,7 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "nodemailer": "^7.0.10"
+    "resend": "^6.12.3"
   },
   "overrides": {
     "hono": "^4.12.4",
