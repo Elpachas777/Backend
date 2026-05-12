@@ -1,22 +1,16 @@
 import { Router } from "express";
 import {
   actualizar,
-  asignar,
+  crear,
   eliminar,
-  estadisticasAsignacion,
   listar,
-  listarTipos,
-  registrarEjercicio,
-} from "../controllers/ejercicios.controller.js";
+} from "../controllers/escuela.controller.js";
 
 const router = Router();
 
-router.post("/crearEjercicio", registrarEjercicio);
-router.get("/obtenerTipos", listarTipos);
-router.get("/obtenerEjercicios", listar);
-router.get("/estadisticasAsignacion/:id", estadisticasAsignacion);
-router.put("/editarEjercicio/:id", actualizar);
-router.delete("/eliminarEjercicio/:id", eliminar);
-router.put("/asignar/:id", asignar);
+router.post("/registrarEscuela", crear);
+router.get("/verEscuelas", listar);
+router.put("/actualizarEscuela/:id", actualizar);
+router.delete("/eliminarEscuela/:id", eliminar);
 
 export default router;
