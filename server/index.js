@@ -17,17 +17,54 @@ import sesionRoutes from "./routes/sesion.routes.js";
 
 const app = express();
 
+const originsDesdeEnv = [
+  process.env.URL_FRONT_END,
+  process.env.FRONTEND_ORIGINS,
+]
+  .filter(Boolean)
+  .flatMap((origenes) =>
+    origenes
+      .split(",")
+      .map((origen) => origen.trim())
+      .filter(Boolean),
+  );
+
+const allowedOrigins = new Set([
+  ...originsDesdeEnv,
+
+  // Frontend local Vite
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+
+  // Por si Vite cambia de puerto
+  "http://localhost:5174",
+  "http://127.0.0.1:5174",
+]);
+
+const corsOptions = {
+  origin(origin, callback) {
+    // Permite llamadas sin Origin, como curl, Postman o health checks
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    if (allowedOrigins.has(origin)) {
+      return callback(null, true);
+    }
+
+    console.log("CORS bloqueado para origin:", origin);
+    return callback(null, false);
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
 app.set("trust proxy", 1);
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: process.env.URL_FRONT_END,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
 
 app.use(indexRoutes);
 app.use(docenteRoutes);
@@ -42,4 +79,8 @@ app.use(respuestaRoutes);
 
 app.use(manejadorErrores);
 
-app.listen(process.env.PORT);
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+});
