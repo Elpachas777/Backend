@@ -26,6 +26,14 @@ export const login = async ({ correo, password }) => {
     if (docente) {
       await validarContraseña(password, docente.contraseña);
 
+      if (!docente.habilitado) {
+        throw new ApiError(
+          "Docente no verificado",
+          403,
+          "Tu cuenta aún no ha sido verificada. Revisa tu correo y haz clic en el enlace de confirmación para activarla.",
+        );
+      }
+
       return {
         id: docente.id_docente,
         nombre: docente.usuario.nombres,

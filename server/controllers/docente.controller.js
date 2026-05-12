@@ -21,7 +21,8 @@ export async function verificarCorreoDocente(req, res, next) {
     const datosToken = validarTokenCorreo(req.query);
     await service.validarCorreoDocente(datosToken);
 
-    return res.redirect(process.env.URL_FRONT_END);
+    const baseFront = process.env.URL_FRONT_END || "";
+    return res.redirect(`${baseFront}/verificado`);
   } catch (error) {
     next(error);
   }
@@ -108,3 +109,18 @@ export async function checarContraseña(req, res, next) {
   }
 }
 
+export async function reenviarVerificacion(req, res, next) {
+  try {
+    const { id } = req.params;
+    const docente = await service.reenviarVerificacionDocente(id);
+
+    await enviarTokenCorreo(docente);
+
+    return res.status(200).json({
+      tipo: "success",
+      mensaje: `Correo de verificación reenviado a ${docente.correo}`,
+    });
+  } catch (error) {
+    next(error);
+  }
+}

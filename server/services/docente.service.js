@@ -122,6 +122,7 @@ export const verInfoDocentes = async () => {
       },
       fechaIngreso: datos.usuario.creado,
       habilitado: datos.habilitado,
+      estado: datos.habilitado ? "Verificado" : "Pendiente",
       grupos: datos.grupos.map((propiedades) => ({
         id: propiedades.id_grupo,
         nombre: propiedades.nombre_grupo,
@@ -244,6 +245,33 @@ export const comprobarContraseña = async (id, contraseña) => {
     }
 
     const validacion = await validarContraseña(contraseña, res.contraseña);
+  } catch (error) {
+    controlErrores(error);
+  }
+};
+
+export const reenviarVerificacionDocente = async (id) => {
+  try {
+    await docenteId(id);
+    const docente = await consultarDocentePorId(id);
+
+    if (!docente) {
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        404,
+        "No se encontró al docente",
+      );
+    }
+
+    if (docente.habilitado) {
+      throw new ApiError(
+        "Docente ya verificado",
+        400,
+        "Este docente ya tiene su cuenta verificada",
+      );
+    }
+
+    return docente;
   } catch (error) {
     controlErrores(error);
   }

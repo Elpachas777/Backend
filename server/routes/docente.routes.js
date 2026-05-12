@@ -7,12 +7,14 @@ import {
   editarDocenteInfo,
   eliminarDocente,
   registarDocente,
+  reenviarVerificacion,
   verificarCorreoDocente,
 } from "../controllers/docente.controller.js";
 
 const router = Router();
 
 router.post("/registrarDocente", registarDocente);
+router.post("/reenviarVerificacion/:id", reenviarVerificacion);
 router.get("/verificar", verificarCorreoDocente);
 router.get("/verDocentes", consultarDocentesInfo);
 router.get("/verDocente/:id", consultarDocenteInfo);

@@ -5,8 +5,13 @@ import sendEmail from "../utils/mail.utils.js";
 import { controlErrores } from "../utils/utilidad.utils.js";
 import "dotenv/config";
 
-export async function enviarTokenCorreo({ idDocente, correo, usuario }) {
+export async function enviarTokenCorreo(docente) {
   try {
+    // Acepta tanto el objeto Prisma (id_docente) como el formato camelCase (idDocente).
+    const idDocente = docente.id_docente ?? docente.idDocente;
+    const correo = docente.correo;
+    const nombres = docente.usuario?.nombres || "docente";
+
     const objeto = { id: idDocente, correo: correo, tipo: "verificación" };
     const tokenVerificacion = generarToken(objeto, "1h");
 
@@ -15,9 +20,10 @@ export async function enviarTokenCorreo({ idDocente, correo, usuario }) {
     await enviarCorreo(
       correo,
       "Confirmación de correo",
-      ` <h1>Hola, ${usuario.nombres}</h1>
+      ` <h1>Hola, ${nombres}</h1>
           <p>Gracias por registrarte. Haz clic para confirmar tu correo:</p>
-          <p><a href="${pagina}">Confirmar correo</a></p>`,
+          <p><a href="${pagina}">Confirmar correo</a></p>
+          <p style="color:#666;font-size:0.9em">Este enlace expira en 1 hora.</p>`,
     );
 
   } catch (error) {
