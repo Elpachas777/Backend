@@ -82,3 +82,20 @@ export const asignar = async (req, res, next) => {
     next(error)
   }
 }
+
+export const estadisticasAsignacion = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const token = req.cookies?.access_token || "";
+    const docente = verificarTokenAuth(token);
+
+    const estadisticas = await service.estadisticasAsignacionPorEjercicio(
+      docente.id,
+      id,
+    );
+
+    return res.status(200).json(estadisticas);
+  } catch (error) {
+    next(error);
+  }
+};
