@@ -1,4 +1,7 @@
-import { enviarTokenCorreo, validarTokenCorreo } from "../services/correo.service.js";
+import {
+  enviarTokenCorreo,
+  validarTokenCorreo,
+} from "../services/correo.service.js";
 import * as service from "../services/docente.service.js";
 
 export async function registarDocente(req, res, next) {

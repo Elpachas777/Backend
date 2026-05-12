@@ -103,13 +103,17 @@ CREATE TABLE `TipoEjercicio` (
 -- CreateTable
 CREATE TABLE `Respuesta` (
     `id_respuesta` INTEGER NOT NULL AUTO_INCREMENT,
-    `trazo` VARCHAR(191) NOT NULL,
-    `puntaje` INTEGER NOT NULL,
+    `trazo` VARCHAR(191) NULL,
+    `silaba` VARCHAR(191) NOT NULL,
+    `puntaje` DOUBLE NOT NULL,
+    `fecha` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `id_intento` VARCHAR(191) NOT NULL,
     `id_alumno` INTEGER NOT NULL,
     `id_ejercicio` INTEGER NOT NULL,
 
     INDEX `Respuesta_id_alumno_fkey`(`id_alumno`),
     INDEX `Respuesta_id_ejercicio_fkey`(`id_ejercicio`),
+    INDEX `Respuesta_id_intento_idx`(`id_intento`),
     PRIMARY KEY (`id_respuesta`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -150,10 +154,10 @@ ALTER TABLE `Ejercicio` ADD CONSTRAINT `Ejercicio_id_docente_fkey` FOREIGN KEY (
 ALTER TABLE `Ejercicio` ADD CONSTRAINT `Ejercicio_id_tipo_fkey` FOREIGN KEY (`id_tipo`) REFERENCES `TipoEjercicio`(`id_tipo`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Respuesta` ADD CONSTRAINT `Respuesta_id_alumno_fkey` FOREIGN KEY (`id_alumno`) REFERENCES `Alumno`(`id_alumno`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Respuesta` ADD CONSTRAINT `Respuesta_id_alumno_fkey` FOREIGN KEY (`id_alumno`) REFERENCES `Alumno`(`id_alumno`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Respuesta` ADD CONSTRAINT `Respuesta_id_ejercicio_fkey` FOREIGN KEY (`id_ejercicio`) REFERENCES `Ejercicio`(`id_ejercicio`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Respuesta` ADD CONSTRAINT `Respuesta_id_ejercicio_fkey` FOREIGN KEY (`id_ejercicio`) REFERENCES `Ejercicio`(`id_ejercicio`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `_EjercicioToGrupo` ADD CONSTRAINT `_EjercicioToGrupo_A_fkey` FOREIGN KEY (`A`) REFERENCES `Ejercicio`(`id_ejercicio`) ON DELETE CASCADE ON UPDATE CASCADE;
