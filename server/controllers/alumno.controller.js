@@ -75,3 +75,12 @@ export async function verAlumnosGrupo(req, res, next) {
     next(error);
   }
 }
+
+export async function consultarEjerciciosAlumno(req, res, next) {
+  try {
+    const respuesta = await service.verEjerciciosDelAlumno(req.params);
+    return res.status(200).json(respuesta);
+  } catch (error) {
+    next(error);
+  }
+}

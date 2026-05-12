@@ -151,6 +151,62 @@ export const verAlumnosEnGrupo = async (data) => {
   }
 };
 
+export const verEjerciciosDelAlumno = async ({ idAlumno }) => {
+  try {
+    if (!idAlumno) {
+      throw new ApiError(
+        "Falta el id de ingreso del alumno",
+        400,
+        "El id de acceso del alumno es obligatorio",
+      );
+    }
+
+    const idLimpio = String(idAlumno).trim();
+    console.log("[ejerciciosAlumno] Buscando alumno con id_ingreso:", JSON.stringify(idLimpio));
+
+    const alumno = await repo.consultarAlumnoConEjerciciosPorIdIngreso(idLimpio);
+    console.log("[ejerciciosAlumno] Resultado de Prisma:", alumno ? "ENCONTRADO" : "NULL");
+
+    if (!alumno) {
+      // Diagnóstico: ¿hay alumnos con id_ingreso parecido?
+      const similares = await repo.buscarIdsIngresoSimilares(idLimpio);
+      console.log("[ejerciciosAlumno] IDs parecidos en BD:", similares);
+
+      throw new ApiError(
+        "La petición devuelve un registro vacio",
+        404,
+        "No se encontró al alumno con el id de acceso proporcionado",
+      );
+    }
+
+    const ejercicios = (alumno.grupo?.ejercicios ?? []).map((ejercicio) => ({
+      id: ejercicio.id_ejercicio,
+      titulo: ejercicio.titulo,
+      fecha_inicio: ejercicio.fecha_inicio,
+      fecha_final: ejercicio.fecha_final,
+      tipo: ejercicio.tipo?.nombre || "",
+    }));
+
+    return {
+      alumno: {
+        id: alumno.id_alumno,
+        id_ingreso: alumno.id_ingreso,
+        nombre: alumno.usuario.nombres,
+        apellidos: alumno.usuario.apellido,
+      },
+      grupo: alumno.grupo
+        ? {
+            id: alumno.grupo.id_grupo,
+            nombre: alumno.grupo.nombre_grupo,
+          }
+        : null,
+      ejercicios,
+    };
+  } catch (error) {
+    controlErrores(error);
+  }
+};
+
 export const actualizarId = async (id, grupo, apellidos) => {
   try {
 

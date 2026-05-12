@@ -169,6 +169,65 @@ export const actualizarId = (id, id_ingreso) => {
   })
 }
 
+export const consultarAlumnoConEjerciciosPorIdIngreso = (id_ingreso) => {
+  const idLimpio = String(id_ingreso ?? "").trim();
+
+  return prisma.alumno.findFirst({
+    where: {
+      id_ingreso: {
+        equals: idLimpio,
+      },
+    },
+    select: {
+      id_alumno: true,
+      id_ingreso: true,
+      usuario: {
+        select: {
+          nombres: true,
+          apellido: true,
+        },
+      },
+      grupo: {
+        select: {
+          id_grupo: true,
+          nombre_grupo: true,
+          ejercicios: {
+            select: {
+              id_ejercicio: true,
+              titulo: true,
+              fecha_inicio: true,
+              fecha_final: true,
+              tipo: {
+                select: {
+                  id_tipo: true,
+                  nombre: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+};
+
+export const buscarIdsIngresoSimilares = async (idIngreso) => {
+  // Devuelve hasta 5 ids parecidos para diagnóstico (mismo prefijo de 4 chars)
+  const prefijo = String(idIngreso ?? "").trim().slice(0, 4);
+  if (!prefijo) return [];
+
+  const resultados = await prisma.alumno.findMany({
+    where: {
+      id_ingreso: {
+        startsWith: prefijo,
+      },
+    },
+    select: { id_ingreso: true },
+    take: 5,
+  });
+  return resultados.map((r) => r.id_ingreso);
+};
+
 export const modificarId = (id_vieja, id_nueva) => {
   return prisma.alumno.update({
     where: {
