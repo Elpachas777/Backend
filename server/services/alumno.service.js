@@ -162,7 +162,8 @@ export const verEjerciciosDelAlumno = async ({ idAlumno }) => {
       );
     }
 
-    const idLimpio = String(idAlumno).trim();
+    const idLimpio = String(idAlumno).trim().toUpperCase();
+
     const alumno = await repo.consultarAlumnoConEjerciciosPorIdIngreso(idLimpio);
 
     if (!alumno) {
@@ -173,9 +174,20 @@ export const verEjerciciosDelAlumno = async ({ idAlumno }) => {
       );
     }
 
-    const respuestasAlumno = await respuestaRepo.listarRespuestasAlumno(
-      alumno.id_alumno,
-    );
+    let respuestasAlumno = [];
+
+    try {
+      respuestasAlumno = await respuestaRepo.listarRespuestasAlumno(
+        alumno.id_alumno,
+      );
+    } catch (error) {
+      console.log(
+        "Error al consultar respuestas del alumno:",
+        error.message,
+      );
+
+      respuestasAlumno = [];
+    }
 
     const ejerciciosResueltos = new Set(
       respuestasAlumno.map((r) => Number(r.id_ejercicio)),
@@ -215,7 +227,6 @@ export const verEjerciciosDelAlumno = async ({ idAlumno }) => {
     controlErrores(error);
   }
 };
-
 export const actualizarId = async (id, grupo, apellidos) => {
   try {
     const apellidosSeparados = String(apellidos || "")
