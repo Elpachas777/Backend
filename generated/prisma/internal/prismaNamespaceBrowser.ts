@@ -171,7 +171,10 @@ export type TipoEjercicioScalarFieldEnum = (typeof TipoEjercicioScalarFieldEnum)
 export const RespuestaScalarFieldEnum = {
   id_respuesta: 'id_respuesta',
   trazo: 'trazo',
+  silaba: 'silaba',
   puntaje: 'puntaje',
+  fecha: 'fecha',
+  id_intento: 'id_intento',
   id_alumno: 'id_alumno',
   id_ejercicio: 'id_ejercicio'
 } as const
@@ -287,7 +290,9 @@ export type TipoEjercicioOrderByRelevanceFieldEnum = (typeof TipoEjercicioOrderB
 
 
 export const RespuestaOrderByRelevanceFieldEnum = {
-  trazo: 'trazo'
+  trazo: 'trazo',
+  silaba: 'silaba',
+  id_intento: 'id_intento'
 } as const
 
 export type RespuestaOrderByRelevanceFieldEnum = (typeof RespuestaOrderByRelevanceFieldEnum)[keyof typeof RespuestaOrderByRelevanceFieldEnum]

@@ -43,7 +43,10 @@ export type RespuestaSumAggregateOutputType = {
 export type RespuestaMinAggregateOutputType = {
   id_respuesta: number | null
   trazo: string | null
+  silaba: string | null
   puntaje: number | null
+  fecha: Date | null
+  id_intento: string | null
   id_alumno: number | null
   id_ejercicio: number | null
 }
@@ -51,7 +54,10 @@ export type RespuestaMinAggregateOutputType = {
 export type RespuestaMaxAggregateOutputType = {
   id_respuesta: number | null
   trazo: string | null
+  silaba: string | null
   puntaje: number | null
+  fecha: Date | null
+  id_intento: string | null
   id_alumno: number | null
   id_ejercicio: number | null
 }
@@ -59,7 +65,10 @@ export type RespuestaMaxAggregateOutputType = {
 export type RespuestaCountAggregateOutputType = {
   id_respuesta: number
   trazo: number
+  silaba: number
   puntaje: number
+  fecha: number
+  id_intento: number
   id_alumno: number
   id_ejercicio: number
   _all: number
@@ -83,7 +92,10 @@ export type RespuestaSumAggregateInputType = {
 export type RespuestaMinAggregateInputType = {
   id_respuesta?: true
   trazo?: true
+  silaba?: true
   puntaje?: true
+  fecha?: true
+  id_intento?: true
   id_alumno?: true
   id_ejercicio?: true
 }
@@ -91,7 +103,10 @@ export type RespuestaMinAggregateInputType = {
 export type RespuestaMaxAggregateInputType = {
   id_respuesta?: true
   trazo?: true
+  silaba?: true
   puntaje?: true
+  fecha?: true
+  id_intento?: true
   id_alumno?: true
   id_ejercicio?: true
 }
@@ -99,7 +114,10 @@ export type RespuestaMaxAggregateInputType = {
 export type RespuestaCountAggregateInputType = {
   id_respuesta?: true
   trazo?: true
+  silaba?: true
   puntaje?: true
+  fecha?: true
+  id_intento?: true
   id_alumno?: true
   id_ejercicio?: true
   _all?: true
@@ -193,8 +211,11 @@ export type RespuestaGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type RespuestaGroupByOutputType = {
   id_respuesta: number
-  trazo: string
+  trazo: string | null
+  silaba: string
   puntaje: number
+  fecha: Date
+  id_intento: string
   id_alumno: number
   id_ejercicio: number
   _count: RespuestaCountAggregateOutputType | null
@@ -224,8 +245,11 @@ export type RespuestaWhereInput = {
   OR?: Prisma.RespuestaWhereInput[]
   NOT?: Prisma.RespuestaWhereInput | Prisma.RespuestaWhereInput[]
   id_respuesta?: Prisma.IntFilter<"Respuesta"> | number
-  trazo?: Prisma.StringFilter<"Respuesta"> | string
-  puntaje?: Prisma.IntFilter<"Respuesta"> | number
+  trazo?: Prisma.StringNullableFilter<"Respuesta"> | string | null
+  silaba?: Prisma.StringFilter<"Respuesta"> | string
+  puntaje?: Prisma.FloatFilter<"Respuesta"> | number
+  fecha?: Prisma.DateTimeFilter<"Respuesta"> | Date | string
+  id_intento?: Prisma.StringFilter<"Respuesta"> | string
   id_alumno?: Prisma.IntFilter<"Respuesta"> | number
   id_ejercicio?: Prisma.IntFilter<"Respuesta"> | number
   alumno?: Prisma.XOR<Prisma.AlumnoScalarRelationFilter, Prisma.AlumnoWhereInput>
@@ -234,8 +258,11 @@ export type RespuestaWhereInput = {
 
 export type RespuestaOrderByWithRelationInput = {
   id_respuesta?: Prisma.SortOrder
-  trazo?: Prisma.SortOrder
+  trazo?: Prisma.SortOrderInput | Prisma.SortOrder
+  silaba?: Prisma.SortOrder
   puntaje?: Prisma.SortOrder
+  fecha?: Prisma.SortOrder
+  id_intento?: Prisma.SortOrder
   id_alumno?: Prisma.SortOrder
   id_ejercicio?: Prisma.SortOrder
   alumno?: Prisma.AlumnoOrderByWithRelationInput
@@ -248,8 +275,11 @@ export type RespuestaWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.RespuestaWhereInput | Prisma.RespuestaWhereInput[]
   OR?: Prisma.RespuestaWhereInput[]
   NOT?: Prisma.RespuestaWhereInput | Prisma.RespuestaWhereInput[]
-  trazo?: Prisma.StringFilter<"Respuesta"> | string
-  puntaje?: Prisma.IntFilter<"Respuesta"> | number
+  trazo?: Prisma.StringNullableFilter<"Respuesta"> | string | null
+  silaba?: Prisma.StringFilter<"Respuesta"> | string
+  puntaje?: Prisma.FloatFilter<"Respuesta"> | number
+  fecha?: Prisma.DateTimeFilter<"Respuesta"> | Date | string
+  id_intento?: Prisma.StringFilter<"Respuesta"> | string
   id_alumno?: Prisma.IntFilter<"Respuesta"> | number
   id_ejercicio?: Prisma.IntFilter<"Respuesta"> | number
   alumno?: Prisma.XOR<Prisma.AlumnoScalarRelationFilter, Prisma.AlumnoWhereInput>
@@ -258,8 +288,11 @@ export type RespuestaWhereUniqueInput = Prisma.AtLeast<{
 
 export type RespuestaOrderByWithAggregationInput = {
   id_respuesta?: Prisma.SortOrder
-  trazo?: Prisma.SortOrder
+  trazo?: Prisma.SortOrderInput | Prisma.SortOrder
+  silaba?: Prisma.SortOrder
   puntaje?: Prisma.SortOrder
+  fecha?: Prisma.SortOrder
+  id_intento?: Prisma.SortOrder
   id_alumno?: Prisma.SortOrder
   id_ejercicio?: Prisma.SortOrder
   _count?: Prisma.RespuestaCountOrderByAggregateInput
@@ -274,59 +307,83 @@ export type RespuestaScalarWhereWithAggregatesInput = {
   OR?: Prisma.RespuestaScalarWhereWithAggregatesInput[]
   NOT?: Prisma.RespuestaScalarWhereWithAggregatesInput | Prisma.RespuestaScalarWhereWithAggregatesInput[]
   id_respuesta?: Prisma.IntWithAggregatesFilter<"Respuesta"> | number
-  trazo?: Prisma.StringWithAggregatesFilter<"Respuesta"> | string
-  puntaje?: Prisma.IntWithAggregatesFilter<"Respuesta"> | number
+  trazo?: Prisma.StringNullableWithAggregatesFilter<"Respuesta"> | string | null
+  silaba?: Prisma.StringWithAggregatesFilter<"Respuesta"> | string
+  puntaje?: Prisma.FloatWithAggregatesFilter<"Respuesta"> | number
+  fecha?: Prisma.DateTimeWithAggregatesFilter<"Respuesta"> | Date | string
+  id_intento?: Prisma.StringWithAggregatesFilter<"Respuesta"> | string
   id_alumno?: Prisma.IntWithAggregatesFilter<"Respuesta"> | number
   id_ejercicio?: Prisma.IntWithAggregatesFilter<"Respuesta"> | number
 }
 
 export type RespuestaCreateInput = {
-  trazo: string
+  trazo?: string | null
+  silaba: string
   puntaje: number
+  fecha?: Date | string
+  id_intento: string
   alumno: Prisma.AlumnoCreateNestedOneWithoutRespuestasInput
   ejercicio: Prisma.EjercicioCreateNestedOneWithoutRespuestasInput
 }
 
 export type RespuestaUncheckedCreateInput = {
   id_respuesta?: number
-  trazo: string
+  trazo?: string | null
+  silaba: string
   puntaje: number
+  fecha?: Date | string
+  id_intento: string
   id_alumno: number
   id_ejercicio: number
 }
 
 export type RespuestaUpdateInput = {
-  trazo?: Prisma.StringFieldUpdateOperationsInput | string
-  puntaje?: Prisma.IntFieldUpdateOperationsInput | number
+  trazo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  silaba?: Prisma.StringFieldUpdateOperationsInput | string
+  puntaje?: Prisma.FloatFieldUpdateOperationsInput | number
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id_intento?: Prisma.StringFieldUpdateOperationsInput | string
   alumno?: Prisma.AlumnoUpdateOneRequiredWithoutRespuestasNestedInput
   ejercicio?: Prisma.EjercicioUpdateOneRequiredWithoutRespuestasNestedInput
 }
 
 export type RespuestaUncheckedUpdateInput = {
   id_respuesta?: Prisma.IntFieldUpdateOperationsInput | number
-  trazo?: Prisma.StringFieldUpdateOperationsInput | string
-  puntaje?: Prisma.IntFieldUpdateOperationsInput | number
+  trazo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  silaba?: Prisma.StringFieldUpdateOperationsInput | string
+  puntaje?: Prisma.FloatFieldUpdateOperationsInput | number
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id_intento?: Prisma.StringFieldUpdateOperationsInput | string
   id_alumno?: Prisma.IntFieldUpdateOperationsInput | number
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RespuestaCreateManyInput = {
   id_respuesta?: number
-  trazo: string
+  trazo?: string | null
+  silaba: string
   puntaje: number
+  fecha?: Date | string
+  id_intento: string
   id_alumno: number
   id_ejercicio: number
 }
 
 export type RespuestaUpdateManyMutationInput = {
-  trazo?: Prisma.StringFieldUpdateOperationsInput | string
-  puntaje?: Prisma.IntFieldUpdateOperationsInput | number
+  trazo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  silaba?: Prisma.StringFieldUpdateOperationsInput | string
+  puntaje?: Prisma.FloatFieldUpdateOperationsInput | number
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id_intento?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type RespuestaUncheckedUpdateManyInput = {
   id_respuesta?: Prisma.IntFieldUpdateOperationsInput | number
-  trazo?: Prisma.StringFieldUpdateOperationsInput | string
-  puntaje?: Prisma.IntFieldUpdateOperationsInput | number
+  trazo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  silaba?: Prisma.StringFieldUpdateOperationsInput | string
+  puntaje?: Prisma.FloatFieldUpdateOperationsInput | number
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id_intento?: Prisma.StringFieldUpdateOperationsInput | string
   id_alumno?: Prisma.IntFieldUpdateOperationsInput | number
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -350,7 +407,10 @@ export type RespuestaOrderByRelevanceInput = {
 export type RespuestaCountOrderByAggregateInput = {
   id_respuesta?: Prisma.SortOrder
   trazo?: Prisma.SortOrder
+  silaba?: Prisma.SortOrder
   puntaje?: Prisma.SortOrder
+  fecha?: Prisma.SortOrder
+  id_intento?: Prisma.SortOrder
   id_alumno?: Prisma.SortOrder
   id_ejercicio?: Prisma.SortOrder
 }
@@ -365,7 +425,10 @@ export type RespuestaAvgOrderByAggregateInput = {
 export type RespuestaMaxOrderByAggregateInput = {
   id_respuesta?: Prisma.SortOrder
   trazo?: Prisma.SortOrder
+  silaba?: Prisma.SortOrder
   puntaje?: Prisma.SortOrder
+  fecha?: Prisma.SortOrder
+  id_intento?: Prisma.SortOrder
   id_alumno?: Prisma.SortOrder
   id_ejercicio?: Prisma.SortOrder
 }
@@ -373,7 +436,10 @@ export type RespuestaMaxOrderByAggregateInput = {
 export type RespuestaMinOrderByAggregateInput = {
   id_respuesta?: Prisma.SortOrder
   trazo?: Prisma.SortOrder
+  silaba?: Prisma.SortOrder
   puntaje?: Prisma.SortOrder
+  fecha?: Prisma.SortOrder
+  id_intento?: Prisma.SortOrder
   id_alumno?: Prisma.SortOrder
   id_ejercicio?: Prisma.SortOrder
 }
@@ -469,16 +535,30 @@ export type RespuestaUncheckedUpdateManyWithoutEjercicioNestedInput = {
   deleteMany?: Prisma.RespuestaScalarWhereInput | Prisma.RespuestaScalarWhereInput[]
 }
 
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type RespuestaCreateWithoutAlumnoInput = {
-  trazo: string
+  trazo?: string | null
+  silaba: string
   puntaje: number
+  fecha?: Date | string
+  id_intento: string
   ejercicio: Prisma.EjercicioCreateNestedOneWithoutRespuestasInput
 }
 
 export type RespuestaUncheckedCreateWithoutAlumnoInput = {
   id_respuesta?: number
-  trazo: string
+  trazo?: string | null
+  silaba: string
   puntaje: number
+  fecha?: Date | string
+  id_intento: string
   id_ejercicio: number
 }
 
@@ -513,22 +593,31 @@ export type RespuestaScalarWhereInput = {
   OR?: Prisma.RespuestaScalarWhereInput[]
   NOT?: Prisma.RespuestaScalarWhereInput | Prisma.RespuestaScalarWhereInput[]
   id_respuesta?: Prisma.IntFilter<"Respuesta"> | number
-  trazo?: Prisma.StringFilter<"Respuesta"> | string
-  puntaje?: Prisma.IntFilter<"Respuesta"> | number
+  trazo?: Prisma.StringNullableFilter<"Respuesta"> | string | null
+  silaba?: Prisma.StringFilter<"Respuesta"> | string
+  puntaje?: Prisma.FloatFilter<"Respuesta"> | number
+  fecha?: Prisma.DateTimeFilter<"Respuesta"> | Date | string
+  id_intento?: Prisma.StringFilter<"Respuesta"> | string
   id_alumno?: Prisma.IntFilter<"Respuesta"> | number
   id_ejercicio?: Prisma.IntFilter<"Respuesta"> | number
 }
 
 export type RespuestaCreateWithoutEjercicioInput = {
-  trazo: string
+  trazo?: string | null
+  silaba: string
   puntaje: number
+  fecha?: Date | string
+  id_intento: string
   alumno: Prisma.AlumnoCreateNestedOneWithoutRespuestasInput
 }
 
 export type RespuestaUncheckedCreateWithoutEjercicioInput = {
   id_respuesta?: number
-  trazo: string
+  trazo?: string | null
+  silaba: string
   puntaje: number
+  fecha?: Date | string
+  id_intento: string
   id_alumno: number
 }
 
@@ -560,55 +649,79 @@ export type RespuestaUpdateManyWithWhereWithoutEjercicioInput = {
 
 export type RespuestaCreateManyAlumnoInput = {
   id_respuesta?: number
-  trazo: string
+  trazo?: string | null
+  silaba: string
   puntaje: number
+  fecha?: Date | string
+  id_intento: string
   id_ejercicio: number
 }
 
 export type RespuestaUpdateWithoutAlumnoInput = {
-  trazo?: Prisma.StringFieldUpdateOperationsInput | string
-  puntaje?: Prisma.IntFieldUpdateOperationsInput | number
+  trazo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  silaba?: Prisma.StringFieldUpdateOperationsInput | string
+  puntaje?: Prisma.FloatFieldUpdateOperationsInput | number
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id_intento?: Prisma.StringFieldUpdateOperationsInput | string
   ejercicio?: Prisma.EjercicioUpdateOneRequiredWithoutRespuestasNestedInput
 }
 
 export type RespuestaUncheckedUpdateWithoutAlumnoInput = {
   id_respuesta?: Prisma.IntFieldUpdateOperationsInput | number
-  trazo?: Prisma.StringFieldUpdateOperationsInput | string
-  puntaje?: Prisma.IntFieldUpdateOperationsInput | number
+  trazo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  silaba?: Prisma.StringFieldUpdateOperationsInput | string
+  puntaje?: Prisma.FloatFieldUpdateOperationsInput | number
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id_intento?: Prisma.StringFieldUpdateOperationsInput | string
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RespuestaUncheckedUpdateManyWithoutAlumnoInput = {
   id_respuesta?: Prisma.IntFieldUpdateOperationsInput | number
-  trazo?: Prisma.StringFieldUpdateOperationsInput | string
-  puntaje?: Prisma.IntFieldUpdateOperationsInput | number
+  trazo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  silaba?: Prisma.StringFieldUpdateOperationsInput | string
+  puntaje?: Prisma.FloatFieldUpdateOperationsInput | number
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id_intento?: Prisma.StringFieldUpdateOperationsInput | string
   id_ejercicio?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RespuestaCreateManyEjercicioInput = {
   id_respuesta?: number
-  trazo: string
+  trazo?: string | null
+  silaba: string
   puntaje: number
+  fecha?: Date | string
+  id_intento: string
   id_alumno: number
 }
 
 export type RespuestaUpdateWithoutEjercicioInput = {
-  trazo?: Prisma.StringFieldUpdateOperationsInput | string
-  puntaje?: Prisma.IntFieldUpdateOperationsInput | number
+  trazo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  silaba?: Prisma.StringFieldUpdateOperationsInput | string
+  puntaje?: Prisma.FloatFieldUpdateOperationsInput | number
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id_intento?: Prisma.StringFieldUpdateOperationsInput | string
   alumno?: Prisma.AlumnoUpdateOneRequiredWithoutRespuestasNestedInput
 }
 
 export type RespuestaUncheckedUpdateWithoutEjercicioInput = {
   id_respuesta?: Prisma.IntFieldUpdateOperationsInput | number
-  trazo?: Prisma.StringFieldUpdateOperationsInput | string
-  puntaje?: Prisma.IntFieldUpdateOperationsInput | number
+  trazo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  silaba?: Prisma.StringFieldUpdateOperationsInput | string
+  puntaje?: Prisma.FloatFieldUpdateOperationsInput | number
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id_intento?: Prisma.StringFieldUpdateOperationsInput | string
   id_alumno?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type RespuestaUncheckedUpdateManyWithoutEjercicioInput = {
   id_respuesta?: Prisma.IntFieldUpdateOperationsInput | number
-  trazo?: Prisma.StringFieldUpdateOperationsInput | string
-  puntaje?: Prisma.IntFieldUpdateOperationsInput | number
+  trazo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  silaba?: Prisma.StringFieldUpdateOperationsInput | string
+  puntaje?: Prisma.FloatFieldUpdateOperationsInput | number
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  id_intento?: Prisma.StringFieldUpdateOperationsInput | string
   id_alumno?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -617,7 +730,10 @@ export type RespuestaUncheckedUpdateManyWithoutEjercicioInput = {
 export type RespuestaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_respuesta?: boolean
   trazo?: boolean
+  silaba?: boolean
   puntaje?: boolean
+  fecha?: boolean
+  id_intento?: boolean
   id_alumno?: boolean
   id_ejercicio?: boolean
   alumno?: boolean | Prisma.AlumnoDefaultArgs<ExtArgs>
@@ -629,12 +745,15 @@ export type RespuestaSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type RespuestaSelectScalar = {
   id_respuesta?: boolean
   trazo?: boolean
+  silaba?: boolean
   puntaje?: boolean
+  fecha?: boolean
+  id_intento?: boolean
   id_alumno?: boolean
   id_ejercicio?: boolean
 }
 
-export type RespuestaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_respuesta" | "trazo" | "puntaje" | "id_alumno" | "id_ejercicio", ExtArgs["result"]["respuesta"]>
+export type RespuestaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_respuesta" | "trazo" | "silaba" | "puntaje" | "fecha" | "id_intento" | "id_alumno" | "id_ejercicio", ExtArgs["result"]["respuesta"]>
 export type RespuestaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   alumno?: boolean | Prisma.AlumnoDefaultArgs<ExtArgs>
   ejercicio?: boolean | Prisma.EjercicioDefaultArgs<ExtArgs>
@@ -648,8 +767,11 @@ export type $RespuestaPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_respuesta: number
-    trazo: string
+    trazo: string | null
+    silaba: string
     puntaje: number
+    fecha: Date
+    id_intento: string
     id_alumno: number
     id_ejercicio: number
   }, ExtArgs["result"]["respuesta"]>
@@ -1025,7 +1147,10 @@ export interface Prisma__RespuestaClient<T, Null = never, ExtArgs extends runtim
 export interface RespuestaFieldRefs {
   readonly id_respuesta: Prisma.FieldRef<"Respuesta", 'Int'>
   readonly trazo: Prisma.FieldRef<"Respuesta", 'String'>
-  readonly puntaje: Prisma.FieldRef<"Respuesta", 'Int'>
+  readonly silaba: Prisma.FieldRef<"Respuesta", 'String'>
+  readonly puntaje: Prisma.FieldRef<"Respuesta", 'Float'>
+  readonly fecha: Prisma.FieldRef<"Respuesta", 'DateTime'>
+  readonly id_intento: Prisma.FieldRef<"Respuesta", 'String'>
   readonly id_alumno: Prisma.FieldRef<"Respuesta", 'Int'>
   readonly id_ejercicio: Prisma.FieldRef<"Respuesta", 'Int'>
 }
