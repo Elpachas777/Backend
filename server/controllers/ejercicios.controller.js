@@ -12,7 +12,7 @@ export const registrarEjercicio = async (req, res, next) => {
 
     return res.status(200).json({
       tipo: "success",
-      mensaje: "Ejercicio guardado con exito",
+      mensaje: "Asigna el ejercicio a un grupo",
     });
   } catch (error) {
     next(error);
@@ -30,7 +30,7 @@ export const listarTipos = async (req, res, next) => {
 
 export const listar = async (req, res, next) => {
   try {
-    const id = obtenerId(req.cookies)
+    const id = obtenerId(req.cookies);
     const ejercicios = await service.listar(id);
     return res.status(200).json(ejercicios);
   } catch (error) {
@@ -45,7 +45,7 @@ export const actualizar = async (req, res, next) => {
     await service.actualizar(id, data);
 
     return res.status(200).json({
-      tipo: "success",
+      tipo: "info",
       mensaje: "Ejercicio actualizado con exito",
     });
   } catch (error) {
@@ -69,19 +69,19 @@ export const eliminar = async (req, res, next) => {
 
 export const asignar = async (req, res, next) => {
   try {
-    const { id } = req.params
-    const data = req.body
-    
-    await service.asignar(id, data)
+    const { id } = req.params;
+    const data = req.body;
+
+    await service.asignar(id, data);
 
     return res.status(200).json({
       tipo: "info",
-      mensaje: "Ejercicio asignado con exito"
-    })
+      mensaje: "Ejercicio asignado con exito",
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 export const estadisticasAsignacion = async (req, res, next) => {
   try {
