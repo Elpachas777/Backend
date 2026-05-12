@@ -1,14 +1,12 @@
+import "dotenv/config";
 import { generarToken, verificarTokenAuth } from "../auth/auth.js";
 import { ApiError } from "../utils/errores.utils.js";
 import enviarCorreo from "../utils/mail.utils.js";
-import sendEmail from "../utils/mail.utils.js";
 import { controlErrores } from "../utils/utilidad.utils.js";
-import "dotenv/config";
 
 export async function enviarTokenCorreo(docente) {
   try {
-    // Acepta tanto el objeto Prisma (id_docente) como el formato camelCase (idDocente).
-    const idDocente = docente.id_docente ?? docente.idDocente;
+    const idDocente = docente.id_docente;
     const correo = docente.correo;
     const nombres = docente.usuario?.nombres || "docente";
 
@@ -25,9 +23,8 @@ export async function enviarTokenCorreo(docente) {
           <p><a href="${pagina}">Confirmar correo</a></p>
           <p style="color:#666;font-size:0.9em">Este enlace expira en 1 hora.</p>`,
     );
-
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 }
 
@@ -43,7 +40,7 @@ export const enviarCorreoContraseña = async (admin, token) => {
             <p><a href="${pagina}">Recuperar contraseña</a></p>`,
     );
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
 };
 
