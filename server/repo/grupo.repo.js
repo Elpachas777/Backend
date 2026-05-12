@@ -86,6 +86,7 @@ export const agregar = (id_grupo, datos) => {
       id_alumno: {
         in: datos,
       },
+      id_grupo: null,
     },
     data: {
       id_grupo: Number(id_grupo),

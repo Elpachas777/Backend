@@ -204,17 +204,31 @@ export const verEjerciciosDelAlumno = async ({ idAlumno }) => {
 
 export const actualizarId = async (id, grupo, apellidos) => {
   try {
+    const apellidosSeparados = String(apellidos || "")
+      .trim()
+      .toUpperCase()
+      .split(/\s+/)
+      .filter(Boolean);
 
-    let separados = apellidos.toUpperCase().split(" ")
-    const inicio = separados[0].charAt(0) + separados[1].charAt(0) + grupo
+    const primerApellido = apellidosSeparados[0] || "X";
+    const segundoApellido = apellidosSeparados[1] || primerApellido;
 
-    const totalIds = await repo.contarIds(inicio)
-    const id_ingreso = inicio + (totalIds + 1)
+    const iniciales =
+      primerApellido.charAt(0) +
+      segundoApellido.charAt(0);
 
-    const actualizado = await repo.actualizarId(id, id_ingreso)
-    peticionVacia(actualizado, "No se pudo generar el id de acceso para el alumno")
+    const inicio = iniciales + grupo;
 
+    const totalIds = await repo.contarIds(inicio);
+    const id_ingreso = inicio + (totalIds + 1);
+
+    const actualizado = await repo.actualizarId(id, id_ingreso);
+
+    peticionVacia(
+      actualizado,
+      "No se pudo generar el id de acceso para el alumno",
+    );
   } catch (error) {
-    controlErrores(error)
+    controlErrores(error);
   }
-}
+};
