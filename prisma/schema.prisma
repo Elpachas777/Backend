@@ -108,13 +108,17 @@ model TipoEjercicio {
 
 model Respuesta {
   id_respuesta Int       @id @default(autoincrement())
-  trazo        String
-  puntaje      Int
+  trazo        String?
+  silaba       String
+  puntaje      Float
+  fecha        DateTime  @default(now())
+  id_intento   String
   id_alumno    Int
   id_ejercicio Int
-  alumno       Alumno    @relation(fields: [id_alumno], references: [id_alumno])
-  ejercicio    Ejercicio @relation(fields: [id_ejercicio], references: [id_ejercicio])
+  alumno       Alumno    @relation(fields: [id_alumno], references: [id_alumno], onDelete: Cascade)
+  ejercicio    Ejercicio @relation(fields: [id_ejercicio], references: [id_ejercicio], onDelete: Cascade)
 
   @@index([id_alumno], map: "Respuesta_id_alumno_fkey")
   @@index([id_ejercicio], map: "Respuesta_id_ejercicio_fkey")
+  @@index([id_intento], map: "Respuesta_id_intento_idx")
 }

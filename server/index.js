@@ -12,6 +12,7 @@ import ejercicioRoutes from "./routes/ejercicio.routes.js";
 import escuelaRoutes from "./routes/escuela.routes.js";
 import gruposRoutes from "./routes/grupo.routes.js";
 import indexRoutes from "./routes/index.routes.js";
+import respuestaRoutes from "./routes/respuesta.routes.js";
 import sesionRoutes from "./routes/sesion.routes.js";
 
 const app = express();
@@ -37,6 +38,7 @@ app.use(authRoutes);
 app.use(adminRoutes);
 app.use(ejercicioRoutes);
 app.use(escuelaRoutes);
+app.use(respuestaRoutes);
 
 app.use(manejadorErrores);
 
