@@ -21,7 +21,7 @@ export function generarToken(objeto, duracion) {
 export function objetoSesion() {
   return {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: "none",
     maxAge: 1000 * 60 * 60,
   };
