@@ -162,16 +162,9 @@ export const verEjerciciosDelAlumno = async ({ idAlumno }) => {
     }
 
     const idLimpio = String(idAlumno).trim();
-    console.log("[ejerciciosAlumno] Buscando alumno con id_ingreso:", JSON.stringify(idLimpio));
-
     const alumno = await repo.consultarAlumnoConEjerciciosPorIdIngreso(idLimpio);
-    console.log("[ejerciciosAlumno] Resultado de Prisma:", alumno ? "ENCONTRADO" : "NULL");
 
     if (!alumno) {
-      // Diagnóstico: ¿hay alumnos con id_ingreso parecido?
-      const similares = await repo.buscarIdsIngresoSimilares(idLimpio);
-      console.log("[ejerciciosAlumno] IDs parecidos en BD:", similares);
-
       throw new ApiError(
         "La petición devuelve un registro vacio",
         404,
@@ -180,11 +173,13 @@ export const verEjerciciosDelAlumno = async ({ idAlumno }) => {
     }
 
     const ejercicios = (alumno.grupo?.ejercicios ?? []).map((ejercicio) => ({
-      id: ejercicio.id_ejercicio,
+      id_ejercicio: ejercicio.id_ejercicio,
       titulo: ejercicio.titulo,
       fecha_inicio: ejercicio.fecha_inicio,
       fecha_final: ejercicio.fecha_final,
+      id_tipo: ejercicio.id_tipo,
       tipo: ejercicio.tipo?.nombre || "",
+      contenido: ejercicio.contenido,
     }));
 
     return {

@@ -197,6 +197,8 @@ export const consultarAlumnoConEjerciciosPorIdIngreso = (id_ingreso) => {
               titulo: true,
               fecha_inicio: true,
               fecha_final: true,
+              id_tipo: true,
+              contenido: true,
               tipo: {
                 select: {
                   id_tipo: true,
