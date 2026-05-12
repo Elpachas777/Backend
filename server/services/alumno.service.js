@@ -1,4 +1,5 @@
 import * as repo from "../repo/alumno.repo.js";
+import * as respuestaRepo from "../repo/respuesta.repo.js";
 import { ApiError } from "../utils/errores.utils.js";
 import {
   alumnoId,
@@ -172,15 +173,28 @@ export const verEjerciciosDelAlumno = async ({ idAlumno }) => {
       );
     }
 
-    const ejercicios = (alumno.grupo?.ejercicios ?? []).map((ejercicio) => ({
-      id_ejercicio: ejercicio.id_ejercicio,
-      titulo: ejercicio.titulo,
-      fecha_inicio: ejercicio.fecha_inicio,
-      fecha_final: ejercicio.fecha_final,
-      id_tipo: ejercicio.id_tipo,
-      tipo: ejercicio.tipo?.nombre || "",
-      contenido: ejercicio.contenido,
-    }));
+    const respuestasAlumno = await respuestaRepo.listarRespuestasAlumno(
+      alumno.id_alumno,
+    );
+
+    const ejerciciosResueltos = new Set(
+      respuestasAlumno.map((r) => Number(r.id_ejercicio)),
+    );
+
+    const ejercicios = (alumno.grupo?.ejercicios ?? [])
+      .filter(
+        (ejercicio) =>
+          !ejerciciosResueltos.has(Number(ejercicio.id_ejercicio)),
+      )
+      .map((ejercicio) => ({
+        id_ejercicio: ejercicio.id_ejercicio,
+        titulo: ejercicio.titulo,
+        fecha_inicio: ejercicio.fecha_inicio,
+        fecha_final: ejercicio.fecha_final,
+        id_tipo: ejercicio.id_tipo,
+        tipo: ejercicio.tipo?.nombre || "",
+        contenido: ejercicio.contenido,
+      }));
 
     return {
       alumno: {
