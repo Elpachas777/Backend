@@ -73,6 +73,13 @@ export const estadisticasAsignacionPorEjercicio = async (
       alumnos: {
         select: {
           id_alumno: true,
+          id_ingreso: true,
+          usuario: {
+            select: {
+              nombres: true,
+              apellido: true,
+            },
+          },
         },
       },
       ejercicios: {
@@ -170,6 +177,30 @@ export const estadisticasAsignacionPorEjercicio = async (
           resueltos
         : 0;
 
+    // Detalle alumno por alumno: quién resolvió y quién no.
+    const alumnosDetalle = grupo.alumnos.map((alumno) => {
+      const mejorPuntaje = alumnosMap.get(alumno.id_alumno);
+      const nombres = alumno.usuario?.nombres || "";
+      const apellido = alumno.usuario?.apellido || "";
+      const nombreCompleto = [nombres, apellido].filter(Boolean).join(" ").trim();
+
+      return {
+        id_alumno: alumno.id_alumno,
+        id_ingreso: alumno.id_ingreso,
+        nombre: nombreCompleto || `Alumno ${alumno.id_alumno}`,
+        resuelto: mejorPuntaje !== undefined,
+        mejor_puntaje:
+          mejorPuntaje !== undefined ? Number(mejorPuntaje.toFixed(2)) : null,
+      };
+    });
+
+    // Resueltos primero, dentro de cada grupo por mejor puntaje desc.
+    alumnosDetalle.sort((a, b) => {
+      if (a.resuelto !== b.resuelto) return a.resuelto ? -1 : 1;
+      if (a.resuelto) return (b.mejor_puntaje || 0) - (a.mejor_puntaje || 0);
+      return a.nombre.localeCompare(b.nombre);
+    });
+
     return {
       id: grupo.id_grupo,
       nombre: grupo.nombre_grupo,
@@ -178,6 +209,7 @@ export const estadisticasAsignacionPorEjercicio = async (
       total_alumnos: totalAlumnos,
       resueltos,
       eficacia: Number(eficacia.toFixed(2)),
+      alumnos: alumnosDetalle,
     };
   });
 };
