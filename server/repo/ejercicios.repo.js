@@ -24,15 +24,37 @@ export const crearEjercicio = (
   });
 };
 
-export const actualizar = (id, json) => {
-  return prisma.ejercicio.update({
-    where: {
-      id_ejercicio: Number(id),
-    },
-    data: json,
-  });
-};
+  export const actualizar = (id, json) => {
+    const data = {};
 
+    if (json.titulo !== undefined) {
+      data.titulo = String(json.titulo).trim();
+    }
+
+    if (json.contenido !== undefined) {
+      data.contenido = json.contenido;
+    }
+
+    if (json.fecha_inicio) {
+      data.fecha_inicio = new Date(json.fecha_inicio);
+    }
+
+    if (json.fecha_final) {
+      data.fecha_final = new Date(json.fecha_final);
+    }
+
+    if (json.id_tipo) {
+      data.id_tipo = Number(json.id_tipo);
+    }
+
+    return prisma.ejercicio.update({
+      where: {
+        id_ejercicio: Number(id),
+      },
+      data,
+    });
+  };
+  
 export const listarTipos = () => {
   return prisma.tipoEjercicio.findMany({
     select: {
