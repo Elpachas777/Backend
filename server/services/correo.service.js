@@ -6,8 +6,7 @@ import { controlErrores } from "../utils/utilidad.utils.js";
 
 export async function enviarTokenCorreo(docente) {
   try {
-    console.log(docente);
-    const idDocente = docente.id_docente ?? docente.idDocente;
+    const idDocente = docente.id_docente;
     const correo = docente.correo;
     const nombres = docente.usuario?.nombres || "docente";
 

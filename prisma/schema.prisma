@@ -62,7 +62,7 @@ model Alumno {
   usuarioId  Int     @unique
 
   grupo      Grupo?      @relation(fields: [id_grupo], references: [id_grupo])
-  docente    Docente     @relation(fields: [id_docente], references: [id_docente])
+  docente    Docente     @relation(fields: [id_docente], references: [id_docente], onDelete: Cascade)
   usuario    Usuario     @relation(fields: [usuarioId], references: [id_usuario], onDelete: Cascade)
   respuestas Respuesta[]
 
@@ -77,7 +77,7 @@ model Grupo {
   turno        String
   alumnos      Alumno[]
   ejercicios   Ejercicio[]
-  docente      Docente     @relation(fields: [id_docente], references: [id_docente])
+  docente      Docente     @relation(fields: [id_docente], references: [id_docente], onDelete: Cascade)
 
   @@index([id_docente], map: "Grupo_id_docente_fkey")
 }
@@ -91,7 +91,7 @@ model Ejercicio {
   titulo       String
   contenido    Json
 
-  docente    Docente       @relation(fields: [id_docente], references: [id_docente])
+  docente    Docente       @relation(fields: [id_docente], references: [id_docente], onDelete: Cascade)
   grupos     Grupo[]
   tipo       TipoEjercicio @relation(fields: [id_tipo], references: [id_tipo])
   respuestas Respuesta[]

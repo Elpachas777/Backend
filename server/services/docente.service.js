@@ -1,5 +1,4 @@
 import "dotenv/config";
-import { modificarContraseñaAdministrador } from "../repo/admin.repo.js";
 import {
   consultarDocentePorCorreo,
   consultarDocentePorId,
@@ -43,7 +42,7 @@ export const registrarNuevoDocente = async (data) => {
       ]),
     );
     const nuevoDocente = await crearDocente(infoDocente);
-    peticionVacia(nuevoDocente, "No se pudo registrar al docente")
+    peticionVacia(nuevoDocente, "No se pudo registrar al docente");
 
     return nuevoDocente;
   } catch (error) {
@@ -53,7 +52,7 @@ export const registrarNuevoDocente = async (data) => {
 
 export const validarCorreoDocente = async (data) => {
   try {
-    const docente = await consultarDocentePorCorreo(data.correo)
+    const docente = await consultarDocentePorCorreo(data.correo);
     if (!docente)
       throw new ApiError(
         "La petición devuelve un registro vacio",
@@ -126,7 +125,7 @@ export const verInfoDocentes = async () => {
       grupos: datos.grupos.map((propiedades) => ({
         id: propiedades.id_grupo,
         nombre: propiedades.nombre_grupo,
-        turno: propiedades.turno
+        turno: propiedades.turno,
       })),
     }));
 
@@ -162,8 +161,6 @@ export const editarInfoDocente = async (id, data) => {
         await editarDocenteEscuela(tx, id, escuela);
       }
 
-
-
       return "ok";
     });
 
@@ -181,7 +178,7 @@ export const editarInfoDocente = async (id, data) => {
 
 export const eliminarDocentePorId = async (id) => {
   try {
-    docenteId(id);
+    await docenteId(id);
     const docenteEliminado = await eliminarDocenteId(id);
 
     if (!docenteEliminado) {
@@ -198,11 +195,8 @@ export const eliminarDocentePorId = async (id) => {
 
 export const actualizarContraseñaDocente = async (data) => {
   try {
-    const contra = await hashear(data.password)
-    const modificado = await modificarContraseñaDocente(
-      data.correo,
-      contra,
-    );
+    const contra = await hashear(data.password);
+    const modificado = await modificarContraseñaDocente(data.correo, contra);
 
     if (!modificado) {
       throw new ApiError(

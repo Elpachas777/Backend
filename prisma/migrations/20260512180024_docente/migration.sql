@@ -139,16 +139,16 @@ ALTER TABLE `Docente` ADD CONSTRAINT `Docente_id_escuela_fkey` FOREIGN KEY (`id_
 ALTER TABLE `Alumno` ADD CONSTRAINT `Alumno_id_grupo_fkey` FOREIGN KEY (`id_grupo`) REFERENCES `Grupo`(`id_grupo`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Alumno` ADD CONSTRAINT `Alumno_id_docente_fkey` FOREIGN KEY (`id_docente`) REFERENCES `Docente`(`id_docente`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Alumno` ADD CONSTRAINT `Alumno_id_docente_fkey` FOREIGN KEY (`id_docente`) REFERENCES `Docente`(`id_docente`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Alumno` ADD CONSTRAINT `Alumno_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Grupo` ADD CONSTRAINT `Grupo_id_docente_fkey` FOREIGN KEY (`id_docente`) REFERENCES `Docente`(`id_docente`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Grupo` ADD CONSTRAINT `Grupo_id_docente_fkey` FOREIGN KEY (`id_docente`) REFERENCES `Docente`(`id_docente`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Ejercicio` ADD CONSTRAINT `Ejercicio_id_docente_fkey` FOREIGN KEY (`id_docente`) REFERENCES `Docente`(`id_docente`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Ejercicio` ADD CONSTRAINT `Ejercicio_id_docente_fkey` FOREIGN KEY (`id_docente`) REFERENCES `Docente`(`id_docente`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Ejercicio` ADD CONSTRAINT `Ejercicio_id_tipo_fkey` FOREIGN KEY (`id_tipo`) REFERENCES `TipoEjercicio`(`id_tipo`) ON DELETE RESTRICT ON UPDATE CASCADE;
