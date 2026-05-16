@@ -7,6 +7,7 @@ import {
 } from "../repo/docente.repo.js";
 import { consultarGrupoPorId } from "../repo/grupo.repo.js";
 import { verificarToken } from "../services/credenciales.service.js";
+import cloudinary from "./cloudinary.utils.js";
 import { ApiError } from "./errores.utils.js";
 
 export function validarCampos(datos, requeridos) {
@@ -138,4 +139,17 @@ export function obtenerId(cookies) {
   const token = cookies.access_token || "";
   const { id } = verificarToken(token);
   return id;
+}
+
+export function subirImagen(foto, folder) {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream({ folder: folder }, (err, result) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(result);
+      })
+      .end(foto.buffer);
+  });
 }

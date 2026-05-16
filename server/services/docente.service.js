@@ -7,13 +7,13 @@ import {
   editarDocente,
   editarDocenteEscuela,
   editarDocenteUsuario,
+  editarFoto,
   eliminarDocenteId,
   modificarContraseñaDocente,
   modificarHabilitado,
   obtenerContraseña,
   validarCorreo,
 } from "../repo/docente.repo.js";
-import { prisma } from "../utils/db.utils.js";
 import { ApiError } from "../utils/errores.utils.js";
 import {
   controlErrores,
@@ -24,12 +24,14 @@ import {
   peticionVacia,
   quitarVacios,
   remplazarContraseña,
+  subirImagen,
   validarCampos,
   validarContraseña,
 } from "../utils/utilidad.utils.js";
 
-export const registrarNuevoDocente = async (data) => {
+export const registrarNuevoDocente = async (data, foto) => {
   try {
+    data.contraseña = data.contrasena;
     await correoRegistrado(data.correo);
 
     const infoDocente = await remplazarContraseña(
@@ -41,7 +43,9 @@ export const registrarNuevoDocente = async (data) => {
         "contraseña",
       ]),
     );
-    const nuevoDocente = await crearDocente(infoDocente);
+
+    const respuesta = await subirImagen(foto, "docentes");
+    const nuevoDocente = await crearDocente(infoDocente, respuesta.secure_url);
     peticionVacia(nuevoDocente, "No se pudo registrar al docente");
 
     return nuevoDocente;
@@ -113,6 +117,7 @@ export const verInfoDocentes = async () => {
       id: datos.id_docente,
       nombre: datos.usuario.nombres,
       apellidos: datos.usuario.apellido,
+      foto: datos.foto,
       correo: datos.correo,
       password: datos.contraseña,
       escuela: {
@@ -135,11 +140,11 @@ export const verInfoDocentes = async () => {
   }
 };
 
-export const editarInfoDocente = async (id, data) => {
+export const editarInfoDocente = async (id, data, foto) => {
   try {
     await docenteId(id);
-    const datosUsuario = quitarVacios(data.usuario);
-    const datosDocente = quitarVacios(data.docente);
+    const datosUsuario = quitarVacios(JSON.parse(data.usuario));
+    const datosDocente = quitarVacios(JSON.parse(data.docente));
     const { escuela } = data;
 
     const editado = await prisma.$transaction(async (tx) => {
@@ -152,6 +157,11 @@ export const editarInfoDocente = async (id, data) => {
 
         if (Object.hasOwn(datosDocente, "contraseña")) {
           datos = await remplazarContraseña(datosDocente);
+        }
+
+        if (foto) {
+          const respuesta = await subirImagen(foto, "docentes");
+          await editarFoto(tx, id, respuesta.secure_url);
         }
 
         await editarDocente(tx, id, datos);
