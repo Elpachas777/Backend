@@ -6,7 +6,10 @@ import * as service from "../services/docente.service.js";
 
 export async function registarDocente(req, res, next) {
   try {
-    const docente = await service.registrarNuevoDocente(req.body);
+    const data = req.body;
+    const foto = req.file;
+
+    const docente = await service.registrarNuevoDocente(data, foto);
     await enviarTokenCorreo(docente);
 
     return res.status(201).json({
@@ -54,8 +57,9 @@ export async function editarDocenteInfo(req, res, next) {
   try {
     const { id } = req.params;
     const data = req.body;
+    const foto = req.file;
 
-    await service.editarInfoDocente(id, data);
+    await service.editarInfoDocente(id, data, foto);
 
     return res.status(200).json({
       tipo: "info",

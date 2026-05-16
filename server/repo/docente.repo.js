@@ -23,17 +23,15 @@ export const consultarDocentePorCorreo = (correo) => {
   });
 };
 
-export const crearDocente = ({
-  correo,
-  contraseña,
-  escuela,
-  nombres,
-  apellidos,
-}) => {
+export const crearDocente = (
+  { correo, contraseña, escuela, nombres, apellidos },
+  foto,
+) => {
   return prisma.docente.create({
     data: {
       correo: correo,
       contraseña: contraseña,
+      foto: foto,
       usuario: {
         create: {
           nombres: nombres,
@@ -80,6 +78,17 @@ export const editarDocente = (db, id, data) => {
       id_docente: Number(id),
     },
     data: data,
+  });
+};
+
+export const editarFoto = (db, id, foto) => {
+  return db.docente.update({
+    where: {
+      id_docente: Number(id),
+    },
+    data: {
+      foto,
+    },
   });
 };
 
